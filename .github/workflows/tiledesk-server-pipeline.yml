@@ -9,9 +9,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      TAG: ${{ github.sha }}
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Set tag name
+      run: |
+        export TAG=$(echo $TAG | cut -c1-7)
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
@@ -22,16 +29,15 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t ${{ secrets.IMAGE_NAME }} .
-        docker tag ${{ secrets.IMAGE_NAME }}:latest ${{ secrets.ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/${{ secrets.IMAGE_NAME }}:latest
+        docker build -t ${{ secrets.IMAGE_NAME }}:$TAG .
+        docker tag ${{ secrets.IMAGE_NAME }}:$TAG ${{ secrets.ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/${{ secrets.IMAGE_NAME }}:$TAG
 
     - name: Login to Amazon ECR
       run: aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin ${{ secrets.ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com
 
     - name: Push image to Amazon ECR
-      run: docker push ${{ secrets.ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/${{ secrets.IMAGE_NAME }}:latest
+      run: docker push ${{ secrets.ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/${{ secrets.IMAGE_NAME }}:$TAG
 
     - name: Update ECS service
       run: |
         aws ecs update-service --cluster ${{ secrets.ECS_CLUSTER_NAME }} --service ${{ secrets.ECS_SERVICE_NAME }} --force-new-deployment
-
