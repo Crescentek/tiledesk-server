@@ -33,5 +33,5 @@ jobs:
 
     - name: Update ECS service
       run: |
-        aws ecs update-service --cluster ${{ ECS_CLUSTER_NAME }} --service ${{ ECS_SERVICE_NAME }} --force-new-deployment
+        aws ecs update-service --cluster ${{ secrets.ECS_CLUSTER_NAME }} --service ${{ secrets.ECS_SERVICE_NAME }} --force-new-deployment
 
