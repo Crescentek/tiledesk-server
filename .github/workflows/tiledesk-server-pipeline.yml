@@ -18,8 +18,8 @@ jobs:
 
     - name: Set tag name
       run: |
-        export TAG=$(echo ${{ github.sha }} | cut -c1-7)
-        echo $TAG
+        export TAG=$(echo ${{ github.sha }} | head -c 7)
+        echo "Tag: $TAG"
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
