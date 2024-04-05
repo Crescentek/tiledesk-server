@@ -21,20 +21,20 @@
  
  async function del(client, key, callback) {
     key = "cacheman:cachegoose-cache:" + key;
-    // winston.debug("key: "+key)
+    winston.debug("key: "+key)
    
     // client.del(key, function (err, data) {
     //     if (err) {
     //         return callback(error);
     //     } else {
-    //         // winston.info("del data: "+ data)
+    //         winston.info("del data: "+ data)
 
     //         return callback(null, data);
     //     }
     // });
 
     // client.del(key).then(function(result) {
-    //     // winston.info("result", result)
+    //     winston.info("result", result)
     //     return callback(null, result);
     // }).catch(function(error) {
     //     winston.error("here3", error)
@@ -42,7 +42,7 @@
     // });
 
     var res = await client.del(key)
-    // winston.debug("result: "+ res)
+    winston.debug("result: "+ res)
     if (res) {
         return callback(null, res); 
     } else {
@@ -59,7 +59,7 @@
             winston.verbose("Creating cache for project.create with key: " + key);
             client.set(key, project, cacheUtil.longTTL, (err, reply) => {
                 winston.verbose("Created cache for project.create",{err:err});
-                // winston.debug("Created cache for project.create reply",reply);
+                winston.debug("Created cache for project.create reply",reply);
             });
 
             // TODO COMMENTA NON USATO
@@ -67,7 +67,7 @@
             // winston.verbose("Deleting cache for project.create with key: " + key);
             // client.del(key, function (err, reply) {
             //     winston.verbose("Deleted cache for project.create",{err:err});
-            //     // winston.debug("Deleted cache for project.create",reply);
+            //     winston.debug("Deleted cache for project.create",reply);
 
             // }); 
         });  
@@ -79,7 +79,7 @@
             winston.verbose("Updating cache for project.update with key: " + key);
             client.set(key, project, cacheUtil.longTTL, (err, reply) => {
                 winston.verbose("Updated cache for project.update",{err:err});
-                // winston.debug("Updated cache for project.update",reply);
+                winston.debug("Updated cache for project.update",reply);
 
             });
 
@@ -87,7 +87,7 @@
             // key = "projects:query:*";
             // winston.verbose("Deleting cache for project.update with key: " + key);
             // client.del(key, function (err, reply) {
-            //     // winston.debug("Deleted cache for project.update",reply);
+            //     winston.debug("Deleted cache for project.update",reply);
             //     winston.verbose("Deleted cache for project.update",{err:err});
             // });   
 
@@ -105,7 +105,7 @@
             // found del
             del(client._cache._engine.client, key, function (err, reply) {  //tested
             // client.del(key, (err, reply) => {
-                // winston.debug("Deleted cache for project.delete",reply);
+                winston.debug("Deleted cache for project.delete",reply);
                 winston.verbose("Deleted cache for project.delete",{err:err});
             });
 
@@ -113,7 +113,7 @@
             // key = "projects:query:*";
             // winston.verbose("Deleting cache for project.create with key: " + key);
             // client.del(key, function (err, reply) {
-            //     // winston.debug("Deleted cache for project.create",reply);
+            //     winston.debug("Deleted cache for project.create",reply);
             //     winston.verbose("Deleted cache for project.create",{err:err});
             // });   
         });
@@ -129,7 +129,7 @@
             winston.verbose("Updating cache for project.downgrade with key: " + key);
 
             client.set(key, project, cacheUtil.longTTL, (err, reply) => {
-                // winston.debug("Updated cache for project.downgrade",reply);
+                winston.debug("Updated cache for project.downgrade",reply);
                 winston.verbose("Updated cache for project.downgrade",{err:err});
             });
 
@@ -137,7 +137,7 @@
             // key = "projects:query:*";
             // winston.verbose("Deleting cache for project.downgrade with key: " + key);
             // client.del(key, function (err, reply) {
-            //     // winston.debug("Deleted cache for project.downgrade",reply);
+            //     winston.debug("Deleted cache for project.downgrade",reply);
             //     winston.verbose("Deleted cache for project.downgrade",{err:err});
             // }); 
             
@@ -160,7 +160,7 @@
             var key = project_user.id_project+":project_users:id:"+project_user.id;
             winston.verbose("Updating cache for project_user.update with key: " + key);
             client.set(key, project_user, cacheUtil.defaultTTL, (err, reply) => {
-                // winston.debug("Updated cache for project_user.update",reply);
+                winston.debug("Updated cache for project_user.update",reply);
                 winston.verbose("Updated cache for project_user.update",{err:err});
             });
 
@@ -168,7 +168,7 @@
                 var key = project_user.id_project+":project_users:iduser:"+project_user.id_user;
                 winston.verbose("Updating cache for project_user.update with key: " + key);
                 client.set(key, project_user, cacheUtil.defaultTTL, (err, reply) => {
-                    // winston.debug("Updated cache for project_user.update",reply);
+                    winston.debug("Updated cache for project_user.update",reply);
                     winston.verbose("Updated cache for project_user.update",{err:err});
                 });
             }
@@ -177,7 +177,7 @@
                 var key = project_user.id_project+":project_users:uuid_user:"+project_user.uuid_user;
                 winston.verbose("Updating cache for project_user.update with key: " + key);
                 client.set(key, project_user, cacheUtil.defaultTTL, (err, reply) => {
-                    // winston.debug("Updated cache for project_user.update",reply);
+                    winston.debug("Updated cache for project_user.update",reply);
                     winston.verbose("Updated cache for project_user.update",{err:err});
                 });
             }
@@ -194,14 +194,14 @@
             // controllare bene
 
             var hierarchicalRoles = TEAMMATE_ROLES[role];
-            // winston.debug("hierarchicalRoles", hierarchicalRoles);
+            winston.debug("hierarchicalRoles", hierarchicalRoles);
         
             if ( hierarchicalRoles && hierarchicalRoles.includes(role)) {
 
                 var key = project_user.id_project+":project_users:role:teammate:"+project_user.id;
                 winston.verbose("Updating cache for project_user.update with key: " + key);
                 client.set(key, project_user, cacheUtil.defaultTTL, (err, reply) => {
-                    // winston.debug("Updated cache for project_user.update",reply);
+                    winston.debug("Updated cache for project_user.update",reply);
                     winston.verbose("Updated cache for project_user.update",{err:err});
                 });
             }
@@ -231,7 +231,7 @@
             var key = "users:id:"+user.id;
             winston.verbose("Creating cache for user.signup with key: " + key);
             client.set(key, user, cacheUtil.defaultTTL, (err, reply) => {
-                // winston.debug("Created cache for user.signup",reply);
+                winston.debug("Created cache for user.signup",reply);
                 winston.verbose("Created cache for user.signup",{err:err});
             });
 
@@ -239,7 +239,7 @@
             // var key = "users:email:"+user.email;
             // winston.verbose("Creating cache for user.signup with key: " + key);
             // client.set(key, user, cacheUtil.defaultTTL, (err, reply) => {
-            //     // winston.debug("Created cache for user.signup",reply);
+            //     winston.debug("Created cache for user.signup",reply);
             //     winston.verbose("Created cache for user.signup",{err:err});
             // });
         });
@@ -253,7 +253,7 @@
             var key = "users:id:"+user.id;
             winston.verbose("Updating cache for user.update with key: " + key);
             client.set(key, user, cacheUtil.defaultTTL, (err, reply) => {
-                // winston.debug("Updated cache for user.update",reply);
+                winston.debug("Updated cache for user.update",reply);
                 winston.verbose("Updated cache for user.update",{err:err});
             });
 
@@ -261,7 +261,7 @@
             // var key = "users:email:"+user.email;
             // winston.verbose("Updating cache for user.update with key: " + key);
             // client.set(key, user, cacheUtil.defaultTTL, (err, reply) => {
-            //     // winston.debug("Updated cache for user.update",reply);
+            //     winston.debug("Updated cache for user.update",reply);
             //     winston.verbose("Updated cache for user.update",{err:err});
             // });
         });
@@ -276,7 +276,7 @@
             // found del
             del(client._cache._engine.client, key, function (err, reply) {  //tested
             // client.del(key, (err, reply) => {
-                // winston.debug("Deleted cache for user.delete",reply);
+                winston.debug("Deleted cache for user.delete",reply);
                 winston.verbose("Deleted cache for user.delete",{err:err});
             });
 
@@ -284,7 +284,7 @@
             // var key = "users:email:"+user.email;
             // winston.verbose("Deleting cache for user.delete with key: " + key);
             // client.del(key, (err, reply) => {
-            //     // winston.debug("Deleted cache for user.delete",reply);
+            //     winston.debug("Deleted cache for user.delete",reply);
             //     winston.verbose("Deleted cache for user.delete",{err:err});
             // });
         });
@@ -299,7 +299,7 @@
             winston.verbose("Creating cache for request.create.simple with key: " + key);
 
             client.set(key, request, cacheUtil.defaultTTL, (err, reply) => {
-                // winston.debug("Created cache for request.create.simple",reply);
+                winston.debug("Created cache for request.create.simple",reply);
                 winston.verbose("Created cache for request.create.simple",{err:err});
             });
 
@@ -308,14 +308,14 @@
             winston.verbose("Creating cache for request.create.simple without project with key : " + key);
 
             client.set(key, request, cacheUtil.defaultTTL, (err, reply) => {
-                // winston.debug("Created cache for request.create.simple",reply);
+                winston.debug("Created cache for request.create.simple",reply);
                 winston.verbose("Created cache for request.create.simple",{err:err});
             });
 
             var key = request.id_project+":requests:request_id:"+request.request_id+":simple";
             winston.verbose("Creating cache for request.create.simple with key: " + key);
             client.set(key, request, cacheUtil.defaultTTL, (err, reply) => {
-                // winston.debug("Created cache for request.create.simple",reply);
+                winston.debug("Created cache for request.create.simple",reply);
                 winston.verbose("Created cache for request.create.simple",{err:err});
             });
 
@@ -327,11 +327,11 @@
         winston.verbose("Deleting cache for widgets with key: " + key);
 
         // found del
-        // winston.debug("Deleted4545");
+        winston.debug("Deleted4545");
         del(client._cache._engine.client, key, function (err, reply) {  //tested
         
         // client.del(key, function (err, reply) {
-            // winston.debug("Deleted cache for invalidatRequestSimple",reply);
+            winston.debug("Deleted cache for invalidatRequestSimple",reply);
             winston.verbose("Deleted cache for invalidatRequestSimple",{err:err});
         });   
 
@@ -340,7 +340,7 @@
         // found del
         del(client._cache._engine.client, key, function (err, reply) {  //tested
         // client.del(key, function (err, reply) {
-            // winston.debug("Deleted cache for invalidatRequestSimple",reply);
+            winston.debug("Deleted cache for invalidatRequestSimple",reply);
             winston.verbose("Deleted cache for invalidatRequestSimple",{err:err});
         });   
 
@@ -349,7 +349,7 @@
         // found del
         del(client._cache._engine.client, key, function (err, reply) {  //tested
         // client.del(key, function (err, reply) {
-            // winston.debug("Deleted cache for invalidatRequestSimple",reply);
+            winston.debug("Deleted cache for invalidatRequestSimple",reply);
             winston.verbose("Deleted cache for invalidatRequestSimple",{err:err});
         });   
 
@@ -363,14 +363,14 @@
             winston.verbose("Creating cache for request.create with key: " + key);
 
             client.set(key, request, cacheUtil.defaultTTL, (err, reply) => {
-                // winston.debug("Created cache for request.create",reply);
+                winston.debug("Created cache for request.create",reply);
                 winston.verbose("Created cache for request.create",{err:err});
             });
 
             var key = request.id_project+":requests:request_id:"+request.request_id;
             winston.verbose("Creating cache for request.create with key: " + key);
             client.set(key, request, cacheUtil.defaultTTL, (err, reply) => {
-                // winston.debug("Created cache for request.create",reply);
+                winston.debug("Created cache for request.create",reply);
                 winston.verbose("Created cache for request.create",{err:err});
             });
 
@@ -378,7 +378,7 @@
             // key = request.id_project+":requests:query:*";
             // winston.verbose("Deleting cache for request.create with key: " + key);
             // client.del(key, function (err, reply) {
-            //     // winston.debug("Deleted cache for request.create",reply);
+            //     winston.debug("Deleted cache for request.create",reply);
             //     winston.verbose("Deleted cache for request.create",{err:err});
             // });   
 
@@ -392,14 +392,14 @@
             var key = request.id_project+":requests:id:"+request.id;
             winston.verbose("Creating cache for request.update with key: " + key);
             client.set(key, request, cacheUtil.defaultTTL, (err, reply) => {
-                // winston.debug("Created cache for request.update",reply);
+                winston.debug("Created cache for request.update",reply);
                 winston.verbose("Created cache for request.update",{err:err});
             });
 
             var key = request.id_project+":requests:request_id:"+request.request_id;
             winston.verbose("Creating cache for request.update with key: " + key);
             client.set(key, request, cacheUtil.defaultTTL, (err, reply) => {
-                // winston.debug("Created cache for request.update",reply);
+                winston.debug("Created cache for request.update",reply);
                 winston.verbose("Created cache for request.update",{err:err});
             });
 
@@ -407,7 +407,7 @@
             // key = request.id_project+":requests:query:*";
             // winston.verbose("Deleting cache for request.update with key: " + key);
             // client.del(key, function (err, reply) {
-            //     // winston.debug("Deleted cache for request.update",reply);
+            //     winston.debug("Deleted cache for request.update",reply);
             //     winston.verbose("Deleted cache for request.update",{err:err});
             // });   
 
@@ -422,14 +422,14 @@
             var key = request.id_project+":requests:id:"+request.id;
             winston.verbose("Creating cache for request.close with key: " + key);
             client.set(key, request, cacheUtil.defaultTTL, (err, reply) => {
-                // winston.debug("Created cache for request.close",reply);
+                winston.debug("Created cache for request.close",reply);
                 winston.verbose("Created cache for request.close",{err:err});
             });
 
             var key = request.id_project+":requests:request_id:"+request.request_id;
             winston.verbose("Creating cache for request.close with key: " + key);
             client.set(key, request, cacheUtil.defaultTTL, (err, reply) => {
-                // winston.debug("Created cache for request.close",reply);
+                winston.debug("Created cache for request.close",reply);
                 winston.verbose("Created cache for request.close",{err:err});
             });
 
@@ -437,7 +437,7 @@
             // key = request.id_project+":requests:query:*";
             // winston.verbose("Deleting cache for request.create with key: " + key);
             // client.del(key, function (err, reply) {
-            //     // winston.debug("Deleted cache for request.close",reply);
+            //     winston.debug("Deleted cache for request.close",reply);
             //     winston.verbose("Deleted cache for request.close",{err:err});
             // });   
 
@@ -476,7 +476,7 @@
             var key = faq_kb.id_project+":faq_kbs:id:"+faq_kb._id;
             winston.verbose("Creating cache for faq_kb.create with key: " + key);
             client.set(key, clonedbot, cacheUtil.defaultTTL, (err, reply) => {
-                // winston.debug("Created cache for faq_kb.create",reply);
+                winston.debug("Created cache for faq_kb.create",reply);
                 winston.verbose("Created cache for faq_kb.create",{err:err});
             });
 
@@ -493,7 +493,7 @@
             var key = faq_kb.id_project+":faq_kbs:id:"+faq_kb._id;
             winston.verbose("Creating cache for faq_kb.update with key: " + key);
             client.set(key, faq_kb, cacheUtil.defaultTTL, (err, reply) => {
-                // winston.debug("Created cache for faq_kb.create",reply);
+                winston.debug("Created cache for faq_kb.create",reply);
                 winston.verbose("Created cache for faq_kb.update",{err:err});
             }); 
             
@@ -501,10 +501,10 @@
             key = faq_kb.id_project+":faq_kbs:id:"+faq_kb._id+":secret";
             winston.verbose("Deleting cache for faq_kb.update secret with key: " + key);
             // found del
-            // // winston.info("quiqui", client._cache);
+            // winston.info("quiqui", client._cache);
             del(client._cache._engine.client, key, function (err, reply) {  //tested
             // client.del(key, function (err, reply) {  //tested
-                // winston.debug("Deleted cache for faq_kb.update secret",reply);
+                winston.debug("Deleted cache for faq_kb.update secret",reply);
                 winston.verbose("Deleted cache for faq_kb.update secret",{err:err});
             });   
 
@@ -514,7 +514,7 @@
             // found del
             del(client._cache._engine.client, key, function (err, reply) {  //tested
             // client.del(key, function (err, reply) {  
-                // winston.debug("Deleted cache for faq_kb.update  without project for tilebot ",reply);
+                winston.debug("Deleted cache for faq_kb.update  without project for tilebot ",reply);
                 winston.verbose("Deleted cache for faq_kb.update  without project for tilebot ",{err:err});
             });   
 
@@ -532,7 +532,7 @@
             // found del
             del(client._cache._engine.client, key, function (err, reply) {  //tested
             // client.del(key, (err, reply) => {
-                // winston.debug("Deleted cache for faqbot.delete",reply);
+                winston.debug("Deleted cache for faqbot.delete",reply);
                 winston.verbose("Deleted cache for faqbot.delete",{err:err});
             });
 
@@ -542,7 +542,7 @@
             // found del
             del(client._cache._engine.client, key, function (err, reply) {  //tested
             // client.del(key, function (err, reply) {
-                // winston.debug("Deleted cache for faq_kb.delete secret",reply);
+                winston.debug("Deleted cache for faq_kb.delete secret",reply);
                 winston.verbose("Deleted cache for faq_kb.delete secret",{err:err});
             });  
             
@@ -553,7 +553,7 @@
             // found del
             del(client._cache._engine.client, key, function (err, reply) {  //tested
             // client.del(key, function (err, reply) {  
-                // winston.debug("Deleted cache for faq_kb.update  without project for tilebot ",reply);
+                winston.debug("Deleted cache for faq_kb.update  without project for tilebot ",reply);
                 winston.verbose("Deleted cache for faq_kb.update  without project for tilebot ",{err:err});
             });   
 
@@ -600,7 +600,7 @@
             var key = department.id_project+":departments:id:"+department._id;
             winston.verbose("Creating cache for department.create with key: " + key);
             client.set(key, department, cacheUtil.defaultTTL, (err, reply) => {
-                // winston.debug("Created cache for department.create",reply);
+                winston.debug("Created cache for department.create",reply);
                 winston.verbose("Created cache for department.create",{err:err});
             });
             
@@ -608,7 +608,7 @@
             // key = department.id_project+":departments:query:*";        
             // winston.verbose("Deleting cache for department.create with key: " + key);
             // client.del(key, function (err, reply) {
-            //     // winston.debug("Deleted cache for department.create",reply);
+            //     winston.debug("Deleted cache for department.create",reply);
             //     winston.verbose("Deleted cache for department.create",{err:err});
             // });   
 
@@ -625,7 +625,7 @@
             var key = department.id_project+":departments:id:"+department._id;
             winston.verbose("Creating cache for department.update with key: " + key);
             client.set(key, department, cacheUtil.defaultTTL, (err, reply) => {
-                // winston.debug("Created cache for department.update",reply);
+                winston.debug("Created cache for department.update",reply);
                 winston.verbose("Created cache for department.update",{err:err});
             });    
 
@@ -633,7 +633,7 @@
             // key = department.id_project+":departments:query:*";        
             // winston.verbose("Deleting cache for department.update with key: " + key);
             // client.del(key, function (err, reply) {
-            //     // winston.debug("Deleted cache for department.update",reply);
+            //     winston.debug("Deleted cache for department.update",reply);
             //     winston.verbose("Deleted cache for department.update",{err:err});
             // });   
 
@@ -651,7 +651,7 @@
             // found del
             del(client._cache._engine.client, key, function (err, reply) {  //tested
             // client.del(key, (err, reply) => {
-                // winston.debug("Deleted cache for department.delete",reply);
+                winston.debug("Deleted cache for department.delete",reply);
                 winston.verbose("Deleted cache for department.delete",{err:err});
             });
 
@@ -659,7 +659,7 @@
             // key = department.id_project+":departments:query:*";        
             // winston.verbose("Deleting cache for department.delete with key: " + key);
             // client.del(key, function (err, reply) {
-            //     // winston.debug("Deleted cache for department.delete",reply);
+            //     winston.debug("Deleted cache for department.delete",reply);
             //     winston.verbose("Deleted cache for department.delete",{err:err});
             // });   
 
@@ -677,7 +677,7 @@
             // var key = label.id_project+":labels:query:*";        
             // winston.verbose("Deleting cache for label.create with key: " + key);
             // client.del(key, function (err, reply) {
-            //     // winston.debug("Deleted cache for label.create",reply);
+            //     winston.debug("Deleted cache for label.create",reply);
             //     winston.verbose("Deleted cache for label.create",{err:err});
             // });   
         });
@@ -692,7 +692,7 @@
             // var key = label.id_project+":labels:query:*";        
             // winston.verbose("Deleting cache for label.update with key: " + key);
             // client.del(key, function (err, reply) {
-            //     // winston.debug("Deleted cache for label.update",reply);
+            //     winston.debug("Deleted cache for label.update",reply);
             //     winston.verbose("Deleted cache for label.update",{err:err});
             // });   
         });
@@ -706,7 +706,7 @@
             // var key = label.id_project+":labels:query:*";        
             // winston.verbose("Deleting cache for label.clone with key: " + key);
             // client.del(key, function (err, reply) {
-            //     // winston.debug("Deleted cache for label.clone",reply);
+            //     winston.debug("Deleted cache for label.clone",reply);
             //     winston.verbose("Deleted cache for label.clone",{err:err});
             // });   
         });
@@ -720,7 +720,7 @@
             // var key = label.id_project+":labels:query:*";        
             // winston.verbose("Deleting cache for label.delete with key: " + key);
             // client.del(key, function (err, reply) {
-            //     // winston.debug("Deleted cache for label.delete",reply);
+            //     winston.debug("Deleted cache for label.delete",reply);
             //     winston.verbose("Deleted cache for label.delete",{err:err});
             // });   
         });
@@ -733,7 +733,7 @@
         winston.verbose("Creating cache for integration.create with key: " + key);
         client.set(key, integrations, cacheUtil.longTTL, (err, reply) => {
             winston.verbose("Created cache for integration.create", {err: err} );
-            // winston.debug("Created cache for integration.create reply", reply);
+            winston.debug("Created cache for integration.create reply", reply);
         })
     })
 
@@ -753,7 +753,7 @@
                 // found del
                 del(client._cache._engine.client, key, function (err, reply) {  //tested
                 // client.del(key, function (err, reply) {
-                    // winston.debug("Deleted cache for subscription.create",reply);
+                    winston.debug("Deleted cache for subscription.create",reply);
                     winston.verbose("Deleted cache for subscription.create",{err:err});
                 });   
             });
@@ -768,7 +768,7 @@
                 // found del
                 del(client._cache._engine.client, key, function (err, reply) {  //tested
                 // client.del(key, function (err, reply) {
-                    // winston.debug("Deleted cache for subscription.update",reply);
+                    winston.debug("Deleted cache for subscription.update",reply);
                     winston.verbose("Deleted cache for subscription.update",{err:err});
                 });   
             });
@@ -783,7 +783,7 @@
                 // found del
                 del(client._cache._engine.client, key, function (err, reply) {  //tested
                 // client.del(key, function (err, reply) {
-                    // winston.debug("Deleted cache for subscription.delete",reply);
+                    winston.debug("Deleted cache for subscription.delete",reply);
                     winston.verbose("Deleted cache for subscription.delete",{err:err});
                 });   
             });
@@ -802,7 +802,7 @@
                 // found del
                 del(client._cache._engine.client, key, function (err, reply) {  //tested
                 // client.del(key, function (err, reply) {
-                    // winston.debug("Deleted cache for trigger.create",reply);
+                    winston.debug("Deleted cache for trigger.create",reply);
                     winston.verbose("Deleted cache for trigger.create",{err:err});
                 });   
             });
@@ -817,7 +817,7 @@
                 // found del
                 del(client._cache._engine.client, key, function (err, reply) {  //tested
                 // client.del(key, function (err, reply) {
-                    // winston.debug("Deleted cache for trigger.update",reply);
+                    winston.debug("Deleted cache for trigger.update",reply);
                     winston.verbose("Deleted cache for trigger.update",{err:err});
                 });   
             });
@@ -832,7 +832,7 @@
                 // found del
                 del(client._cache._engine.client, key, function (err, reply) {  //tested
                 // client.del(key, function (err, reply) {
-                    // winston.debug("Deleted cache for trigger.delete",reply);
+                    winston.debug("Deleted cache for trigger.delete",reply);
                     winston.verbose("Deleted cache for trigger.delete",{err:err});
                 });   
             });
@@ -852,7 +852,7 @@
         // found del
         del(client._cache._engine.client, key, function (err, reply) {  //tested
         // client.del(key, function (err, reply) {
-            // winston.debug("Deleted cache for faq",reply);
+            winston.debug("Deleted cache for faq",reply);
             winston.verbose("Deleted cache for faq",{err:err});
         });   
 
@@ -863,7 +863,7 @@
         // found del
         del(client._cache._engine.client, key, function (err, reply) {  //tested
         // client.del(key, function (err, reply) {
-            // winston.debug("Deleted cache for faq",reply);
+            winston.debug("Deleted cache for faq",reply);
             winston.verbose("Deleted cache for faq",{err:err});
         });   
         
@@ -875,7 +875,7 @@
         // found del
         del(client._cache._engine.client, key, function (err, reply) {  //tested
         // client.del(key, function (err, reply) {
-            // winston.debug("Deleted cache for widgets",reply);
+            winston.debug("Deleted cache for widgets",reply);
             winston.verbose("Deleted cache for widgets",{err:err});
         });   
     }
@@ -891,22 +891,22 @@ module.exports = function (mongoose, option) {
 
     if (process.env.CACHE_ENABLED == true || process.env.CACHE_ENABLED == "true") {
         var engine = process.env.CACHE_ENGINE;
-        // winston.debug("Redis engine: "+ engine);
+        winston.debug("Redis engine: "+ engine);
 
         // var endPoint = process.env.CACHE_REDIS_ENDPOINT || "redis://127.0.0.1:6379";
-        // // winston.debug("Redis endpoint: "+ endPoint);
+        // winston.debug("Redis endpoint: "+ endPoint);
 
         var port = process.env.CACHE_REDIS_PORT || 6379;
-        // winston.debug("Redis port: "+ port);
+        winston.debug("Redis port: "+ port);
 
         var host = process.env.CACHE_REDIS_HOST || "127.0.0.1"
-        // winston.debug("Redis host: "+ host);
+        winston.debug("Redis host: "+ host);
 
         var password = process.env.CACHE_REDIS_PASSWORD;
-        // winston.debug("Redis password: "+ password);
+        winston.debug("Redis password: "+ password);
         
-        // winston.info("Mongoose Cachegoose fn initialized, engine: " + engine + ", port: "+ port + ", host: "+ host  + " defaultTTL: " +cacheUtil.defaultTTL + ", password: "+ password);
-        // // winston.info("Mongoose Cachegoose fn initialized, engine: " + engine + ", endpoint: "+endPoint +", port: "+ port + ", host: "+ host + ", password: "+ password);
+        winston.info("Mongoose Cachegoose fn initialized, engine: " + engine + ", port: "+ port + ", host: "+ host  + " defaultTTL: " +cacheUtil.defaultTTL + ", password: "+ password);
+        // winston.info("Mongoose Cachegoose fn initialized, engine: " + engine + ", endpoint: "+endPoint +", port: "+ port + ", host: "+ host + ", password: "+ password);
 
 
 
@@ -921,22 +921,22 @@ module.exports = function (mongoose, option) {
           });
 
         var client = cachegoose._cache;
-        // // winston.info("client client", client);
-        // // winston.info("client _cache._engine", client._cache._engine);
-        // // winston.info("client _cache._engine.client", client._cache._engine.client);
+        // winston.info("client client", client);
+        // winston.info("client _cache._engine", client._cache._engine);
+        // winston.info("client _cache._engine.client", client._cache._engine.client);
         listen(client);
 
         return cachegoose;
     }else {
-        // winston.info("Mongoose Cachegoose disabled");
+        winston.info("Mongoose Cachegoose disabled");
 
         return;
     }
 
-    // // console.log("init",init);  
-    // // console.log("cachegoose._cache",cachegoose._cache);  
+    // console.log("init",init);  
+    // console.log("cachegoose._cache",cachegoose._cache);  
     // cachegoose._cache.get("/projects/5ea800091147f28c72b90c5e", (err, cachedResults) => { //
-    //     // console.log("cachedResults",cachedResults);  
+    //     console.log("cachedResults",cachedResults);  
     // });
 
   

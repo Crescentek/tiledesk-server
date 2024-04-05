@@ -3,32 +3,32 @@ var winston = require('../../config/winston');
 var configGlobal = require('../../config/global');
 
 const apiUrl = process.env.API_URL || configGlobal.apiUrl;
-//// winston.info('Messenger apiUrl: ' + apiUrl);
+//winston.info('Messenger apiUrl: ' + apiUrl);
 
 class Listener {
 
     listen(config) {
-        // winston.info("Messenger Listener listen");
+        winston.info("Messenger Listener listen");
         if (config.databaseUri) {
-            // winston.debug("messenger config databaseUri: " + config.databaseUri);
+            winston.debug("messenger config databaseUri: " + config.databaseUri);
         }
 
         let graph_url = process.env.META_GRAPH_URL || config.graphUrl || "https://graph.facebook.com/v14.0/"
-        // winston.debug("Messenger graph_url: " + graph_url);
+        winston.debug("Messenger graph_url: " + graph_url);
 
         let log = process.env.MESSENGER_LOG || false
-        // winston.debug("Messenger log: " + log);
+        winston.debug("Messenger log: " + log);
 
         let fb_app_id = process.env.FB_APP_ID;
-        // winston.debug("Messenger fb_app_id: ", fb_app_id);
+        winston.debug("Messenger fb_app_id: ", fb_app_id);
 
         let fb_app_secret = process.env.FB_APP_SECRET;
-        // winston.debug("Messenger fb_app_secret: ", fb_app_secret);
+        winston.debug("Messenger fb_app_secret: ", fb_app_secret);
         
         let fb_verify_token = process.env.MESSENGER_VERIFY_TOKEN;
 
         let dashboard_base_url = process.env.EMAIL_BASEURL || config.baseUrl;
-        // winston.debug("Messenger dashboard_base_url: ", dashboard_base_url);
+        winston.debug("Messenger dashboard_base_url: ", dashboard_base_url);
 
 
         messenger.startApp({
@@ -44,9 +44,9 @@ class Listener {
             log: log
         }, (err) => {
             if (!err) {
-                // winston.info("Tiledesk Messenger Connector proxy server succesfully started.");
+                winston.info("Tiledesk Messenger Connector proxy server succesfully started.");
             } else {
-                // winston.info("unable to start Tiledesk Messenger Connector. " + err);
+                winston.info("unable to start Tiledesk Messenger Connector. " + err);
             }
         })
 

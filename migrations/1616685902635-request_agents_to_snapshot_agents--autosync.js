@@ -23,8 +23,8 @@ async function up () {
     }
     requests.forEach( 
       function(request, i){ 
-        // winston.debug(request.agents,i);
-        // // console.log(request,i); 
+        winston.debug(request.agents,i);
+        // console.log(request,i); 
 
         // request.snapshot.agents = request.agents;
 
@@ -32,7 +32,7 @@ async function up () {
           if (err) {
             winston.error("Schema migration: label agents update err", err);              
           } 
-          // // winston.debug("ok",doc);
+          // winston.debug("ok",doc);
           // return resolve('ok');
         }); 
 
@@ -40,11 +40,11 @@ async function up () {
         // request.snapshot.agents = request.agents;
         // request.markModified('snapshot');
         // request.save(function(err, data) {
-        //   // console.log("Error",err);
+        //   console.log("Error",err);
         // });
       });
 
-      // winston.info("Updated request agents found: " + requests.length);
+      winston.info("Updated request agents found: " + requests.length);
       return resolve('ok');
     });
   });

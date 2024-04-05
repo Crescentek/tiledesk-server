@@ -132,7 +132,7 @@ exports.plugin = function (schema, options) {
           // check that a number has already been provided, and update the counter to that number if it is
           // greater than the current count
           if (typeof doc[settings.field] === 'number') {
-              // console.log("docid_project",doc["id_project"])
+              console.log("docid_project",doc["id_project"])
             IdentityCounter.findOneAndUpdate(
               // IdentityCounter documents are identified by the model and field that the plugin was invoked for.
               // Check also that count is less than field value.
@@ -146,7 +146,7 @@ exports.plugin = function (schema, options) {
               }
             );
           } else {
-            // console.log("docid_project",doc["id_project"])
+            console.log("docid_project",doc["id_project"])
             // Find the counter collection entry for this model and field and update it.
             IdentityCounter.findOneAndUpdate(
               // IdentityCounter documents are identified by the model and field that the plugin was invoked for.

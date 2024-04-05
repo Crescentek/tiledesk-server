@@ -14,7 +14,7 @@ class EntityInterceptor {
     listen() {
 
         var that = this;
-        // winston.info("EntityInterceptor listener start ");
+        winston.info("EntityInterceptor listener start ");
         
 
         authEvent.on('user.delete',  function(data) {          
@@ -22,7 +22,7 @@ class EntityInterceptor {
             var userid = data.user.id;
             var query = { id_user: userid,  role: { $in : [RoleConstants.OWNER]} } ;
 
-            // winston.debug("query: ", query);
+            winston.debug("query: ", query);
 
                 setImmediate(() => {
                     Project_user.find(query).populate('id_user')
@@ -33,7 +33,7 @@ class EntityInterceptor {
                                     if (err) {
                                       winston.error('Error deleting project ', err);
                                     }
-                                    // winston.info('Deleted project with id: '+project.id);
+                                    winston.info('Deleted project with id: '+project.id);
                                     projectEvent.emit('project.delete', project );
                                   });
                              });

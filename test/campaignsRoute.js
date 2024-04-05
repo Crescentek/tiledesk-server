@@ -42,8 +42,8 @@ describe('CampaignsRoute', () => {
           .set('content-type', 'application/json')
           .send({ "text": "ciao", "recipient": recipient })
           .end(function (err, res) {
-            //// console.log("res",  res);
-            // console.log("res.body", res.body);
+            //console.log("res",  res);
+            console.log("res.body", res.body);
             res.should.have.status(200);
             res.body.should.be.a('object');
 
@@ -82,8 +82,8 @@ describe('CampaignsRoute', () => {
           .set('content-type', 'application/json')
           .send({ "text": "ciao", "recipient": recipient, returnobject: true })
           .end(function (err, res) {
-            //// console.log("res",  res);
-            // console.log("res.body", res.body);
+            //console.log("res",  res);
+            console.log("res.body", res.body);
             res.should.have.status(200);
             res.body.should.be.a('object');
 
@@ -132,7 +132,7 @@ describe('CampaignsRoute', () => {
             updatedBy: userid
           });
           newGroup.save(function (err, savedGroup) {
-            // console.log("savedGroup", savedGroup)
+            console.log("savedGroup", savedGroup)
 
 
             chai.request(server)
@@ -141,8 +141,8 @@ describe('CampaignsRoute', () => {
               .set('content-type', 'application/json')
               .send({ "text": "ciao", "group_id": savedGroup._id.toString() })
               .end(function (err, res) {
-                //// console.log("res",  res);
-                // console.log("res.body", res.body);
+                //console.log("res",  res);
+                console.log("res.body", res.body);
                 res.should.have.status(200);
                 res.body.should.be.a('object');
 
@@ -188,7 +188,7 @@ describe('CampaignsRoute', () => {
             updatedBy: userid
           });
           newGroup.save(function (err, savedGroup) {
-            // console.log("savedGroup", savedGroup)
+            console.log("savedGroup", savedGroup)
 
 
             chai.request(server)
@@ -197,8 +197,8 @@ describe('CampaignsRoute', () => {
               .set('content-type', 'application/json')
               .send({ "text": "ciao", "group_id": savedGroup._id.toString(), returnobject: true })
               .end(function (err, res) {
-                //// console.log("res",  res);
-                // console.log("res.body", res.body);
+                //console.log("res",  res);
+                console.log("res.body", res.body);
                 res.should.have.status(200);
                 res.body.should.be.a('array');
 

@@ -13,7 +13,7 @@ async function up () {
       if (err) { 
         winston.error("Schema migration: label err1", err);
       }
-      // winston.info("Schema updated for " + updates.nModified + " label with single data to default field")
+      winston.info("Schema updated for " + updates.nModified + " label with single data to default field")
           return resolve('ok');  
     });  
     // {"data": { $elemMatch: {"lang": {  $ne: "EN" }}}}  
@@ -23,13 +23,13 @@ async function up () {
         if (err) {
           winston.error("Schema migration: label err2", err);
         }
-      // winston.info("Schema updated for " + updates.nModified + " label to default false field")
+      winston.info("Schema updated for " + updates.nModified + " label to default false field")
 
       Label.updateMany({$where: "this.data.length > 1", "data.lang": "EN"}, {"$set": {"data.$.default": true}}, function (err, updates) {
         if (err) {
           winston.error("Schema migration: label err3", err);
         }
-        // winston.info("Schema updated for " + updates.nModified + " label with multiple data to default field")
+        winston.info("Schema updated for " + updates.nModified + " label with multiple data to default field")
          return resolve('ok'); 
       });  
 

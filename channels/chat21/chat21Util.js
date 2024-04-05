@@ -28,7 +28,7 @@ class Chat21Util {
                     repl_message.text = text_with_removed_buttons
                     var buttons = []
                     text_buttons.forEach(element => {
-                    // // console.log("button ", element)
+                    // console.log("button ", element)
                     var remove_extra_from_button = /^\*/mg;
                     var button_text = element.replace(remove_extra_from_button, "").trim()
                     var button = {}
@@ -48,7 +48,7 @@ class Chat21Util {
                 
                 }  else if (imagetext && imagetext.length>0) {
                     var imageurl = imagetext[0].replace("\\image:","").trim();
-                    // // console.log("imageurl ", imageurl)
+                    // console.log("imageurl ", imageurl)
                     var text_with_removed_image = text.replace(image_pattern,"").trim();
                     repl_message.text = text_with_removed_image + " " + imageurl
                     repl_message.metadata = {src: imageurl, width:200, height:200};
@@ -59,7 +59,7 @@ class Chat21Util {
                
                 else if (webhooktext && webhooktext.length>0) {
                     var webhookurl = webhooktext[0].replace("\\webhook:","").trim();
-                    // // console.log("webhookurl ", webhookurl)
+                    // console.log("webhookurl ", webhookurl)
     
                     return request({                        
                         uri :  webhookurl,
@@ -73,14 +73,14 @@ class Chat21Util {
                             if (response.statusCode >= 400) {                  
                                 return reject(`HTTP Error: ${response.statusCode}`);
                             }
-                            // // console.log("webhookurl repl_message ", response);
+                            // console.log("webhookurl repl_message ", response);
                             that.getButtonFromText(response.text,message, bot,qna).then(function(bot_answer) {
                                 return resolve(bot_answer);
                             });
                         });
                  
                 }else {
-                    // // console.log("repl_message ", repl_message)
+                    // console.log("repl_message ", repl_message)
                     return resolve(repl_message);
                 }
     
@@ -103,16 +103,16 @@ class Chat21Util {
             var parts = text.split(split_pattern)
             for (var i=0; i < parts.length; i++) {
                 let p = parts[i]
-                // console.log("part: " + p)
+                console.log("part: " + p)
                 if (i % 2 != 0) {
                 // split command
-                // console.log("split command: " + p)
+                console.log("split command: " + p)
                 var split_parts = p.split(":")
                 var wait_time = 1000
                 if (split_parts.length == 2) {
                     wait_time = split_parts[1]
                 }
-                // console.log("wait time: " + wait_time)
+                console.log("wait time: " + wait_time)
                 var command = {}
                 command.type = "wait"
                 command.time = parseInt(wait_time, 10)
@@ -133,7 +133,7 @@ class Chat21Util {
                 }
             }
             commands.forEach(c => {
-                // console.log("* * * * * * * * * command: ", c)
+                console.log("* * * * * * * * * command: ", c)
             })
             return commands
         }
@@ -150,15 +150,15 @@ class Chat21Util {
     
             var reply = {}
           
-            // console.log("TEXT: ", text)
+            console.log("TEXT: ", text)
             reply[TEXT_KEY] = text
             reply[ATTRIBUTES_KEY] = null
           
             // looks for images
             var image_pattern = /^\\image:.*/mg; // images are defined as a line starting with \image:IMAGE_URL
-            // // console.log("Searching images with image_pattern: ", image_pattern)
+            // console.log("Searching images with image_pattern: ", image_pattern)
             var images = text.match(image_pattern);
-            // // console.log("images: ", images)
+            // console.log("images: ", images)
             if (images && images.length > 0) {
               const image_text = images[0]
               var text = text.replace(image_text,"").trim()
@@ -188,7 +188,7 @@ class Chat21Util {
                 button[TYPE_KEY] = "text"
                 button["value"] = button_text
                 buttons.push(button)
-                // console.log("Added button: " + button_text)
+                console.log("Added button: " + button_text)
               });
               if (reply[ATTRIBUTES_KEY] == null) {
                 reply[ATTRIBUTES_KEY] = {}

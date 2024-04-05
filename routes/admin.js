@@ -39,7 +39,7 @@ router.get('/saved', function (req, res) {
 
 router.post('/', function (req, res) {
        
-    // console.log(req.body.FIREBASE_PRIVATE_KEY);
+    console.log(req.body.FIREBASE_PRIVATE_KEY);
     var env = `
     FIREBASE_PRIVATE_KEY=${req.body.FIREBASE_PRIVATE_KEY}
     FIREBASE_CLIENT_EMAIL=${req.body.FIREBASE_CLIENT_EMAIL}
@@ -57,11 +57,11 @@ router.post('/', function (req, res) {
     fs.writeFile(__dirname+"/../confenv/.env",env, function(err) {
 
         if(err) {
-            // console.log(err);
+            console.log(err);
             return res.redirect(303, '/admin/') // Notice the 303 parameter
         }
     
-        // console.log("The env file was saved!");
+        console.log("The env file was saved!");
         // res.end()
         res.redirect(303, '/admin/saved') // Notice the 303 parameter
     }); 

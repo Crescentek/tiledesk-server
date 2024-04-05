@@ -4,7 +4,7 @@ var winston = require('../config/winston');
 var config = require('../config/database');
 
 var pjson = require('../package.json');
-// // console.log(pjson.version);
+// console.log(pjson.version);
 
 var SettingSchema = new Schema({
   
@@ -37,7 +37,7 @@ var setting =  mongoose.model('Setting', SettingSchema);
 
 if (process.env.MONGOOSE_SYNCINDEX) {
   setting.syncIndexes();
-  // winston.info("setting syncIndexes")
+  winston.info("setting syncIndexes")
 }
 
 

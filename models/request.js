@@ -16,10 +16,10 @@ var LocationSchema = require("../models/location");
 var RequestSnapshotSchema = require("../models/requestSnapshot");
 
 var defaultFullTextLanguage = process.env.DEFAULT_FULLTEXT_INDEX_LANGUAGE || "none";
-// winston.info("Request defaultFullTextLanguage: "+ defaultFullTextLanguage);
+winston.info("Request defaultFullTextLanguage: "+ defaultFullTextLanguage);
 
 const disableTicketIdSequence = process.env.DISABLE_TICKET_ID_SEQUENCE || false;
-// winston.info("Request disableTicketIdSequence: "+ disableTicketIdSequence);
+winston.info("Request disableTicketIdSequence: "+ disableTicketIdSequence);
 
 // var autoIncrement = require('mongoose-auto-increment');
 
@@ -76,10 +76,10 @@ var RequestSchema = new Schema({
   //   index: true,
   //   // get: v => {
   //   //   if (ObjectId.isValid(v)){
-  //   //     // console.log("ciaoooo ok");
+  //   //     console.log("ciaoooo ok");
   //   //     return v;
   //   //   }else {
-  //   //     // console.log("ciaoooo ko");
+  //   //     console.log("ciaoooo ko");
   //   //     return null;
   //   //   }
        
@@ -277,12 +277,12 @@ var RequestSchema = new Schema({
   smartAssignment: {
     type: Boolean,
     default: function() {
-      // // winston.info("smartAssignment default this.channel.name:" + this.channel.name);
+      // winston.info("smartAssignment default this.channel.name:" + this.channel.name);
       if (this.channel && (this.channel.name===ChannelConstants.FORM || this.channel.name===ChannelConstants.EMAIL )) {
-        // // winston.info("smartAssignment default return false");
+        // winston.info("smartAssignment default return false");
         return false;
       }else {
-        // // winston.info("smartAssignment default return true");
+        // winston.info("smartAssignment default return true");
         return true;
       }
     },
@@ -307,7 +307,7 @@ var RequestSchema = new Schema({
 );
 
 if (!disableTicketIdSequence) {
-  // winston.info("AutoIncrement plugin enabled");
+  winston.info("AutoIncrement plugin enabled");
   RequestSchema.plugin(AutoIncrement, {id: 'ticket_seq', inc_field: 'ticket_id', reference_fields: ['id_project'], disable_hooks:false });
 }
 
@@ -352,7 +352,7 @@ RequestSchema.virtual('participatingAgents', {
  // TODO serve????? Nico dice di no. io lo uso solo per trigger fai una cosa + semplice ese hasAvailableAgent = true o false
  /* CAMBIA TRIGGER PRIMA DI PUBBLICARE
  RequestSchema.virtual('availableAgentsCount').get(function () {
-  // if (this.agents && this.agents.length>0  // I uncomment  // winston.debug("project_user", project_user); of the requestNotification.js row 252 this.agents doesn't have .filter method??
+  // if (this.agents && this.agents.length>0  // I uncomment  winston.debug("project_user", project_user); of the requestNotification.js row 252 this.agents doesn't have .filter method??
   //   // &&  this.agents.filter
   //   ) {
 
@@ -363,7 +363,7 @@ RequestSchema.virtual('participatingAgents', {
       }
     });
     // ATTENTION DO NOT PRINT INTO A VIRTUAL 
-    // // winston.debug('++ AVAILABLE PROJECT USERS count ', project_users_available)
+    // winston.debug('++ AVAILABLE PROJECT USERS count ', project_users_available)
 
     // if (project_users_available && project_users_available.length>0){
       return project_users_available.length;
@@ -383,7 +383,7 @@ RequestSchema.virtual('participatingAgents', {
 //         return true;
 //       }
 //     });
-//     // winston.debug('++ AVAILABLE PROJECT USERS ', project_users_available)
+//     winston.debug('++ AVAILABLE PROJECT USERS ', project_users_available)
 
 //     if (project_users_available && project_users_available.length>0){
 //       return project_users_available;
@@ -411,19 +411,19 @@ RequestSchema.method("getBotId", function () {
   }
 
   var participants = this.participants;
-  // winston.debug("participants", participants);
+  winston.debug("participants", participants);
 
   var botIdTmp;
   
   if (participants) {
     participants.forEach(function(participant) { 
-      //// winston.debug("participant", participant);
+      //winston.debug("participant", participant);
       // bot_HERE
       // botprefix
       if (participant.indexOf("bot_")> -1) {
         // botprefix
         botIdTmp = participant.replace("bot_","");
-        //// winston.debug("botIdTmp", botIdTmp);
+        //winston.debug("botIdTmp", botIdTmp);
         //break;        
       }
     });
@@ -498,7 +498,7 @@ RequestSchema.index({ hasBot: 1, status: 1, createdAt: 1});
 var request =  mongoose.model('request', RequestSchema);
 if (process.env.MONGOOSE_SYNCINDEX) {
   request.syncIndexes();
-  // winston.info("message syncIndexes")
+  winston.info("message syncIndexes")
 
 }
 

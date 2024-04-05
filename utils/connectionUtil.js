@@ -6,7 +6,7 @@ class ConnnectionUtil {
     }
 
     get() {
-        // console.log("this.connection",this.connection)
+        console.log("this.connection",this.connection)
         return this.connection;
     }
     set(connection) {

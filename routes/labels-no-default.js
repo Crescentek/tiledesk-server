@@ -39,7 +39,7 @@ check('lang').notEmpty(),
 
 
   var lang = req.body.lang;
-  // winston.debug("lang: " + lang);
+  winston.debug("lang: " + lang);
   
   var pickedLang = req.labels.find(l => l.lang === lang);
 
@@ -49,7 +49,7 @@ check('lang').notEmpty(),
     pickedLang = pickedLangPivot;
   }
   var newLabel = pickedLang;
-  // winston.debug("newLabel: " ,newLabel);
+  winston.debug("newLabel: " ,newLabel);
 
   Label.findOne({id_project:req.projectid}, function(err, label) {
     if (err) {
@@ -69,7 +69,7 @@ check('lang').notEmpty(),
               foundIndex = index;
             }
         });
-        // winston.debug("foundIndex: " + foundIndex);
+        winston.debug("foundIndex: " + foundIndex);
         if (foundIndex>-1) {
           label.data[foundIndex] = newLabel;
         }else {
@@ -87,7 +87,7 @@ check('lang').notEmpty(),
 
           // express forward          
           req.url =  '/';
-          // winston.debug('--- > req.url'+req.url);
+          winston.debug('--- > req.url'+req.url);
 
           req.method = 'GET';  
 
@@ -115,12 +115,12 @@ router.get('/default/:lang', function (req, res) {
 router.post('/',  [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('admin')],function (req, res, next) {
  
   var lang = req.body.lang;
-  // winston.debug("lang: " + lang);
+  winston.debug("lang: " + lang);
 
 
 
   var newLabel = {lang: lang, data: req.body.data};
-  // winston.debug("newLabel: " ,newLabel);
+  winston.debug("newLabel: " ,newLabel);
 
   Label.findOne({id_project:req.projectid}, function(err, label) {
     if (err) {
@@ -140,7 +140,7 @@ router.post('/',  [passport.authenticate(['basic', 'jwt'], { session: false }), 
               foundIndex = index;
             }
         });
-        // winston.debug("foundIndex: " + foundIndex);
+        winston.debug("foundIndex: " + foundIndex);
         if (foundIndex>-1) {
           label.data[foundIndex] = newLabel;
         }else {
@@ -157,7 +157,7 @@ router.post('/',  [passport.authenticate(['basic', 'jwt'], { session: false }), 
 
            // express forward          
            req.url =  '/'+lang;
-           // winston.debug('--- > req.url'+req.url);
+           winston.debug('--- > req.url'+req.url);
  
            req.method = 'GET';  
  
@@ -172,7 +172,7 @@ router.post('/',  [passport.authenticate(['basic', 'jwt'], { session: false }), 
 // curl -v -X DELETE -H 'Content-Type:application/json' -u andrea.leo@f21.it:123456 http://localhost:3000/4321/labels/
 
 router.delete('/',  [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('admin')], function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   Label.remove({ id_project: req.projectid }, function (err, label) {
     if (err) {
@@ -190,7 +190,7 @@ router.delete('/',  [passport.authenticate(['basic', 'jwt'], { session: false })
 // curl -v -X DELETE -H 'Content-Type:application/json' -u andrea.leo@f21.it:123456 http://localhost:3000/1235/labels/EN
 router.delete('/:lang',  [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('admin')],function (req, res, next) {
   var lang = req.params.lang;
-  // winston.debug("lang: " + lang);
+  winston.debug("lang: " + lang);
 
 
   Label.findOne({id_project:req.projectid}, function(err, label) {
@@ -206,7 +206,7 @@ router.delete('/:lang',  [passport.authenticate(['basic', 'jwt'], { session: fal
               foundIndex = index;
             }
         });
-        // winston.debug("foundIndex: " + foundIndex);
+        winston.debug("foundIndex: " + foundIndex);
         if (foundIndex>-1) {
           var idData = label.data[foundIndex]._id;
           label.data.id(idData).remove();
@@ -225,7 +225,7 @@ router.delete('/:lang',  [passport.authenticate(['basic', 'jwt'], { session: fal
 
          
            req.url =  '/'+lang;
-           // winston.debug('--- > req.url'+req.url);
+           winston.debug('--- > req.url'+req.url);
  
            req.method = 'GET';  
  
@@ -241,7 +241,7 @@ router.get('/', function (req, res) {
  
   var query = { "id_project": req.projectid};
 
-  // winston.debug("query /", query);
+  winston.debug("query /", query);
 
 
   return Label.findOne(query).lean().exec(function (err, labels) {
@@ -250,10 +250,10 @@ router.get('/', function (req, res) {
         winston.error('Label ROUTE - REQUEST FIND ERR ', err)
         return res.status(500).send({ success: false, msg: 'Error getting object.' });
       }
-      // winston.debug("here /", labels);
+      winston.debug("here /", labels);
       let returnval;
       if (!labels) {
-        // winston.debug("here  no labels");
+        winston.debug("here  no labels");
 
         returnval = {data: req.labels};
       } else {
@@ -269,7 +269,7 @@ router.get('/', function (req, res) {
       
       }
       
-      // winston.debug("returnval",returnval);
+      winston.debug("returnval",returnval);
     
         return res.json(returnval);
       

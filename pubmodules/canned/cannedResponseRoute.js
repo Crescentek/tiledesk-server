@@ -7,8 +7,8 @@ var winston = require('../../config/winston');
 
 router.post('/', function (req, res) {
 
-  // winston.debug(req.body);
-  // winston.debug("req.user", req.user);
+  winston.debug(req.body);
+  winston.debug("req.user", req.user);
 
   var newCannedResponse = new CannedResponse({
     title: req.body.title,  
@@ -36,7 +36,7 @@ router.post('/', function (req, res) {
 });
 
 router.put('/:cannedResponseid', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
   var update = {};
   
   if (req.body.title!=undefined) {
@@ -64,7 +64,7 @@ router.put('/:cannedResponseid', function (req, res) {
 });
 
 router.delete('/:cannedResponseid', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   CannedResponse.findByIdAndUpdate(req.params.cannedResponseid, {status: 1000}, { new: true, upsert: true }, function (err, updatedCannedResponse) {
     if (err) {
@@ -80,7 +80,7 @@ router.delete('/:cannedResponseid', function (req, res) {
 });
 
 router.delete('/:cannedResponseid/physical', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   CannedResponse.remove({ _id: req.params.cannedResponseid }, function (err, cannedResponse) {
     if (err) {
@@ -96,7 +96,7 @@ router.delete('/:cannedResponseid/physical', function (req, res) {
 });
 
 router.get('/:cannedResponseid', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   CannedResponse.findById(req.params.cannedResponseid, function (err, cannedResponse) {
     if (err) {
@@ -118,13 +118,13 @@ router.get('/', function (req, res) {
   }
 
   var skip = page * limit;
-  // winston.debug('CannedResponse ROUTE - SKIP PAGE ', skip);
+  winston.debug('CannedResponse ROUTE - SKIP PAGE ', skip);
 
   // var query = { "id_project": req.projectid, "status": {$lt:1000}};
   var query = {"id_project": req.projectid, "status": { $lt:1000 }, $or:[ { shared: true }, { shared : { $exists: false }}, { createdBy: req.user._id } ] }
 
   if (req.query.full_text) {
-    // winston.debug('CannedResponse ROUTE req.query.fulltext', req.query.full_text);
+    winston.debug('CannedResponse ROUTE req.query.fulltext', req.query.full_text);
     query.$text = { "$search": req.query.full_text };
   }
 
@@ -141,7 +141,7 @@ router.get('/', function (req, res) {
   var sortQuery = {};
   sortQuery[sortField] = direction;
 
-  // winston.debug("sort query", sortQuery);
+  winston.debug("sort query", sortQuery);
 
   return CannedResponse.find(query).
     skip(skip).limit(limit).

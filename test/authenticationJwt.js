@@ -48,13 +48,13 @@ it('signinJWt-userNoAudNoSubject', (done) => {
 
                               
                                   
-                                  // console.log("jwtToken", jwtToken);
+                                  console.log("jwtToken", jwtToken);
                                     chai.request(server)
                                     .get('/'+ savedProject._id + '/requests')
                                     .set('Authorization', 'JWT '+jwtToken)
                                     .send()
                                     .end((err, res) => {
-                                        // console.log("res.body", res.body);
+                                        console.log("res.body", res.body);
                                       res.should.have.status(200);
                                       
                                       done();
@@ -88,7 +88,7 @@ it('signinJWt-userYESAudNoSubject', (done) => {
             projectService.create("test-signinJWt-user", savedUser._id).then(function(savedProject) {                                              
                                                                                 
                             var savedUserObj = savedUser.toObject();                           
-                            // console.log("savedUserObj", savedUserObj);
+                            console.log("savedUserObj", savedUserObj);
 
 
                             var signOptions = {                                                            
@@ -101,13 +101,13 @@ it('signinJWt-userYESAudNoSubject', (done) => {
 
                               
                                   
-                                  // console.log("jwtToken", jwtToken);
+                                  console.log("jwtToken", jwtToken);
                                     chai.request(server)
                                     .get('/'+ savedProject._id + '/requests')
                                     .set('Authorization', 'JWT '+jwtToken)
                                     .send()
                                     .end((err, res) => {
-                                        // console.log("res.body", res.body);
+                                        console.log("res.body", res.body);
                                       res.should.have.status(200);
                                       
                                       done();
@@ -137,7 +137,7 @@ it('signinJWt-userYESAudYesSubject', (done) => {
                             projectService.create("test-signinJWt-user", savedUser._id).then(function(savedProject) {                                              
                                                                                                 
                                             var savedUserObj = savedUser.toObject();                           
-                                            // console.log("savedUserObj", savedUserObj);
+                                            console.log("savedUserObj", savedUserObj);
                 
                 
                                             var signOptions = {                                                            
@@ -150,13 +150,13 @@ it('signinJWt-userYESAudYesSubject', (done) => {
                 
                                               
                                                   
-                                                  // console.log("jwtToken", jwtToken);
+                                                  console.log("jwtToken", jwtToken);
                                                     chai.request(server)
                                                     .get('/'+ savedProject._id + '/requests')
                                                     .set('Authorization', 'JWT '+jwtToken)
                                                     .send()
                                                     .end((err, res) => {
-                                                        // console.log("res.body", res.body);
+                                                        console.log("res.body", res.body);
                                                       res.should.have.status(200);
                                                       
                                                       done();
@@ -194,14 +194,14 @@ it('signinJWt-userYESAudYesSubject', (done) => {
                     .auth(email, pwd)
                     .send()
                     .end((err, res) => {
-                        //// console.log("res",  res);
-                        // console.log("res.body",  res.body);
+                        //console.log("res",  res);
+                        console.log("res.body",  res.body);
                         res.should.have.status(200);
                         res.body.should.be.a('object');
                         expect(res.body.jwtSecret).to.not.equal(null);                                                                              
                     
                         var savedUserObj = savedUser.toObject();                           
-                        // console.log("savedUserObj", savedUserObj);
+                        console.log("savedUserObj", savedUserObj);
 
 
                         var signOptions = {                                                            
@@ -214,13 +214,13 @@ it('signinJWt-userYESAudYesSubject', (done) => {
 
                             
                                 
-                                // console.log("jwtToken", jwtToken);
+                                console.log("jwtToken", jwtToken);
                                 chai.request(server)
                                 .get('/'+ savedProject._id + '/requests')
                                 .set('Authorization', 'JWT '+jwtToken)
                                 .send()
                                 .end((err, res) => {
-                                    // console.log("res.body", res.body);
+                                    console.log("res.body", res.body);
                                     res.should.have.status(200);
                                     
                                     done();
@@ -261,14 +261,14 @@ it('signinJWt-userYESAudYesSubject', (done) => {
                     .auth(email, pwd)
                     .send()
                     .end((err, res) => {
-                        //// console.log("res",  res);
-                        // console.log("res.body",  res.body);
+                        //console.log("res",  res);
+                        console.log("res.body",  res.body);
                         res.should.have.status(200);
                         res.body.should.be.a('object');
                         expect(res.body.jwtSecret).to.not.equal(null);                                                                              
                     
                         var savedUserObj = savedUser.toObject();                           
-                        // console.log("savedUserObj", savedUserObj);
+                        console.log("savedUserObj", savedUserObj);
 
 
                         var signOptions = {                                                            
@@ -281,13 +281,13 @@ it('signinJWt-userYESAudYesSubject', (done) => {
 
                             
                                 
-                                // console.log("jwtToken", jwtToken);
+                                console.log("jwtToken", jwtToken);
                                 chai.request(server)
                                 .get('/'+ savedProject._id + '/requests')
                                 .set('Authorization', 'JWT '+jwtToken)
                                 .send()
                                 .end((err, res) => {
-                                    // console.log("res.body", res.body);
+                                    console.log("res.body", res.body);
                                     res.should.have.status(200);
                                     
                                     done();
@@ -327,8 +327,8 @@ it('signinJWt-userYESAudYesSubject', (done) => {
                     .auth(email, pwd)
                     .send()
                     .end((err, res) => {
-                        //// console.log("res",  res);
-                        // console.log("res.body",  res.body);
+                        //console.log("res",  res);
+                        console.log("res.body",  res.body);
                         res.should.have.status(200);
                         res.body.should.be.a('object');
                         expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -336,7 +336,7 @@ it('signinJWt-userYESAudYesSubject', (done) => {
 
                         var externalUserObj = {_id:"123",name:"andrea", surname:"leo"};
                         
-                        // console.log("externalUserObj", externalUserObj);
+                        console.log("externalUserObj", externalUserObj);
 
 
                         var signOptions = {                                                            
@@ -349,14 +349,14 @@ it('signinJWt-userYESAudYesSubject', (done) => {
 
                             
                                 
-                                // console.log("jwtToken", jwtToken);
+                                console.log("jwtToken", jwtToken);
                                 
                                 chai.request(server)
                                 .get('/testauth/noentitycheck')
                                 .set('Authorization', 'JWT '+jwtToken)
                                 .send()
                                 .end((err, res) => {
-                                    // console.log("res.body", res.body);
+                                    console.log("res.body", res.body);
                                     res.should.have.status(200);
                                     
                                     done();
@@ -402,8 +402,8 @@ it('signinJWt-userYESAudYesSubject', (done) => {
 //                     .auth(email, pwd)
 //                     .send()
 //                     .end((err, res) => {
-//                         //// console.log("res",  res);
-//                         // console.log("res.body",  res.body);
+//                         //console.log("res",  res);
+//                         console.log("res.body",  res.body);
 //                         res.should.have.status(200);
 //                         res.body.should.be.a('object');
 //                         expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -411,7 +411,7 @@ it('signinJWt-userYESAudYesSubject', (done) => {
 
 //                         var externalUserObj = {_id:"123",name:"andrea", surname:"leo",role : 'agent'};
                         
-//                         // console.log("externalUserObj", externalUserObj);
+//                         console.log("externalUserObj", externalUserObj);
 
 
 //                         var signOptions = {                                                            
@@ -424,14 +424,14 @@ it('signinJWt-userYESAudYesSubject', (done) => {
 
                             
                                 
-//                                 // console.log("jwtToken", jwtToken);
+//                                 console.log("jwtToken", jwtToken);
                                 
 //                                 chai.request(server)
 //                                 .get('/testauth/noentitycheck')
 //                                 .set('Authorization', 'JWT '+jwtToken)
 //                                 .send()
 //                                 .end((err, res) => {
-//                                     // console.log("res.body", res.body);
+//                                     console.log("res.body", res.body);
 //                                     res.should.have.status(200);
                                     
 //                                     done();
@@ -466,7 +466,7 @@ it('signinJWt-userYESAudYesSubject', (done) => {
                     // create(name, url, projectid, user_id, type, description, webhook_url, webhook_enabled, language) {                                         
                     faqService.create("testbot", null, savedProject._id, savedUser._id).then(function(savedBot) {                                                             
                                 var savedBotObj = savedBot.toObject();                           
-                                // console.log("savedBotObj", savedBotObj);
+                                console.log("savedBotObj", savedBotObj);
     
     
                                 var signOptions = {                                                            
@@ -479,7 +479,7 @@ it('signinJWt-userYESAudYesSubject', (done) => {
     
                                     
                                         
-                                        // console.log("jwtToken", jwtToken);
+                                        console.log("jwtToken", jwtToken);
                                         chai.request(server)
                                         // .get('/'+ savedProject._id + '/faq_kb')
                                         .get('/'+savedProject._id+'/authtestWithRoleCheck/bot')
@@ -487,7 +487,7 @@ it('signinJWt-userYESAudYesSubject', (done) => {
                                         .set('Authorization', 'JWT '+jwtToken)
                                         .send()
                                         .end((err, res) => {
-                                            // console.log("res.body", res.body);
+                                            console.log("res.body", res.body);
                                             res.should.have.status(200);
                                             
                                             done();

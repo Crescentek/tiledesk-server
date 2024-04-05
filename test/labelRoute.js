@@ -40,8 +40,8 @@ describe('LabelRoute', () => {
                         .auth(email, pwd)
                         .send({lang: "EN"})
                         .end((err, res) => {
-                            // console.log("err",  err);
-                            // console.log("res.body",  res.body);
+                            console.log("err",  err);
+                            console.log("res.body",  res.body);
                             res.should.have.status(200);
                             res.body.should.be.a('object');
                             expect(res.body.id_project).to.equal(savedProject.id);     
@@ -77,8 +77,8 @@ describe('LabelRoute', () => {
                             .auth(email, pwd)
                             .send({lang: "EN"})
                             .end((err, res) => {
-                                //// console.log("res",  res);
-                                // console.log("res.body",  res.body);
+                                //console.log("res",  res);
+                                console.log("res.body",  res.body);
                                 res.should.have.status(200);
                                 res.body.should.be.a('object');
                                 // expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -91,8 +91,8 @@ describe('LabelRoute', () => {
                                 .auth(email, pwd)
                                 .send()
                                 .end((err, res) => {
-                                    //// console.log("res",  res);
-                                    // console.log("res.body",  res.body);
+                                    //console.log("res",  res);
+                                    console.log("res.body",  res.body);
                                     expect(res.body.data.LABEL_PLACEHOLDER).to.equal("type your message..");     
                                     expect(res.body.default).to.equal(true);
                                     expect(res.body.lang).to.equal("EN");  
@@ -125,8 +125,8 @@ describe('LabelRoute', () => {
                                 .auth(email, pwd)
                                 .send({lang: "EN"})
                                 .end((err, res) => {
-                                    //// console.log("res",  res);
-                                    // console.log("res.body",  res.body);
+                                    //console.log("res",  res);
+                                    console.log("res.body",  res.body);
                                     res.should.have.status(200);
                                     res.body.should.be.a('object');
                                     // expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -139,8 +139,8 @@ describe('LabelRoute', () => {
                                     .auth(email, pwd)
                                     .send()
                                     .end((err, res) => {
-                                        //// console.log("res",  res);
-                                        // console.log("res.body",  res.body);
+                                        //console.log("res",  res);
+                                        console.log("res.body",  res.body);
                                         expect(res.body.data.LABEL_PLACEHOLDER).to.equal("type your message..");     
                                         //expect(res.body.default).to.equal(false);
                                         expect(res.body.lang).to.equal("EN"); 
@@ -173,8 +173,8 @@ describe('LabelRoute', () => {
                                     .auth(email, pwd)
                                     .send({lang: "EN"})
                                     .end((err, res) => {
-                                        //// console.log("res",  res);
-                                        // console.log("res.body",  res.body);
+                                        //console.log("res",  res);
+                                        console.log("res.body",  res.body);
                                         res.should.have.status(200);
                                         res.body.should.be.a('object');
                                         // expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -187,8 +187,8 @@ describe('LabelRoute', () => {
                                         .auth(email, pwd)
                                         .send()
                                         .end((err, res) => {
-                                            //// console.log("res",  res);
-                                            // console.log("res.body",  res.body);
+                                            //console.log("res",  res);
+                                            console.log("res.body",  res.body);
                                             expect(res.body.data.LABEL_PLACEHOLDER).to.equal("type your message..");    
                                             //expect(res.body.default).to.equal(false);
                                             expect(res.body.lang).to.equal("EN");  
@@ -221,8 +221,8 @@ describe('LabelRoute', () => {
                                         .auth(email, pwd)
                                         .send({lang: "ARR"}) //not exists
                                         .end((err, res) => {
-                                            //// console.log("res",  res);
-                                            // console.log("res.body",  res.body);
+                                            //console.log("res",  res);
+                                            console.log("res.body",  res.body);
                                             res.should.have.status(200);
                                             res.body.should.be.a('object');
                                             // expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -235,8 +235,8 @@ describe('LabelRoute', () => {
                                             .auth(email, pwd)
                                             .send()
                                             .end((err, res) => {
-                                                //// console.log("res",  res);
-                                                // console.log("res.body ar",  res.body);
+                                                //console.log("res",  res);
+                                                console.log("res.body ar",  res.body);
                                                 expect(res.body.data.LABEL_PLACEHOLDER).to.equal("type your message..");  
                                                 expect(res.body.lang).to.equal("ARR");   
                                                 expect(res.body.default).to.equal(true);     
@@ -270,8 +270,8 @@ describe('LabelRoute', () => {
                                 .auth(email, pwd)
                                 .send({lang: "IT"})
                                 .end((err, res) => {
-                                    //// console.log("res",  res);
-                                    // console.log("res.body",  res.body);
+                                    //console.log("res",  res);
+                                    console.log("res.body",  res.body);
                                     res.should.have.status(200);
                                     res.body.should.be.a('object');
                                     // expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -284,8 +284,8 @@ describe('LabelRoute', () => {
                                     .auth(email, pwd)
                                     .send()
                                     .end((err, res) => {
-                                        //// console.log("res",  res);
-                                        // console.log("res.body",  res.body);
+                                        //console.log("res",  res);
+                                        console.log("res.body",  res.body);
                                         expect(res.body.data.LABEL_PLACEHOLDER).to.equal("Scrivi la tua domanda...");     
                                         expect(res.body.lang).to.equal("IT");                                         
                                         expect(res.body.default).to.equal(true);    
@@ -321,8 +321,8 @@ describe('LabelRoute', () => {
                                 .auth(email, pwd)
                                 .send({lang: "IT"})
                                 .end((err, res) => {
-                                    //// console.log("res",  res);
-                                    // console.log("res.body",  res.body);
+                                    //console.log("res",  res);
+                                    console.log("res.body",  res.body);
                                     res.should.have.status(200);
                                     res.body.should.be.a('object');
                                     // expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -335,8 +335,8 @@ describe('LabelRoute', () => {
                                         .auth(email, pwd)
                                         .send({lang: "EN"})
                                         .end((err, res) => {
-                                            //// console.log("res",  res);
-                                            // console.log("res.body en",  res.body);
+                                            //console.log("res",  res);
+                                            console.log("res.body en",  res.body);
                                             res.should.have.status(200);
                                             res.body.should.be.a('object');
                                             // expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -349,8 +349,8 @@ describe('LabelRoute', () => {
                                             .auth(email, pwd)
                                             .send()
                                             .end((err, res) => {
-                                                //// console.log("res",  res);
-                                                // console.log("res.body",  res.body);
+                                                //console.log("res",  res);
+                                                console.log("res.body",  res.body);
                                                 expect(res.body.data.LABEL_PLACEHOLDER).to.equal("type your message..");  
                                                 expect(res.body.lang).to.equal("EN");                                                    
                                                 expect(res.body.default).to.equal(false);    
@@ -389,8 +389,8 @@ describe('LabelRoute', () => {
                                 .auth(email, pwd)
                                 .send({lang: "IT"})
                                 .end((err, res) => {
-                                    //// console.log("res",  res);
-                                    // console.log("res.body",  res.body);
+                                    //console.log("res",  res);
+                                    console.log("res.body",  res.body);
                                     res.should.have.status(200);
                                     res.body.should.be.a('object');
                                     // expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -402,8 +402,8 @@ describe('LabelRoute', () => {
                                         .auth(email, pwd)
                                         .send({lang: "EN"})
                                         .end((err, res) => {
-                                            //// console.log("res",  res);
-                                            // console.log("res.body",  res.body);
+                                            //console.log("res",  res);
+                                            console.log("res.body",  res.body);
                                             res.should.have.status(200);
                                             res.body.should.be.a('object');
                                             // expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -418,8 +418,8 @@ describe('LabelRoute', () => {
                                             .auth(email, pwd)
                                             .send(modifiedEN)
                                             .end((err, res) => {
-                                                //// console.log("res",  res);
-                                                // console.log("res.body",  res.body);
+                                                //console.log("res",  res);
+                                                console.log("res.body",  res.body);
                                                 res.should.have.status(200);
                                                 res.body.should.be.a('object');
                                                 // expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -432,8 +432,8 @@ describe('LabelRoute', () => {
                                                 .auth(email, pwd)
                                                 .send()
                                                 .end((err, res) => {
-                                                    //// console.log("res",  res);
-                                                    // console.log("res.body",  res.body);
+                                                    //console.log("res",  res);
+                                                    console.log("res.body",  res.body);
                                                     expect(res.body.data.LABEL_PLACEHOLDER).to.equal("type your message modified..");     
                                                     done();
                                                 });
@@ -476,8 +476,8 @@ describe('LabelRoute', () => {
                                 .auth(email, pwd)
                                 .send({lang: "IT"})
                                 .end((err, res) => {
-                                    //// console.log("res",  res);
-                                    // console.log("res.body",  res.body);
+                                    //console.log("res",  res);
+                                    console.log("res.body",  res.body);
                                     res.should.have.status(200);
                                     res.body.should.be.a('object');
                                     // expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -489,8 +489,8 @@ describe('LabelRoute', () => {
                                         .auth(email, pwd)
                                         .send({lang: "EN"})
                                         .end((err, res) => {
-                                            //// console.log("res",  res);
-                                            // console.log("res.body",  res.body);
+                                            //console.log("res",  res);
+                                            console.log("res.body",  res.body);
                                             res.should.have.status(200);
                                             res.body.should.be.a('object');
                                             // expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -502,8 +502,8 @@ describe('LabelRoute', () => {
                                             .auth(email, pwd)
                                             .send()
                                             .end((err, res) => {
-                                                //// console.log("res",  res);
-                                                // console.log("res.body",  res.body);
+                                                //console.log("res",  res);
+                                                console.log("res.body",  res.body);
                                                 expect(res.body.data.LABEL_PLACEHOLDER).to.equal("Scrivi la tua domanda...");     
                                                 done();
                                             });
@@ -543,8 +543,8 @@ describe('/update', () => {
                         .auth(email, pwd)
                         .send({lang: "EN"})
                         .end((err, res) => {
-                            // console.log("err",  err);
-                            // console.log("res.body",  res.body);
+                            console.log("err",  err);
+                            console.log("res.body",  res.body);
                             res.should.have.status(200);
                             res.body.should.be.a('object');
                             expect(res.body.id_project).to.equal(savedProject.id);     
@@ -557,8 +557,8 @@ describe('/update', () => {
                             .auth(email, pwd)
                             .send({lang: "EN", default:true, data: {PIPPO: "pippo", PLUTO: "pluto"}})
                             .end((err, res) => {
-                                // console.log("err",  err);
-                                // console.log("res.body",  res.body);
+                                console.log("err",  err);
+                                console.log("res.body",  res.body);
                                 res.should.have.status(200);
                                 res.body.should.be.a('object');
                                 expect(res.body.data.PIPPO).to.equal( "pippo");
@@ -570,8 +570,8 @@ describe('/update', () => {
                                     .auth(email, pwd)
                                     .send({})
                                     .end((err, res) => {
-                                        // console.log("err",  err);
-                                        // console.log("res.body",  res.body);
+                                        console.log("err",  err);
+                                        console.log("res.body",  res.body);
                                         res.should.have.status(200);
                                         res.body.should.be.a('object');
                                         expect(res.body.data[0].lang).to.equal("EN");     
@@ -609,8 +609,8 @@ describe('/update', () => {
                             .auth(email, pwd)
                             .send({lang: "EN"})
                             .end((err, res) => {
-                                // console.log("err",  err);
-                                // console.log("res.body",  res.body);
+                                console.log("err",  err);
+                                console.log("res.body",  res.body);
                                 res.should.have.status(200);
                                 res.body.should.be.a('object');
                                 expect(res.body.id_project).to.equal(savedProject.id);     
@@ -623,8 +623,8 @@ describe('/update', () => {
                                 .auth(email, pwd)
                                 .send({lang: "AR", default:true, data: {PIPPO: "pippo", PLUTO: "pluto"}})
                                 .end((err, res) => {
-                                    // console.log("err",  err);
-                                    // console.log("res.body",  res.body);
+                                    console.log("err",  err);
+                                    console.log("res.body",  res.body);
                                     res.should.have.status(200);
                                     res.body.should.be.a('object');
                                     expect(res.body.data.PIPPO).to.equal( "pippo");
@@ -636,8 +636,8 @@ describe('/update', () => {
                                     .auth(email, pwd)
                                     .send({})
                                     .end((err, res) => {
-                                        // console.log("err",  err);
-                                        // console.log("res.body",  res.body);
+                                        console.log("err",  err);
+                                        console.log("res.body",  res.body);
                                         res.should.have.status(200);
                                         res.body.should.be.a('object');
                                         expect(res.body.data[0].lang).to.equal("EN");     
@@ -694,8 +694,8 @@ describe('/patch', () => {
                             .auth(email, pwd)
                             .send({lang: "EN"})
                             .end((err, res) => {
-                                // console.log("err",  err);
-                                // console.log("res.body",  res.body);
+                                console.log("err",  err);
+                                console.log("res.body",  res.body);
                                 res.should.have.status(200);
                                 res.body.should.be.a('object');
                                 expect(res.body.id_project).to.equal(savedProject.id);     
@@ -708,8 +708,8 @@ describe('/patch', () => {
                                 .auth(email, pwd)
                                 .send({lang: "IT"})
                                 .end((err, res) => {
-                                    // console.log("err",  err);
-                                    // console.log("res.body",  res.body);
+                                    console.log("err",  err);
+                                    console.log("res.body",  res.body);
                                     res.should.have.status(200);
                                     res.body.should.be.a('object');
                                     expect(res.body.id_project).to.equal(savedProject.id);     
@@ -724,8 +724,8 @@ describe('/patch', () => {
                                     .auth(email, pwd)
                                     .send({})
                                     .end((err, res) => {
-                                        // console.log("err",  err);
-                                        // console.log("res.body",  res.body);
+                                        console.log("err",  err);
+                                        console.log("res.body",  res.body);
                                         res.should.have.status(200);
                                         res.body.should.be.a('object');
                                         
@@ -766,8 +766,8 @@ describe('/delete', () => {
                             .auth(email, pwd)
                             .send({lang: "EN"})
                             .end((err, res) => {
-                                // console.log("err",  err);
-                                // console.log("res.body",  res.body);
+                                console.log("err",  err);
+                                console.log("res.body",  res.body);
                                 res.should.have.status(200);
                                 res.body.should.be.a('object');
                                 expect(res.body.id_project).to.equal(savedProject.id);     
@@ -780,8 +780,8 @@ describe('/delete', () => {
                                 .auth(email, pwd)
                                 .send({lang: "IT"})
                                 .end((err, res) => {
-                                    // console.log("err",  err);
-                                    // console.log("res.body",  res.body);
+                                    console.log("err",  err);
+                                    console.log("res.body",  res.body);
                                     res.should.have.status(200);
                                     res.body.should.be.a('object');
                                     expect(res.body.id_project).to.equal(savedProject.id);     
@@ -796,8 +796,8 @@ describe('/delete', () => {
                                     .auth(email, pwd)
                                     .send({})
                                     .end((err, res) => {
-                                        // console.log("err",  err);
-                                        // console.log("res.body",  res.body);
+                                        console.log("err",  err);
+                                        console.log("res.body",  res.body);
                                         res.should.have.status(200);
                                         res.body.should.be.a('object');
                                         expect(res.body.deletedCount).to.equal(1);     
@@ -807,8 +807,8 @@ describe('/delete', () => {
                                         .auth(email, pwd)
                                         .send({})
                                         .end((err, res) => {
-                                            // console.log("err",  err);
-                                            // console.log("res.body",  res.body);
+                                            console.log("err",  err);
+                                            console.log("res.body",  res.body);
                                             res.should.have.status(200);
                                             expect(res.body).to.deep.equal({});    
                                             
@@ -851,8 +851,8 @@ describe('/delete', () => {
                          .auth(email, pwd)
                          .send({lang: "EN"})
                          .end((err, res) => {
-                             // console.log("err",  err);
-                             // console.log("res.body",  res.body);
+                             console.log("err",  err);
+                             console.log("res.body",  res.body);
                              res.should.have.status(200);
                              res.body.should.be.a('object');
                              expect(res.body.id_project).to.equal(savedProject.id);     
@@ -865,8 +865,8 @@ describe('/delete', () => {
                              .auth(email, pwd)
                              .send({lang: "IT"})
                              .end((err, res) => {
-                                 // console.log("err",  err);
-                                 // console.log("res.body",  res.body);
+                                 console.log("err",  err);
+                                 console.log("res.body",  res.body);
                                  res.should.have.status(200);
                                  res.body.should.be.a('object');
                                  expect(res.body.id_project).to.equal(savedProject.id);     
@@ -881,8 +881,8 @@ describe('/delete', () => {
                                  .auth(email, pwd)
                                  .send({})
                                  .end((err, res) => {
-                                     // console.log("err",  err);
-                                     // console.log("res.body",  res.body);
+                                     console.log("err",  err);
+                                     console.log("res.body",  res.body);
                                      res.should.have.status(200);
                                      res.body.should.be.a('object');
                                      expect(res.body.lang).to.equal("EN");    
@@ -892,8 +892,8 @@ describe('/delete', () => {
                                      .auth(email, pwd)
                                      .send({})
                                      .end((err, res) => {
-                                         // console.log("err",  err);
-                                         // console.log("res.body",  res.body);
+                                         console.log("err",  err);
+                                         console.log("res.body",  res.body);
 
                                          res.should.have.status(200);
                                          res.body.should.be.a('object');

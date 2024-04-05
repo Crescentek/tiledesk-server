@@ -37,8 +37,8 @@ describe('FileRoute', () => {
             .attach('file',  fs.readFileSync('./test/sample.pdf'), 'sample.pdf')             
             // .field('delimiter', ';')            
             .end((err, res) => {                        
-                    //// console.log("res",  res);
-                    // console.log("res.body",  res.body);
+                    //console.log("res",  res);
+                    console.log("res.body",  res.body);
                     res.should.have.status(201);
                     res.body.should.be.a('object');
                     expect(res.body.message).to.equal('File uploded successfully');                                                                              
@@ -61,8 +61,8 @@ describe('FileRoute', () => {
             .attach('file',  fs.readFileSync('./test/sample.pdf'), 'sample.pdf')                  
             // .field('delimiter', ';')            
             .end((err, res) => {                        
-                    //// console.log("res",  res);
-                    // console.log("res.body",  res.body);
+                    //console.log("res",  res);
+                    console.log("res.body",  res.body);
                     res.should.have.status(201);
                     res.body.should.be.a('object');
                     expect(res.body.message).to.equal('File uploded successfully');                                                                              

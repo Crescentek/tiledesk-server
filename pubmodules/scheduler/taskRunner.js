@@ -15,11 +15,11 @@ constructor() {
 start() {
     // var that = this;
     if (this.enabled == "true") {
-      // winston.info("TaskRunner started" );
+      winston.info("TaskRunner started" );
       closeBotUnresponsiveRequestTask.run();
       closeAgentUnresponsiveRequestTask.run();
     }else {
-      // winston.info("TaskRunner is disabled" );
+      winston.info("TaskRunner is disabled" );
     }
     
 

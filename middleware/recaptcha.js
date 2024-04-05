@@ -17,7 +17,7 @@ module.exports =
 
         recaptcha.verify(req, function (error, data) {
             if (!error) {
-              // winston.debug("Signup recaptcha ok");
+              winston.debug("Signup recaptcha ok");
               next();
                 // success code
             } else {

@@ -11,7 +11,7 @@ const recipientEmailUtil = require("../utils/recipientEmailUtil");
 router.get('/templates/:templateid', 
  async (req, res) => {
   let templateid = req.params.templateid+".html";
-  // winston.debug("templateid",templateid);
+  winston.debug("templateid",templateid);
 
   var html = await emailService.readTemplateFile(templateid);
     res.json({template:html});
@@ -20,13 +20,13 @@ router.get('/templates/:templateid',
 router.post('/test/send', 
  async (req, res) => {
   let to = req.body.to;
-  // winston.debug("to",to);
+  winston.debug("to",to);
 
   let configEmail = req.body.config;
-  // winston.debug("configEmail", configEmail);
+  winston.debug("configEmail", configEmail);
 
   emailService.sendTest(to, configEmail, function(err,obj) {
-    // // winston.info("sendTest rest", err, obj);
+    // winston.info("sendTest rest", err, obj);
     res.json({error: err, response:obj});
   });
     
@@ -40,10 +40,10 @@ if (process.env.ENABLE_TEST_EMAIL_ENDPOINT==true || process.env.ENABLE_TEST_EMAI
   async (req, res) => {
 
     let to = req.body.to;
-    // winston.debug("to",to);
+    winston.debug("to",to);
 
     let configEmail = req.body.config;
-    // winston.debug("configEmail", configEmail);
+    winston.debug("configEmail", configEmail);
 
     let request = {
       "_id" : "6316fe117c04320341200e8a",
@@ -67,10 +67,10 @@ if (process.env.ENABLE_TEST_EMAIL_ENDPOINT==true || process.env.ENABLE_TEST_EMAI
   async (req, res) => {
 
     let to = req.body.to;
-    // winston.debug("to",to);
+    winston.debug("to",to);
 
     let configEmail = req.body.config;
-    // winston.debug("configEmail", configEmail);
+    winston.debug("configEmail", configEmail);
 
     let request = {
       "_id" : "6316fe117c04320341200e8a",
@@ -101,10 +101,10 @@ if (process.env.ENABLE_TEST_EMAIL_ENDPOINT==true || process.env.ENABLE_TEST_EMAI
   async (req, res) => {
 
     let to = req.body.to;
-    // winston.debug("to",to);
+    winston.debug("to",to);
 
     let configEmail = req.body.config;
-    // winston.debug("configEmail", configEmail);
+    winston.debug("configEmail", configEmail);
 
     let request = {
       "_id" : "6316fe117c04320341200e8a",
@@ -131,10 +131,10 @@ if (process.env.ENABLE_TEST_EMAIL_ENDPOINT==true || process.env.ENABLE_TEST_EMAI
   async (req, res) => {
 
     let to = req.body.to;
-    // winston.debug("to",to);
+    winston.debug("to",to);
 
     let configEmail = req.body.config;
-    // winston.debug("configEmail", configEmail);
+    winston.debug("configEmail", configEmail);
 
     let request = {
       "_id" : "6316fe117c04320341200e8a",
@@ -165,10 +165,10 @@ if (process.env.ENABLE_TEST_EMAIL_ENDPOINT==true || process.env.ENABLE_TEST_EMAI
   async (req, res) => {
 
     let to = req.body.to;
-    // winston.debug("to",to);
+    winston.debug("to",to);
 
     let configEmail = req.body.config;
-    // winston.debug("configEmail", configEmail);
+    winston.debug("configEmail", configEmail);
 
     let request = {
       "_id" : "6316fe117c04320341200e8a",
@@ -198,10 +198,10 @@ if (process.env.ENABLE_TEST_EMAIL_ENDPOINT==true || process.env.ENABLE_TEST_EMAI
   async (req, res) => {
 
     let to = req.body.to;
-    // winston.debug("to",to);
+    winston.debug("to",to);
 
     let configEmail = req.body.config;
-    // winston.debug("configEmail", configEmail);
+    winston.debug("configEmail", configEmail);
 
     let request = {
       "_id" : "6316fe117c04320341200e8a",
@@ -232,10 +232,10 @@ if (process.env.ENABLE_TEST_EMAIL_ENDPOINT==true || process.env.ENABLE_TEST_EMAI
   async (req, res) => {
 
     let to = req.body.to;
-    // winston.debug("to",to);
+    winston.debug("to",to);
 
     let configEmail = req.body.config;
-    // winston.debug("configEmail", configEmail);
+    winston.debug("configEmail", configEmail);
 
     let request = {
       "_id" : "6316fe117c04320341200e8a",
@@ -264,10 +264,10 @@ if (process.env.ENABLE_TEST_EMAIL_ENDPOINT==true || process.env.ENABLE_TEST_EMAI
   async (req, res) => {
 
     let to = req.body.to;
-    // winston.debug("to",to);
+    winston.debug("to",to);
 
     let configEmail = req.body.config;
-    // winston.debug("configEmail", configEmail);
+    winston.debug("configEmail", configEmail);
 
     let request = {
       "_id" : "6316fe117c04320341200e8a",
@@ -306,26 +306,26 @@ if (process.env.ENABLE_TEST_EMAIL_ENDPOINT==true || process.env.ENABLE_TEST_EMAI
 router.post('/internal/send', 
  async (req, res) => {
   let to = req.body.to;
-  // winston.debug("to: " + to);
+  winston.debug("to: " + to);
 
   let text = req.body.text;
-  // winston.debug("text: " + text);
+  winston.debug("text: " + text);
 
   let request_id = req.body.request_id;
-  // winston.debug("request_id: " + request_id);
+  winston.debug("request_id: " + request_id);
 
   let subject = req.body.subject;
-  // winston.debug("subject: " + subject);
+  winston.debug("subject: " + subject);
 
-  // winston.debug("req.project", req.project);
+  winston.debug("req.project", req.project);
 
   let newto = await recipientEmailUtil.process(to, req.projectid);
-  // winston.debug("newto: " + newto);
+  winston.debug("newto: " + newto);
 
   let replyto = req.body.replyto;
-  // winston.debug("replyto: " + replyto);
+  winston.debug("replyto: " + replyto);
 
-  // winston.info("Sending an email with text : " + text + " to " + to);
+  winston.info("Sending an email with text : " + text + " to " + to);
 
   let quoteManager = req.app.get('quote_manager');
 

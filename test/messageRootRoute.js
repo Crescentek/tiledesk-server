@@ -51,8 +51,8 @@ describe('MessageRoute', () => {
             .set('content-type', 'application/json')
             .send({"recipient":savedUser2._id.toString(), "recipientFullname": "Dest", "text":"text"})
             .end(function(err, res) {
-                //// console.log("res",  res);
-                // console.log("res.body",  res.body);
+                //console.log("res",  res);
+                console.log("res.body",  res.body);
                 res.should.have.status(200);
                 res.body.should.be.a('object');                          
 
@@ -98,8 +98,8 @@ it('createValidationNoRecipient', function (done) {
           .set('content-type', 'application/json')
           .send({"text":"text"})
           .end(function(err, res) {
-              //// console.log("res",  res);
-              // console.log("res.body",  res.body);
+              //console.log("res",  res);
+              console.log("res.body",  res.body);
               res.should.have.status(422);
               res.body.should.be.a('object');                          
         
@@ -130,8 +130,8 @@ it('createValidationNoText', function (done) {
           .set('content-type', 'application/json')
           .send({"recipient":"5ddd30bff0195f0017f72c6d", "recipientFullname": "Dest"})
           .end(function(err, res) {
-              //// console.log("res",  res);
-              // console.log("res.body",  res.body);
+              //console.log("res",  res);
+              console.log("res.body",  res.body);
               res.should.have.status(422);
               res.body.should.be.a('object');                          
         
@@ -163,8 +163,8 @@ it('createWithSenderFullName', function (done) {
           .set('content-type', 'application/json')
           .send({"senderFullname":"Pippo","recipient":"5ddd30bff0195f0017f72c6d",  "recipientFullname": "Dest", "text":"text"})
           .end(function(err, res) {
-              //// console.log("res",  res);
-              // console.log("res.body",  res.body);
+              //console.log("res",  res);
+              console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');                          
 

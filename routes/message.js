@@ -31,23 +31,23 @@ csv.separator = ';';
 router.post('/', 
 // [
 //   check('text').custom(value => {
-//     // console.log("value",value);
-//     // console.log("req.body.type",this.type);
+//     console.log("value",value);
+//     console.log("req.body.type",this.type);
 //     if (this.type === "text" && (value == undefined || value == "" ) ) {    
 //       // if (this.type === "text" && ( (!value) || (value === "") ) ) {    
-//       // console.log("sono qui ",value);
+//       console.log("sono qui ",value);
 //       return Promise.reject('Text field is required for text message');
 //     }else {
-//       // console.log("sono qua ",value);
+//       console.log("sono qua ",value);
 //       return Promise.resolve();
 //     }
 //   })
 // ],
 async (req, res)  => {
 
-  // winston.debug('req.body post message', req.body);
-  // winston.debug('req.params: ', req.params);
-  // winston.debug('req.params.request_id: ' + req.params.request_id);
+  winston.debug('req.body post message', req.body);
+  winston.debug('req.params: ', req.params);
+  winston.debug('req.params.request_id: ' + req.params.request_id);
 
 
   // const errors = validationResult(req);
@@ -66,12 +66,12 @@ async (req, res)  => {
   var email = req.body.email || req.user.email;
 
   let messageStatus = req.body.status || MessageConstants.CHAT_MESSAGE_STATUS.SENDING;
-  // winston.debug('messageStatus: ' + messageStatus);
+  winston.debug('messageStatus: ' + messageStatus);
 
       let q = Request.findOne({request_id: req.params.request_id, id_project: req.projectid}); 
       if (cacheEnabler.request) {
         q.cache(cacheUtil.defaultTTL, req.projectid+":requests:request_id:"+req.params.request_id+":simple") //request_cache
-        // winston.debug('request cache enabled');
+        winston.debug('request cache enabled');
       }
       // cacherequest       // requestcachefarequi nocachepopulatereqired
       return q.exec(async(err, request) => {
@@ -94,10 +94,10 @@ async (req, res)  => {
 
         if (!request) { //the request doen't exists create it
 
-              // winston.debug("request not exists", request);                                     
+              winston.debug("request not exists", request);                                     
 
               if (project_user) {
-                // winston.debug("project_user", project_user);                                     
+                winston.debug("project_user", project_user);                                     
               }
               
               
@@ -109,7 +109,7 @@ async (req, res)  => {
               if (sender) {
 
                 var isObjectId = mongoose.Types.ObjectId.isValid(sender);
-                // winston.debug("isObjectId:"+ isObjectId);
+                winston.debug("isObjectId:"+ isObjectId);
             
                  var queryProjectUser = {id_project:req.projectid, status: "active" };
             
@@ -119,10 +119,10 @@ async (req, res)  => {
                   queryProjectUser.uuid_user = sender;
                 }
             
-                // winston.debug("queryProjectUser", queryProjectUser);
+                winston.debug("queryProjectUser", queryProjectUser);
                 
                 project_user = await Project_user.findOne(queryProjectUser).populate({path:'id_user', select:{'firstname':1, 'lastname':1, 'email':1}})
-                // winston.debug("project_user", project_user);
+                winston.debug("project_user", project_user);
             
                 if (!project_user) {
                   return res.status(403).send({success: false, msg: 'Unauthorized. Project_user not found with user id  : '+ sender });
@@ -130,17 +130,17 @@ async (req, res)  => {
 
                 if ( project_user.id_user) {
                   fullname = project_user.id_user.fullName;
-                  // winston.debug("pu fullname: "+ fullname);
+                  winston.debug("pu fullname: "+ fullname);
                   email = project_user.id_user.email;
-                  // winston.debug("pu email: "+ email);
+                  winston.debug("pu email: "+ email);
                 } else if (project_user.uuid_user) {
                   var lead = await Lead.findOne({lead_id: project_user.uuid_user, id_project: req.projectid});
-                  // winston.debug("lead: ",lead);
+                  winston.debug("lead: ",lead);
                   if (lead) {
                     fullname = lead.fullname;
-                    // winston.debug("lead fullname: "+ fullname);
+                    winston.debug("lead fullname: "+ fullname);
                     email = lead.email;
-                    // winston.debug("lead email: "+ email);
+                    winston.debug("lead email: "+ email);
                   }else {
                     winston.warn("lead not found: " + JSON.stringify({lead_id: project_user.uuid_user, id_project: req.projectid}));
                   }
@@ -185,7 +185,7 @@ async (req, res)  => {
   
                 return requestService.create(new_request).then(function (savedRequest) {
 
-                  // winston.debug("returning savedRequest to", savedRequest.toJSON());
+                  winston.debug("returning savedRequest to", savedRequest.toJSON());
 
                   // createWithIdAndRequester(request_id, project_user_id, lead_id, id_project, first_text, departmentid, sourcePage, language, userAgent, status, 
                   //  createdBy, attributes, subject, preflight, channel, location) {
@@ -205,9 +205,9 @@ async (req, res)  => {
 
                           let message = savedMessage.toJSON();
 
-                          // winston.debug("returning message to", message);
+                          winston.debug("returning message to", message);
                           
-                          // winston.debug("returning savedRequest2210 to", savedRequest.toJSON());
+                          winston.debug("returning savedRequest2210 to", savedRequest.toJSON());
 
 
                           savedRequest //bug
@@ -225,16 +225,16 @@ async (req, res)  => {
                               return winston.error("Error gettting savedRequestPopulated for send Message", err);
                             }       
                             
-                            // winston.debug("returning savedRequest221 to", savedRequest.toJSON());
+                            winston.debug("returning savedRequest221 to", savedRequest.toJSON());
 
 
-                            // winston.debug("savedRequestPopulated", savedRequestPopulated.toJSON());
+                            winston.debug("savedRequestPopulated", savedRequestPopulated.toJSON());
 
-                            // winston.debug("returning savedRequest22 to", savedRequest.toJSON());
+                            winston.debug("returning savedRequest22 to", savedRequest.toJSON());
 
 
                             message.request = savedRequestPopulated;
-                            // winston.debug("returning2 message to", message);
+                            winston.debug("returning2 message to", message);
 
 
                             return res.json(message);
@@ -259,7 +259,7 @@ async (req, res)  => {
 
       
 
-          // winston.debug("request  exists", request.toObject());
+          winston.debug("request  exists", request.toObject());
       
          
                // create(sender, senderFullname, recipient, text, id_project, createdBy, status, attributes, type, metadata, language, channel_type, channel) {                 
@@ -268,10 +268,10 @@ async (req, res)  => {
 
                   // TOOD update also request attributes and sourcePage
                   // return requestService.incrementMessagesCountByRequestId(request.request_id, request.id_project).then(function(savedRequest) {
-                    // // console.log("savedRequest.participants.indexOf(message.sender)", savedRequest.participants.indexOf(message.sender));
+                    // console.log("savedRequest.participants.indexOf(message.sender)", savedRequest.participants.indexOf(message.sender));
                      
                     if (request.participants && request.participants.indexOf(sender) > -1) { //update waiitng time if write an  agent (member of participants)
-                      // winston.debug("updateWaitingTimeByRequestId");
+                      winston.debug("updateWaitingTimeByRequestId");
                       return requestService.updateWaitingTimeByRequestId(request.request_id, request.id_project, true).then(function(upRequest) {
                           let message = savedMessage.toJSON();
                           message.request = upRequest;
@@ -282,7 +282,7 @@ async (req, res)  => {
                     }else {
                       let message = savedMessage.toJSON();
 
-                      // winston.debug("getting request for response");
+                      winston.debug("getting request for response");
 
                       let q =
                       Request.findOne({request_id:  request.request_id, id_project: request.id_project})
@@ -297,7 +297,7 @@ async (req, res)  => {
 
                       if (cacheEnabler.request) {
                         q.cache(cacheUtil.defaultTTL, request.id_project+":requests:request_id:"+request.request_id)
-                        // winston.debug('request cache enabled for messages');
+                        winston.debug('request cache enabled for messages');
                       }
 
                       q.exec(function (err, requestPopulated){    
@@ -348,7 +348,7 @@ async (req, res)  => {
 //               return res.status(422).json({ errors: ["request body is not array"] });
 //       }
 //           req.url =  '/';
-//           // winston.info('--- > req.url'+req.url);
+//           winston.info('--- > req.url'+req.url);
 
 //           req.method = 'POST';  
 
@@ -357,13 +357,13 @@ async (req, res)  => {
 //           req.body.forEach(function(message,index) {
 //             promises.push(router.handle(req, res, next));
 //           });
-//           // winston.info('--- >promises', promises);
+//           winston.info('--- >promises', promises);
 
 //           Promise.all(promises).then((values) => {
-//             // console.log("finito",values);
+//             console.log("finito",values);
 //             return res.status(200).json({ "success": true });
 //           }).catch((err) => {
-//             // console.log("errore",err);
+//             console.log("errore",err);
 //           });
 // });
 
@@ -373,9 +373,9 @@ async (req, res)  => {
 router.post('/multi', 
 async (req, res)  => {
 
-  // winston.debug('req.body post message', req.body);
-  // winston.debug('req.params: ', req.params);
-  // winston.debug('req.params.request_id: ' + req.params.request_id);
+  winston.debug('req.body post message', req.body);
+  winston.debug('req.params: ', req.params);
+  winston.debug('req.params.request_id: ' + req.params.request_id);
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -387,7 +387,7 @@ async (req, res)  => {
   let q = Request.findOne({request_id: req.params.request_id, id_project: req.projectid}); 
   // if (cacheEnabler.request) {
   //   q.cache(cacheUtil.defaultTTL, req.projectid+":requests:request_id:"+req.params.request_id+":simple") //request_cache
-  //   // winston.debug('request cache enabled');
+  //   winston.debug('request cache enabled');
   // }
   return q.exec(async(err, request) => {
     
@@ -408,7 +408,7 @@ async (req, res)  => {
 
   
 
-      // winston.debug("request  exists", request.toObject());
+      winston.debug("request  exists", request.toObject());
   
       
       let promises = [];
@@ -443,11 +443,11 @@ async (req, res)  => {
 
           promises.push(promise);
       });
-      // winston.debug('--- >promises', promises);
+      winston.debug('--- >promises', promises);
 
       //Promise.all(promises).then((values) => {
       PromiseUtil.doAllSequentually(promises).then((values) => {
-        // winston.info('Inserted multiple messages with values: ', values);
+        winston.info('Inserted multiple messages with values: ', values);
         return res.status(200).json(values);
       }).catch((err) => {
         winston.error('Error inserting multiple messages.', err);
@@ -482,7 +482,7 @@ async (req, res)  => {
 
 // router.patch('/:messageid', function(req, res) {
   
-//   // winston.info(req.body);
+//   winston.info(req.body);
   
 //   Message.findByIdAndUpdate(req.params.messageid, req.body, {new: true, upsert:true}, function(err, updatedMessage) {
 //     if (err) {
@@ -495,7 +495,7 @@ async (req, res)  => {
 
 // router.put('/:messageid', function(req, res) {
   
-//     // console.log(req.body);
+//     console.log(req.body);
     
 //     Message.findByIdAndUpdate(req.params.messageid, req.body, {new: true, upsert:true}, function(err, updatedMessage) {
 //       if (err) {
@@ -508,7 +508,7 @@ async (req, res)  => {
 
 //   router.delete('/:messageid', function(req, res) {
   
-//     // console.log(req.body);
+//     console.log(req.body);
     
 //     Message.remove({_id:req.params.messageid}, function(err, Message) {
 //       if (err) {
@@ -520,7 +520,7 @@ async (req, res)  => {
 
   router.get('/csv', function(req, res) {
 
-    // // console.log("csv");
+    // console.log("csv");
 
 
     return Message.find({"recipient": req.params.request_id, id_project: req.projectid}).sort({createdAt: 'asc'}).exec(function(err, messages) { 
@@ -531,7 +531,7 @@ async (req, res)  => {
 
   router.get('/:messageid', function(req, res) {
   
-    // // console.log(req.body);
+    // console.log(req.body);
     
     Message.findById(req.params.messageid, function(err, message) {
       if (err) {

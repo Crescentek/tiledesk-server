@@ -45,9 +45,9 @@ class Subscription {
       type: type, // email, phone
     }
 
-    // // winston.debug('New subscriber via add method:', subscription)
+    // winston.debug('New subscriber via add method:', subscription)
     this.subscriptions = this.subscriptions.set(id, subscription)
-    // // winston.debug('New subscribers',this.subscriptions);
+    // winston.debug('New subscribers',this.subscriptions);
     return id
   }
 

@@ -7,7 +7,7 @@ RUN apt-get update
 # Create app directory
 WORKDIR /usr/src/app
 
-ARG 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
+ARG NPM_TOKEN
 COPY .npmrc_ .npmrc
 
 # Install app dependencies

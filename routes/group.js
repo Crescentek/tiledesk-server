@@ -8,7 +8,7 @@ var winston = require('../config/winston');
 
 router.post('/', function (req, res) {
 
-  // winston.debug('SAVE GROUP ', req.body);
+  winston.debug('SAVE GROUP ', req.body);
   var newGroup = new Group({
     name: req.body.name,
     members: req.body.members,
@@ -32,7 +32,7 @@ router.post('/', function (req, res) {
 
 router.put('/:groupid', function (req, res) {
 
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   var update = {};
   if (req.body.name!=undefined) {
@@ -59,7 +59,7 @@ router.put('/:groupid', function (req, res) {
 
 // router.put('/:groupid', function (req, res) {
 
-//   // winston.debug(req.body);
+//   winston.debug(req.body);
 
 //   var update = {};
   
@@ -81,7 +81,7 @@ router.put('/:groupid', function (req, res) {
 
 router.delete('/:groupid', function (req, res) {
 
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   Group.findOneAndRemove({_id: req.params.groupid}, function (err, group) {
     // Group.remove({ _id: req.params.groupid }, function (err, group) {
@@ -99,7 +99,7 @@ router.delete('/:groupid', function (req, res) {
 
 router.get('/:groupid', function (req, res) {
 
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   Group.findById(req.params.groupid, function (err, group) {
     if (err) {
@@ -118,7 +118,7 @@ router.get('/:groupid', function (req, res) {
 
 router.get('/', function (req, res) {
 
-  // winston.debug("req projectid", req.projectid);
+  winston.debug("req projectid", req.projectid);
 
   var query = { "id_project": req.projectid, trashed: false };
 
@@ -126,7 +126,7 @@ router.get('/', function (req, res) {
     query.members = { $in : req.query.member }
   }
   
-  // winston.debug("query", query);
+  winston.debug("query", query);
   
   Group.find(query, function (err, groups) {        
     if (err) {

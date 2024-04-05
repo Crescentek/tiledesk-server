@@ -7,13 +7,13 @@ const { Transaction } = require('../models/transaction');
 
 
 router.get('/', function (req, res, next) {
-    // winston.info("logs", req.body);
+    winston.info("logs", req.body);
     return res.status(200).send({ success: true });
 });
 
 
 router.post('/', function (req, res, next) {
-    // winston.info("logs", req.body);
+    winston.info("logs", req.body);
     return res.status(200).send({ success: true });
 });
 
@@ -41,7 +41,7 @@ router.get('/whatsapp/:transaction_id', async (req, res) => {
     let project_id = req.projectid;
 
     let transaction_id = req.params.transaction_id;
-    // winston.info("Get logs for whatsapp transaction_id " + transaction_id);;
+    winston.info("Get logs for whatsapp transaction_id " + transaction_id);;
 
     MessageLog.find({ id_project: project_id, transaction_id: transaction_id }).lean().exec((err, logs) => {
         if (err) {
@@ -61,7 +61,7 @@ router.get('/whatsapp/:transaction_id', async (req, res) => {
 
 router.post('/whatsapp', async (req, res) => {
 
-    // winston.info("save following log: ", req.body);
+    winston.info("save following log: ", req.body);
 
     let log = new MessageLog({
         id_project: req.body.id_project,
@@ -79,7 +79,7 @@ router.post('/whatsapp', async (req, res) => {
             return res.status(400).send(err);
         }
 
-        // winston.info("savedLog: ", savedLog);
+        winston.info("savedLog: ", savedLog);
         res.status(200).send(savedLog);
     })
 })

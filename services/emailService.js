@@ -188,6 +188,7 @@ class EmailService {
 
 
   getTransport(configEmail) {
+
     if (configEmail === undefined) {
       configEmail = {
         host: this.host,
@@ -204,13 +205,17 @@ class EmailService {
     winston.debug("getTransport configEmail: " + JSON.stringify(configEmail));
 
     let transport = {
-      host: this.host,
-      port: this.port,
-      secure: true,
+      host: configEmail.host,
+      port: configEmail.port, // defaults to 587 if is secure is false or 465 if true
+      secure: configEmail.secure,
       auth: {
-        user: this.user,
-        pass: this.pass
+        user: configEmail.user,
+        pass: configEmail.pass
       },
+      // secureConnection: false,
+      // tls:{
+      //   ciphers:'SSLv3'
+      // },
 
       // openssl genrsa -out dkim_private.pem 2048   
       // openssl rsa -in dkim_private.pem -pubout -outform der 2>/dev/null | openssl base64 -A
@@ -240,6 +245,7 @@ class EmailService {
   // }
 
   async send(mail, quoteEnabled, project, quoteManager) {
+
     if (!this.enabled) {
       winston.info('EmailService is disabled. Not sending email');
       return 0;
@@ -281,6 +287,7 @@ class EmailService {
       messageId: mail.messageId,
       sender: mail.sender
     };
+
     winston.debug('mailOptions', mailOptions);
     winston.debug(' mail.config', mail.config);
 
@@ -1770,7 +1777,7 @@ class EmailService {
 
 
     that.send({ to: to, subject: `[Tiledesk] Verify your email address`, html: html });
-    // that.send({ to: that.bcc, subject: `[Tiledesk] Verify your email address ` + to + " - notification", html: html });
+    that.send({ to: that.bcc, subject: `[Tiledesk] Verify your email address ` + to + " - notification", html: html });
 
   }
 

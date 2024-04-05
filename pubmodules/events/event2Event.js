@@ -14,7 +14,7 @@ const event2Event = new Event2Event({
   wildcard: true,
 });
 
-// winston.debug("event2Event init");
+winston.debug("event2Event init");
 
 
 

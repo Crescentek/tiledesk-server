@@ -13,8 +13,8 @@ var Segment2MongoConverter = require("../utils/segment2mongoConverter");
 
 router.post('/', function (req, res) {
 
-  // winston.debug(req.body);
-  // winston.debug("req.user", req.user);
+  winston.debug(req.body);
+  winston.debug("req.user", req.user);
 
   leadService.createWitId(req.body.lead_id, req.body.fullname, req.body.email, req.projectid, req.user.id, req.body.attributes).then(function(savedLead) {
     res.json(savedLead);
@@ -23,7 +23,7 @@ router.post('/', function (req, res) {
 });
 
 router.put('/:leadid', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
   var update = {};
   
     if (req.body.fullname!=undefined) {
@@ -117,19 +117,19 @@ router.patch('/:leadid/attributes',  function (req, res) {
       }
       
       if (!lead.attributes) {
-        // winston.debug("empty attributes")
+        winston.debug("empty attributes")
         lead.attributes = {};
       }
 
-      // winston.debug(" lead attributes", lead.attributes)
+      winston.debug(" lead attributes", lead.attributes)
         
         Object.keys(data).forEach(function(key) {
           var val = data[key];
-          // winston.debug("data attributes "+key+" " +val)
+          winston.debug("data attributes "+key+" " +val)
           lead.attributes[key] = val;
         });     
         
-        // winston.debug(" lead attributes", lead.attributes)
+        winston.debug(" lead attributes", lead.attributes)
 
         // https://stackoverflow.com/questions/24054552/mongoose-not-saving-nested-object
         lead.markModified('attributes');
@@ -168,19 +168,19 @@ router.post('/:leadid/properties',  function (req, res) {
       }
       
       if (!lead.properties) {
-        // winston.debug("empty properties")
+        winston.debug("empty properties")
         lead.properties = {};
       }
 
-      // winston.debug(" lead properties", lead.properties)
+      winston.debug(" lead properties", lead.properties)
         
         Object.keys(data).forEach(function(key) {
           var val = data[key];
-          // winston.debug("data attributes "+key+" " +val)
+          winston.debug("data attributes "+key+" " +val)
           lead.properties[key] = val;
         });     
         
-        // winston.debug(" lead properties", lead.properties)
+        winston.debug(" lead properties", lead.properties)
 
         // https://stackoverflow.com/questions/24054552/mongoose-not-saving-nested-object
         lead.markModified('properties');
@@ -217,19 +217,19 @@ router.patch('/:leadid/properties',  function (req, res) {
       }
       
       if (!lead.properties) {
-        // winston.debug("empty properties")
+        winston.debug("empty properties")
         lead.properties = {};
       }
 
-      // winston.debug(" lead properties", lead.properties)
+      winston.debug(" lead properties", lead.properties)
         
         Object.keys(data).forEach(function(key) {
           var val = data[key];
-          // winston.debug("data attributes "+key+" " +val)
+          winston.debug("data attributes "+key+" " +val)
           lead.properties[key] = val;
         });     
         
-        // winston.debug(" lead properties", lead.properties)
+        winston.debug(" lead properties", lead.properties)
 
         // https://stackoverflow.com/questions/24054552/mongoose-not-saving-nested-object
         lead.markModified('properties');
@@ -252,7 +252,7 @@ router.patch('/:leadid/properties',  function (req, res) {
 
 
 // router.put('/:leadid', function (req, res) {
-//   // winston.debug(req.body);
+//   winston.debug(req.body);
 //   var update = {};
   
 //   // trasforma in patch altrimenti nn va
@@ -276,7 +276,7 @@ router.patch('/:leadid/properties',  function (req, res) {
 // });
 
 router.delete('/:leadid', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   Lead.findByIdAndUpdate(req.params.leadid, {status: LeadConstants.DELETED}, { new: true, upsert: true }, function (err, updatedLead) {
     if (err) {
@@ -292,7 +292,7 @@ router.delete('/:leadid', function (req, res) {
 });
 
 router.delete('/:leadid/physical', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   var projectuser = req.projectuser;
 
@@ -324,17 +324,17 @@ router.get('/csv', function (req, res, next) {
     page = req.query.page;
   }
   var skip = page * limit;
-  // winston.debug('LEAD ROUTE - SKIP PAGE ', skip);
+  winston.debug('LEAD ROUTE - SKIP PAGE ', skip);
 
   var query = { "id_project": req.projectid, "status": {$lt: LeadConstants.DELETED}};
 
   if (req.query.full_text) {
-    // winston.debug('LEAD ROUTE req.query.fulltext', req.query.full_text);
+    winston.debug('LEAD ROUTE req.query.fulltext', req.query.full_text);
     query.$text = { "$search": req.query.full_text };
   }
 
   if (req.query.email) {
-    // winston.debug('LEAD ROUTE req.query.email', req.query.email);
+    winston.debug('LEAD ROUTE req.query.email', req.query.email);
     query.email = req.query.email;
   }
 
@@ -342,18 +342,18 @@ router.get('/csv', function (req, res, next) {
   if (req.query.direction) {
     direction = req.query.direction;
   }
-  // winston.debug("direction", direction);
+  winston.debug("direction", direction);
 
   var sortField = "createdAt";
   if (req.query.sort) {
     sortField = req.query.sort;
   }
-  // winston.debug("sortField", sortField);
+  winston.debug("sortField", sortField);
 
   var sortQuery = {};
   sortQuery[sortField] = direction;
 
-  // winston.debug("sort query", sortQuery);
+  winston.debug("sort query", sortQuery);
 
   // TODO ORDER BY SCORE
   // return Faq.find(query,  {score: { $meta: "textScore" } }) 
@@ -376,7 +376,7 @@ router.get('/csv', function (req, res, next) {
 });
 
 router.get('/:leadid', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   Lead.findById(req.params.leadid, function (err, lead) {
     if (err) {
@@ -396,7 +396,7 @@ router.get('/', async(req, res) => {
 
   if (req.query.limit) {    
     limit = parseInt(req.query.limit);
-    // winston.debug('LEAD ROUTE - limit: '+limit);
+    winston.debug('LEAD ROUTE - limit: '+limit);
   }
 
   var page = 0;
@@ -406,7 +406,7 @@ router.get('/', async(req, res) => {
   }
 
   var skip = page * limit;
-  // winston.debug('LEAD ROUTE - SKIP PAGE ', skip);
+  winston.debug('LEAD ROUTE - SKIP PAGE ', skip);
 
 
   var query = {};
@@ -421,22 +421,22 @@ router.get('/', async(req, res) => {
   }
   
   if (req.query.full_text) {
-    // winston.debug('LEAD ROUTE req.query.fulltext', req.query.full_text);
+    winston.debug('LEAD ROUTE req.query.fulltext', req.query.full_text);
     query.$text = { "$search": req.query.full_text };
   }
 
   if (req.query.email) {
-    // winston.debug('LEAD ROUTE req.query.email', req.query.email);
+    winston.debug('LEAD ROUTE req.query.email', req.query.email);
     query.email = req.query.email;
   }
 
   if (req.query.with_email) {  //for internal request and zapier to retrieve only lead with an email
-    // winston.debug('LEAD ROUTE req.query.withemail', req.query.withemail);
+    winston.debug('LEAD ROUTE req.query.withemail', req.query.withemail);
     query.email = { "$exists": true };
   }
 
   if (req.query.with_fullname) {  //or internal request to retrieve only lead with an email
-    // winston.debug('LEAD ROUTE req.query.withfullname', req.query.with_fullname);
+    winston.debug('LEAD ROUTE req.query.withfullname', req.query.with_fullname);
     query.fullname = { "$exists": true };
   }
 
@@ -444,7 +444,7 @@ router.get('/', async(req, res) => {
 
 
   if (req.query.tags) {
-    // winston.debug('req.query.tags', req.query.tags);
+    winston.debug('req.query.tags', req.query.tags);
     query["tags"] = req.query.tags;
   }
 
@@ -457,7 +457,7 @@ router.get('/', async(req, res) => {
     query.status = req.query.status;
   }
 
-  // winston.debug("query", query);
+  winston.debug("query", query);
 
 
   var direction = -1; //-1 descending , 1 ascending
@@ -473,7 +473,7 @@ router.get('/', async(req, res) => {
   var sortQuery = {};
   sortQuery[sortField] = direction;
 
-  // winston.debug("sort query", sortQuery);
+  winston.debug("sort query", sortQuery);
 
   // TODO ORDER BY SCORE
   // return Faq.find(query,  {score: { $meta: "textScore" } }) 

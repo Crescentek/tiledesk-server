@@ -7,11 +7,11 @@ var DefaultTrigger = require('./default');
 var winston = require('../../config/winston');
 
 
-// winston.debug("trigger route");
+winston.debug("trigger route");
 
 router.post('/', function (req, res) {
 
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   var trigger = new Trigger({
     name: req.body.name,
@@ -39,7 +39,7 @@ router.post('/', function (req, res) {
 
 router.put('/:triggerid', function (req, res) {
 
-  // winston.debug(req.body);      
+  winston.debug(req.body);      
 
   
   var update = {};
@@ -70,7 +70,7 @@ router.put('/:triggerid', function (req, res) {
 
 router.put('/:triggercode/reset', function (req, res) {
 
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   var query = {code:req.params.triggercode, id_project:  req.projectid};
   winston.verbose("query resetting trigger: " , query);
@@ -107,7 +107,7 @@ router.put('/:triggercode/reset', function (req, res) {
 
 router.delete('/:triggerid', function (req, res) {
 
-  // winston.debug(req.body);
+  winston.debug(req.body);
   Trigger.findByIdAndRemove(req.params.triggerid, { new: false}, function (err, trigger) {
   // Trigger.remove({ _id: req.params.triggerid }, function (err, trigger) {
     if (err) {
@@ -123,7 +123,7 @@ router.delete('/:triggerid', function (req, res) {
 
 router.get('/:triggerid', function (req, res) {
 
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   Trigger.findById(req.params.triggerid, function (err, trigger) {
     if (err) {

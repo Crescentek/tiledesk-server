@@ -1,8 +1,8 @@
 
 module.exports = function(req, res, next) {
-        // // winston.debug("valid-token");
+        // winston.debug("valid-token");
         var token = getToken(req.headers);
-        // console.log("token", token);
+        // winston.debug("token", token);
         if (token) {
            next();
         } else {

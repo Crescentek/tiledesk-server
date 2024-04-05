@@ -2,7 +2,7 @@
 class Segment2MongoConverter {
 
     convert(query, segment) {
-        //// console.log("qui", query);
+        //console.log("qui", query);
 
         let condition = query;
         //let condition = {};
@@ -17,46 +17,46 @@ class Segment2MongoConverter {
                 let filter = segment.filters[i];
                 switch (filter.operator) {
                     case '=':
-                      //// console.log('Operator =');
+                      //console.log('Operator =');
                       this.convertEqualsOperatorFilter(condition, filter);
                       break;
                     case '!=':
-                        //// console.log('Operator !=');
+                        //console.log('Operator !=');
                         this.convertNotEqualsOperatorFilter(condition, filter);
                         break;
                     case '>':
-                        //// console.log('Operator !=');
+                        //console.log('Operator !=');
                         this.convertGreaterThanOperatorFilter(condition, filter);
                         break;
                     case '>=':
-                        //// console.log('Operator >=');
+                        //console.log('Operator >=');
                         this.convertGreaterThanOrEqualOperatorFilter(condition, filter);
                         break;
                     case 'starts with':
-                        //// console.log('Operator >=');
+                        //console.log('Operator >=');
                         this.convertStarsWithOperatorFilter(condition, filter);
                         break;
                     case 'contains':
-                        //// console.log('Operator >=');
+                        //console.log('Operator >=');
                         this.convertContainsOperatorFilter(condition, filter);
                         break;
                     case 'is null':
-                        //// console.log('Operator >=');
+                        //console.log('Operator >=');
                         this.convertIsUndefinedOperatorFilter(condition, filter);
                         break;
                     case 'is not null':
-                        //// console.log('Operator >=');
+                        //console.log('Operator >=');
                         this.convertExistsOperatorFilter(condition, filter);
                         break;
 
                     default:
-                        // console.log('Operator default');
+                        console.log('Operator default');
                     } 
 
             }
         }
 
-        //// console.log("qui2", query);
+        //console.log("qui2", query);
        
     }
 

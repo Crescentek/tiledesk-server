@@ -18,14 +18,14 @@ class JobsManager {
         // if (process.env.JOB_WORKER_ENABLED=="true" || process.env.JOB_WORKER_ENABLED == true) {
         //     this.jobWorkerEnabled = true;
         // }
-        // // winston.info("JobsManager jobWorkerEnabled: "+ this.jobWorkerEnabled);  
+        // winston.info("JobsManager jobWorkerEnabled: "+ this.jobWorkerEnabled);  
     }
 
 
     listen() {      
-        // winston.info("JobsManager listener started");  
+        winston.info("JobsManager listener started");  
         if ( this.jobWorkerEnabled == true) {
-           return // winston.info("JobsManager jobWorkerEnabled is enabled. Skipping listeners");  
+           return winston.info("JobsManager jobWorkerEnabled is enabled. Skipping listeners");  
         }
         this.geoService.listen();
         
@@ -38,46 +38,46 @@ class JobsManager {
     }
 
     listenEmailNotification(emailNotification) {      
-        // winston.info("JobsManager listenEmailNotification started");  
+        winston.info("JobsManager listenEmailNotification started");  
         if ( this.jobWorkerEnabled == true) {
-            return // winston.info("JobsManager jobWorkerEnabled is enabled. Skipping listener for Email Notification");  
+            return winston.info("JobsManager jobWorkerEnabled is enabled. Skipping listener for Email Notification");  
         }
         this.emailNotification = emailNotification;
         this.emailNotification.requestNotification.listen();
     }
 
     listenRoutingQueue(routingQueue) {
-        // winston.info("JobsManager routingQueue started");  
+        winston.info("JobsManager routingQueue started");  
         if ( this.jobWorkerEnabled == true) {
-            return // winston.info("JobsManager jobWorkerEnabled is enabled. Skipping listener for routingQueue");  
+            return winston.info("JobsManager jobWorkerEnabled is enabled. Skipping listener for routingQueue");  
         }
         this.routingQueue = routingQueue;
         this.routingQueue.listen();
     }
 
     listenScheduler(scheduler) {
-        // winston.info("JobsManager scheduler started");  
+        winston.info("JobsManager scheduler started");  
         if ( this.jobWorkerEnabled == true) {
-            return // winston.info("JobsManager jobWorkerEnabled is enabled. Skipping listener for scheduler");  
+            return winston.info("JobsManager jobWorkerEnabled is enabled. Skipping listener for scheduler");  
         }
         this.scheduler = scheduler;
         this.scheduler.taskRunner.start();    
     }
 
     listenActivityArchiver(activityArchiver) {
-        // winston.info("JobsManager listenActivityArchiver started"); 
+        winston.info("JobsManager listenActivityArchiver started"); 
         if ( this.jobWorkerEnabled == true) {
-            return // winston.info("JobsManager jobWorkerEnabled is enabled. Skipping listener for Activity Archiver");  
+            return winston.info("JobsManager jobWorkerEnabled is enabled. Skipping listener for Activity Archiver");  
         } 
         this.activityArchiver = activityArchiver;
         this.activityArchiver.listen();
     }
 
     listenWhatsappQueue(whatsappQueue) {
-        // console.log("JobsManager listenWhatsappQueue started");
-        // console.log("whatsappQueue is: ", whatsappQueue)
+        console.log("JobsManager listenWhatsappQueue started");
+        console.log("whatsappQueue is: ", whatsappQueue)
         if ( this.jobWorkerEnabled == true) {
-            return // winston.info("JobsManager jobWorkerEnabled is enabled. Skipping listener for Whatsapp Queue");  
+            return winston.info("JobsManager jobWorkerEnabled is enabled. Skipping listener for Whatsapp Queue");  
         }
         // this.whatsappWorker = whatsappQueue;
         // this.whatsappQueue.listen(); // oppure codice

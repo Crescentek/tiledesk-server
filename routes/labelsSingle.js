@@ -11,8 +11,8 @@ var roleChecker = require('../middleware/has-role')
 // router.post('/',  function (req, res) {
 router.post('/',  [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('admin')],function (req, res) {
 
-  // winston.debug(req.body);
-  // winston.debug("req.user", req.user);
+  winston.debug(req.body);
+  winston.debug("req.user", req.user);
 
  if (Array.isArray(req.body)) {
 
@@ -72,15 +72,15 @@ router.post('/',  [passport.authenticate(['basic', 'jwt'], { session: false }), 
 
 // router.post('/bulk',  function (req, res) {
 
-//   // winston.debug(req.body);
-//   // winston.debug("req.user", req.user);
+//   winston.debug(req.body);
+//   winston.debug("req.user", req.user);
 
  
 
 // });
 
 router.put('/:labelid',  [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('admin')],function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   Label.findByIdAndUpdate(req.params.labelid, req.body, { new: true, upsert: true }, function (err, updatedLabel) {
     if (err) {
@@ -93,7 +93,7 @@ router.put('/:labelid',  [passport.authenticate(['basic', 'jwt'], { session: fal
 });
 
 router.delete('/:labelid',  [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('admin')],function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   Label.remove({ _id: req.params.labelid }, function (err, label) {
     if (err) {
@@ -112,7 +112,7 @@ router.get('/:lang', function (req, res) {
   var query = { "id_project": req.projectid,"lang": req.params.lang};
 
  
-  // winston.debug("query", query);
+  winston.debug("query", query);
 
   return Label.find(query).  
     exec(function (err, labels) {

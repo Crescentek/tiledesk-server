@@ -42,8 +42,8 @@ describe('Authentication', () => {
                         .post('/auth/signin' )
                         .send({"email":email, "password":pwd})
                         .end((err, res) => {
-                            //// console.log("res",  res);
-                            // console.log("res.body",  res.body);
+                            //console.log("res",  res);
+                            console.log("res.body",  res.body);
                             res.should.have.status(200);
                             res.body.should.be.a('object');
                             expect(res.body.success).to.equal(true);                                               
@@ -73,8 +73,8 @@ describe('Authentication', () => {
                             .post('/auth/signin' )
                             .send({"email":email, "password":pwd})
                             .end((err, res) => {
-                                //// console.log("res",  res);
-                                // console.log("res.body",  res.body);
+                                //console.log("res",  res);
+                                console.log("res.body",  res.body);
                                 res.should.have.status(401);
                                 
                             
@@ -102,8 +102,8 @@ describe('Authentication', () => {
                             .post('/auth/signin' )
                             .send()
                             .end((err, res) => {
-                                //// console.log("res",  res);
-                                // console.log("res.body",  res.body);
+                                //console.log("res",  res);
+                                console.log("res.body",  res.body);
                                 res.should.have.status(422);
                                 
                             
@@ -130,7 +130,7 @@ describe('Authentication', () => {
                             .post('/auth/signin' )
                             .send({"email":email, "password":pwd})
                             .end((err, res) => {
-                                // console.log("res.body",  res.body);
+                                console.log("res.body",  res.body);
                                 res.should.have.status(200);
                                 res.body.should.be.a('object');
                                 expect(res.body.success).to.equal(true);                                               
@@ -144,7 +144,7 @@ describe('Authentication', () => {
                                     .get('/users/' )        
                                     .auth(email, pwd)                            
                                     .end((err, res) => {
-                                        // console.log("res.body",  res.body);
+                                        console.log("res.body",  res.body);
                                         res.should.have.status(200);
                                         res.body.should.be.a('object');                                                                                
                                 
@@ -186,8 +186,8 @@ describe('/signup', () => {
                         .post('/auth/signup' )
                         .send({email:email, password:pwd, lastname:"lastname", firstname: "firstname", disableEmail: true})
                         .end((err, res) => {
-                            //// console.log("res",  res);
-                            // console.log("res.body",  res.body);
+                            //console.log("res",  res);
+                            console.log("res.body",  res.body);
                             res.should.have.status(200);
                             res.body.should.be.a('object');
                             expect(res.body.success).to.equal(true);                                                                                                                     
@@ -217,8 +217,8 @@ describe('/signup', () => {
                             .post('/auth/signup' )
                             .send({email:email, password:pwd, lastname:"lastname", firstname: "firstname", disableEmail: true})
                             .end((err, res) => {
-                                //// console.log("res",  res);
-                                // console.log("res.body",  res.body);
+                                //console.log("res",  res);
+                                console.log("res.body",  res.body);
                                 res.should.have.status(200);
                                 res.body.should.be.a('object');
                                 expect(res.body.success).to.equal(true);                                                                                                                     
@@ -244,8 +244,8 @@ describe('/signup', () => {
                             .post('/auth/signup' )
                             .send({email:email, password:pwd, lastname:"lastname", firstname: "firstname", disableEmail: true})
                             .end((err, res) => {
-                                //// console.log("res",  res);
-                                // console.log("res.body",  res.body);
+                                //console.log("res",  res);
+                                console.log("res.body",  res.body);
                                 res.should.have.status(422);                                                                      
                             
                                 done();
@@ -279,8 +279,8 @@ describe('/signInAnonymously', () => {
                         .post('/auth/signinAnonymously' )
                         .send({ id_project: savedProject._id, email: "email@email.com"})
                         .end((err, res) => {
-                            //// console.log("res",  res);
-                            // console.log("res.body",  res.body);
+                            //console.log("res",  res);
+                            console.log("res.body",  res.body);
                             res.should.have.status(200);
                             res.body.should.be.a('object');
                             expect(res.body.success).to.equal(true);                                                                                                                     
@@ -312,8 +312,8 @@ describe('/signInAnonymously', () => {
     //                     .post('/auth/signinAnonymously' )
     //                     .send({ id_project: savedProject._id, email: "email@email.com"})
     //                     .end((err, res) => {
-    //                         //// console.log("res",  res);
-    //                         // console.log("res.body",  res.body);
+    //                         //console.log("res",  res);
+    //                         console.log("res.body",  res.body);
     //                         res.should.have.status(200);
     //                         res.body.should.be.a('object');
     //                         expect(res.body.success).to.equal(true);                                                                                                                     
@@ -322,18 +322,18 @@ describe('/signInAnonymously', () => {
     //                         expect(res.body.user._id).to.not.equal(undefined);                                               
 
     //                         var uuid = res.body.user._id.toString();
-    //                         // console.log("uuid", uuid);
+    //                         console.log("uuid", uuid);
 
     //                         var token = res.body.token;
-    //                         // console.log("token", token);
+    //                         console.log("token", token);
 
     //                         chai.request(server)
     //                             .post('/auth/resigninAnonymously' )
     //                             .set('Authorization', token)
     //                             .send({ id_project: savedProject._id, email: "email@email.com"})
     //                             .end((err, res) => {
-    //                                 //// console.log("res",  res);
-    //                                 // console.log("res.body",  res.body);
+    //                                 //console.log("res",  res);
+    //                                 console.log("res.body",  res.body);
     //                                 res.should.have.status(200);
     //                                 res.body.should.be.a('object');
     //                                 expect(res.body.success).to.equal(true);                                                                                                                     
@@ -370,8 +370,8 @@ describe('/signInAnonymously', () => {
     //                     .post('/auth/signinAnonymously' )
     //                     .send({ id_project: savedProject._id, email: "email@email.com"})
     //                     .end((err, res) => {
-    //                         //// console.log("res",  res);
-    //                         // console.log("res.body",  res.body);
+    //                         //console.log("res",  res);
+    //                         console.log("res.body",  res.body);
     //                         res.should.have.status(200);
     //                         res.body.should.be.a('object');
     //                         expect(res.body.success).to.equal(true);                                                                                                                     
@@ -380,18 +380,18 @@ describe('/signInAnonymously', () => {
     //                         expect(res.body.user._id).to.not.equal(undefined);                                               
 
     //                         var uuid = res.body.user._id.toString();
-    //                         // console.log("uuid", uuid);
+    //                         console.log("uuid", uuid);
 
     //                         var token = res.body.token;
-    //                         // console.log("token", token);
+    //                         console.log("token", token);
 
     //                         chai.request(server)
     //                             .post('/auth/resigninAnonymously' )
     //                             .set('Authorization', token)
     //                             .send({ id_project: savedProjectDifferent._id, email: "email@email.com"})
     //                             .end((err, res) => {
-    //                                 //// console.log("res",  res);
-    //                                 // console.log("res.body",  res.body);
+    //                                 //console.log("res",  res);
+    //                                 console.log("res.body",  res.body);
     //                                 res.should.have.status(200);
     //                                 res.body.should.be.a('object');
     //                                 expect(res.body.success).to.equal(true);                                                                                                                     
@@ -436,8 +436,8 @@ describe('/signinWithCustomToken', () => {
                 .auth(email, pwd)
                 .send()
                 .end((err, res) => {
-                    //// console.log("res",  res);
-                    // console.log("res.body",  res.body);
+                    //console.log("res",  res);
+                    console.log("res.body",  res.body);
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -445,7 +445,7 @@ describe('/signinWithCustomToken', () => {
                     // 'E11000 duplicate key error collection: tiledesk-test.users index: email_1 dup key: { email: "email@email.com" }' }
                     var externalUserObj = {_id: "123", firstname:"andrea", lastname:"leo", email: "email2@email.com",  customAttr: "c1"};
                     
-                    // console.log("externalUserObj", externalUserObj);
+                    console.log("externalUserObj", externalUserObj);
 
 
                     var signOptions = {                                                            
@@ -456,7 +456,7 @@ describe('/signinWithCustomToken', () => {
 
                     var jwtToken = jwt.sign(externalUserObj, res.body.jwtSecret,signOptions);
                 
-                    // console.log("jwtToken", jwtToken);
+                    console.log("jwtToken", jwtToken);
 
 
                     chai.request(server)
@@ -465,8 +465,8 @@ describe('/signinWithCustomToken', () => {
                         //.send({ id_project: savedProject._id})
                         .send()
                         .end((err, res) => {
-                            //// console.log("res",  res);
-                            // console.log("res.body",  res.body);
+                            //console.log("res",  res);
+                            console.log("res.body",  res.body);
                             res.should.have.status(200);
                             res.body.should.be.a('object');
                             expect(res.body.success).to.equal(true);                                                                                                                     
@@ -507,8 +507,8 @@ describe('/signinWithCustomToken', () => {
                 .auth(email, pwd)
                 .send()
                 .end((err, res) => {
-                    //// console.log("res",  res);
-                    // console.log("res.body",  res.body);
+                    //console.log("res",  res);
+                    console.log("res.body",  res.body);
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -516,7 +516,7 @@ describe('/signinWithCustomToken', () => {
 
                     var externalUserObj = {_id: "123", name:"andrea", surname:"leo", customAttr: "c1"};
                     
-                    // console.log("externalUserObj", externalUserObj);
+                    console.log("externalUserObj", externalUserObj);
 
 
                     var signOptions = {                                                            
@@ -527,7 +527,7 @@ describe('/signinWithCustomToken', () => {
 
                     var jwtToken = jwt.sign(externalUserObj, res.body.jwtSecret+"1234567KOOOOOOO",signOptions);
                 
-                    // console.log("jwtToken", jwtToken);
+                    console.log("jwtToken", jwtToken);
 
 
                     chai.request(server)
@@ -535,8 +535,8 @@ describe('/signinWithCustomToken', () => {
                         .set('Authorization', 'JWT '+jwtToken)
                         .send({ id_project: savedProject._id})
                         .end((err, res) => {
-                            //// console.log("res",  res);
-                            // // console.log("res.body",  res.body);
+                            //console.log("res",  res);
+                            // console.log("res.body",  res.body);
                             res.should.have.status(401);                                                                 
                         
                             done();
@@ -567,8 +567,8 @@ it('signinWithCustomTokenKONoID', (done) => {
             .auth(email, pwd)
             .send()
             .end((err, res) => {
-                //// console.log("res",  res);
-                // console.log("res.body",  res.body);
+                //console.log("res",  res);
+                console.log("res.body",  res.body);
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -576,7 +576,7 @@ it('signinWithCustomTokenKONoID', (done) => {
                 // 'E11000 duplicate key error collection: tiledesk-test.users index: email_1 dup key: { email: "email@email.com" }' }
                 var externalUserObj = {firstname:"andrea", lastname:"leo", email: "email2@email.com"};
                 
-                // console.log("externalUserObj", externalUserObj);
+                console.log("externalUserObj", externalUserObj);
 
 
                 var signOptions = {                                                            
@@ -587,7 +587,7 @@ it('signinWithCustomTokenKONoID', (done) => {
 
                 var jwtToken = jwt.sign(externalUserObj, res.body.jwtSecret,signOptions);
             
-                // console.log("jwtToken", jwtToken);
+                console.log("jwtToken", jwtToken);
 
 
                 chai.request(server)
@@ -596,8 +596,8 @@ it('signinWithCustomTokenKONoID', (done) => {
                     //.send({ id_project: savedProject._id})
                     .send()
                     .end((err, res) => {
-                        //// console.log("res",  res);
-                        // console.log("res.body",  res.body);
+                        //console.log("res",  res);
+                        console.log("res.body",  res.body);
                         res.should.have.status(401);                                                                                            
                     
                         done();
@@ -626,8 +626,8 @@ it('signinWithCustomTokenKONoAud', (done) => {
             .auth(email, pwd)
             .send()
             .end((err, res) => {
-                //// console.log("res",  res);
-                // console.log("res.body",  res.body);
+                //console.log("res",  res);
+                console.log("res.body",  res.body);
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -635,7 +635,7 @@ it('signinWithCustomTokenKONoAud', (done) => {
                 // 'E11000 duplicate key error collection: tiledesk-test.users index: email_1 dup key: { email: "email@email.com" }' }
                 var externalUserObj = {_id: 1234, firstname:"andrea", lastname:"leo", email: "email2@email.com"};
                 
-                // console.log("externalUserObj", externalUserObj);
+                console.log("externalUserObj", externalUserObj);
 
 
                 var signOptions = {                                                            
@@ -646,7 +646,7 @@ it('signinWithCustomTokenKONoAud', (done) => {
 
                 var jwtToken = jwt.sign(externalUserObj, res.body.jwtSecret,signOptions);
             
-                // console.log("jwtToken", jwtToken);
+                console.log("jwtToken", jwtToken);
 
 
                 chai.request(server)
@@ -655,8 +655,8 @@ it('signinWithCustomTokenKONoAud', (done) => {
                     //.send({ id_project: savedProject._id})
                     .send()
                     .end((err, res) => {
-                        //// console.log("res",  res);
-                        // console.log("res.body",  res.body);
+                        //console.log("res",  res);
+                        console.log("res.body",  res.body);
                         res.should.have.status(401);                                                                                            
                     
                         done();
@@ -685,8 +685,8 @@ it('signinWithCustomTokenOkTwoSigninWithCT', (done) => {
             .auth(email, pwd)
             .send()
             .end((err, res) => {
-                //// console.log("res",  res);
-                // console.log("res.body",  res.body);
+                //console.log("res",  res);
+                console.log("res.body",  res.body);
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -694,7 +694,7 @@ it('signinWithCustomTokenOkTwoSigninWithCT', (done) => {
                 // 'E11000 duplicate key error collection: tiledesk-test.users index: email_1 dup key: { email: "email@email.com" }' }
                 var externalUserObj = {_id: "123", firstname:"andrea", lastname:"leo", email: "email2@email.com",  customAttr: "c1"};
                 
-                // console.log("externalUserObj", externalUserObj);
+                console.log("externalUserObj", externalUserObj);
 
 
                 var signOptions = {                                                            
@@ -705,7 +705,7 @@ it('signinWithCustomTokenOkTwoSigninWithCT', (done) => {
 
                 var jwtToken = jwt.sign(externalUserObj, res.body.jwtSecret,signOptions);
             
-                // console.log("jwtToken", jwtToken);
+                console.log("jwtToken", jwtToken);
 
 
                 chai.request(server)
@@ -714,8 +714,8 @@ it('signinWithCustomTokenOkTwoSigninWithCT', (done) => {
                     //.send({ id_project: savedProject._id})
                     .send()
                     .end((err, res) => {
-                        //// console.log("res",  res);
-                        // console.log("res.body",  res.body);
+                        //console.log("res",  res);
+                        console.log("res.body",  res.body);
                         res.should.have.status(200);
                         res.body.should.be.a('object');
                         expect(res.body.success).to.equal(true);                                                                                                                     
@@ -734,8 +734,8 @@ it('signinWithCustomTokenOkTwoSigninWithCT', (done) => {
                                 //.send({ id_project: savedProject._id})
                                 .send()
                                 .end((err, res) => {
-                                    //// console.log("res",  res);
-                                    // console.log("res.body",  res.body);
+                                    //console.log("res",  res);
+                                    console.log("res.body",  res.body);
                                     res.should.have.status(200);
                                     res.body.should.be.a('object');
                                     expect(res.body.success).to.equal(true);                                                                                                                     

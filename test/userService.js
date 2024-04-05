@@ -13,7 +13,7 @@ var winston = require('../config/winston');
 
 // var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 // if (!databaseUri) {
-//   // console.log('DATABASE_URI not specified, falling back to localhost.');
+//   console.log('DATABASE_URI not specified, falling back to localhost.');
 // }
 
 // mongoose.connect(databaseUri || config.database);
@@ -28,8 +28,8 @@ describe('UserService()', function () {
   // it('signup', function (done) {
   // const myURL =
   // new URL('https://user:pass@sub.example.com:8080/p/a?query=string#hash');
-  // // console.log(myURL.pathname);
-  // // console.log(myURL.pathname.split("/")[1]);
+  // console.log(myURL.pathname);
+  // console.log(myURL.pathname.split("/")[1]);
   // });
 
   it('signup', function (done) {
@@ -37,7 +37,7 @@ describe('UserService()', function () {
     var email = "test-userservice-signup-" + Date.now() + "@email.com";
 
     userService.signup( email ,"pwd", "Test Firstname", "Test lastname").then(function(savedUser) {
-        // console.log("savedUser resolve");
+        console.log("savedUser resolve");
          expect(savedUser.email).to.equal(email);
          expect(savedUser.firstname).to.equal( "Test Firstname");
          expect(savedUser.lastname).to.equal("Test lastname");
@@ -56,7 +56,7 @@ describe('UserService()', function () {
     var email = "test-UserService-signup-" + now + "@email.com";
 
     userService.signup( email ,"pwd", "Test Firstname", "Test lastname").then(function(savedUser) {
-        // console.log("savedUser resolve");
+        console.log("savedUser resolve");
          expect(savedUser.email).to.equal("test-userservice-signup-" + now + "@email.com");
          expect(savedUser.firstname).to.equal( "Test Firstname");
          expect(savedUser.lastname).to.equal("Test lastname");
@@ -79,10 +79,10 @@ describe('UserService()', function () {
   //       var r = new Request({requester_id: 'test',first_text:'ft',id_project:'123', createdBy: '123', requester:savedUser._id, requesterModel:'user'});
   //       r.save(function(err, request) {
   //         winston.error("test reject", err);
-  //         // winston.info("request", request.toObject());
+  //         winston.info("request", request.toObject());
   //         Request.findById(request._id).populate('requester').exec(function(err, req1){
-  //           // winston.info("err", err);
-  //           // winston.info("req1", req1.toObject());
+  //           winston.info("err", err);
+  //           winston.info("req1", req1.toObject());
   //           done();
   //         });
          
@@ -114,15 +114,15 @@ describe('UserService()', function () {
   //   assert.ok(clickedEvent.url);
 
   //   clickedEvent.save(function(err, saved) {
-  //     // console.log("saved", err);
+  //     console.log("saved", err);
      
   //   });
 
 
   //   Event.findById('5cc80986176f565ffc210ea6', function(err, getted){
-  //     // console.log("getted", getted.toObject());
-  //     // console.log("instanceof", getted.toObject() instanceof ClickedLinkEvent);
-  //     // console.log("instanceof", getted.toObject() instanceof Event);
+  //     console.log("getted", getted.toObject());
+  //     console.log("instanceof", getted.toObject() instanceof ClickedLinkEvent);
+  //     console.log("instanceof", getted.toObject() instanceof Event);
   //     if (getted.toObject() instanceof ClickedLinkEvent) {
   //       done();
   //     } else {
@@ -148,11 +148,11 @@ describe('UserService()', function () {
     
   //   .then(function(userRecord) {
   //     // See the UserRecord reference doc for the contents of userRecord.
-  //     // console.log("Successfully fetched user data:", userRecord.toJSON());
+  //     console.log("Successfully fetched user data:", userRecord.toJSON());
   //     done();
   //   })
   //   .catch(function(error) {
-  //     // console.log("Error fetching user data:", error);
+  //     console.log("Error fetching user data:", error);
   //   });
   // });
 

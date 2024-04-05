@@ -11,11 +11,11 @@ var mongoose = require('mongoose');
 
 // sponz: realizza mini servizio senza sec
 router.get('/:userid', function (req, res) {
-  // winston.debug("users");
+  winston.debug("users");
   var userid = req.params.userid;
 
   var isObjectId = mongoose.Types.ObjectId.isValid(userid);
-  // winston.debug("isObjectId:"+ isObjectId);
+  winston.debug("isObjectId:"+ isObjectId);
 
   if (!isObjectId) {
     return res.status(404).send({ success: false, msg: 'User id not found' });
@@ -30,7 +30,7 @@ router.get('/:userid', function (req, res) {
       winston.warn("Object not found with id " +userid);
       return res.status(404).send({ success: false, msg: 'Object not found.' });
     }
-    // winston.debug("GET USER BY ID RES JSON", user);
+    winston.debug("GET USER BY ID RES JSON", user);
     res.json(user);
   });
 });

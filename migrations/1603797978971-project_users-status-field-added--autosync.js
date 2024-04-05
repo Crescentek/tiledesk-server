@@ -9,7 +9,7 @@ async function up () {
   await new Promise((resolve, reject) => {
     // setTimeout(()=> { resolve('ok'); }, 3000);
     return Project_user.updateMany({}, {"$set": {status: "active"}}, function (err, updates) {
-      // winston.info("Schema updated for " + updates.nModified + " project_user status active field")
+      winston.info("Schema updated for " + updates.nModified + " project_user status active field")
        return resolve('ok'); 
     });  
   });
@@ -22,7 +22,7 @@ async function up () {
  */
 async function down () {
   // Write migration here
-  // // console.log("down*********");
+  // console.log("down*********");
 }
 
 module.exports = { up, down }; 

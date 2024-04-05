@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     // check if project is not null/undefined
     let quotes = await quoteManager.getAllQuotes(req.project, obj);
 
-    // winston.debug("quotes: ", quotes);
+    winston.debug("quotes: ", quotes);
     res.status(200).send({ message: 'ok', quotes: quotes });
 
 })
@@ -31,7 +31,7 @@ router.get('/:type', async (req, res) => {
     let quoteManager = req.app.get('quote_manager');
     let isAvailable = await quoteManager.checkQuote(req.project, obj, type);
 
-    // winston.debug("is " + type + " available: ", isAvailable);
+    winston.debug("is " + type + " available: ", isAvailable);
     res.status(200).send({ isAvailable: isAvailable })
 
 })

@@ -5,8 +5,8 @@ var winston = require('../config/winston');
 
 router.post('/', function (req, res) {
 
-  // winston.debug(req.body);
-  // winston.debug("req.user", req.user);
+  winston.debug(req.body);
+  winston.debug("req.user", req.user);
 
   var newProperty= new Property({
     label: req.body.label,
@@ -29,7 +29,7 @@ router.post('/', function (req, res) {
 });
 
 router.put('/:propertyid', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
   var update = {};
   
   if (req.body.label!=undefined) {
@@ -61,7 +61,7 @@ router.put('/:propertyid', function (req, res) {
 
 
 router.delete('/:propertyid', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   Property.findByIdAndUpdate(req.params.propertyid, {status: 1000}, { new: true, upsert: true }, function (err, updatedProperty) {
     if (err) {
@@ -74,7 +74,7 @@ router.delete('/:propertyid', function (req, res) {
 });
 
 router.delete('/:propertyid/physical', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   var projectuser = req.projectuser;
 
@@ -97,7 +97,7 @@ router.delete('/:propertyid/physical', function (req, res) {
 
 
 router.get('/:propertyid', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   Property.findById(req.params.propertyid, function (err, property) {
     if (err) {
@@ -117,7 +117,7 @@ router.get('/', function (req, res) {
 
   if (req.query.limit) {    
     limit = parseInt(req.query.limit);
-    // winston.debug('property ROUTE - limit: '+limit);
+    winston.debug('property ROUTE - limit: '+limit);
   }
 
   var page = 0;
@@ -127,13 +127,13 @@ router.get('/', function (req, res) {
   }
 
   var skip = page * limit;
-  // winston.debug('property ROUTE - SKIP PAGE ', skip);
+  winston.debug('property ROUTE - SKIP PAGE ', skip);
 
 
   var query = { "id_project": req.projectid, "status": 100};
 
   if (req.query.name) {
-    // winston.debug('property ROUTE req.query.name', req.query.name);
+    winston.debug('property ROUTE req.query.name', req.query.name);
     query.name = req.query.name;
   }
 
@@ -154,7 +154,7 @@ router.get('/', function (req, res) {
   var sortQuery = {};
   sortQuery[sortField] = direction;
 
-  // winston.debug("sort query", sortQuery);  
+  winston.debug("sort query", sortQuery);  
 
   return Property.find(query).
     skip(skip).limit(limit).

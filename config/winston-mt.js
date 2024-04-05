@@ -4,7 +4,7 @@ var winston = require('winston');
 var config = require('./database');
 
 var level = process.env.LOG_LEVEL || 'info'
-// // console.log("level",level);
+// console.log("level",level);
 
 var options = {
     file: {
@@ -39,7 +39,7 @@ var options = {
       var logsDb = config.database;
     }
 
-    // console.log("Added winston MongoDB transport");
+    console.log("Added winston MongoDB transport");
     logger.add(new winston.transports.MongoDB({db: logsDb, level:"verbose", collection: "logsmt"}));
   }
     

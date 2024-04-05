@@ -8,7 +8,7 @@ async function up () {
   // Write migration here 
   await new Promise((resolve, reject) => {
 
-  // winston.info("Duplicate");
+  winston.info("Duplicate");
 
 
   return mongoose.connection.db.collection('requests').aggregate(
@@ -21,15 +21,15 @@ async function up () {
       winston.error("Schema migration: requests err", err);
     }
 
-    // winston.info("found requests", requests);
-    // winston.info("found requests.length"+requests.length);
+    winston.info("found requests", requests);
+    winston.info("found requests.length"+requests.length);
  
     
     requests.forEach(   
       function(request, i){ 
 
-        // winston.info("request",request); 
-        // winston.info("request._id: " + request._id); 
+        winston.info("request",request); 
+        winston.info("request._id: " + request._id); 
         
 
         return mongoose.connection.db.collection('requests')
@@ -40,14 +40,14 @@ async function up () {
             if (err) {
               winston.error("Schema migration: requests err", err);  
             } 
-            // winston.info("updates",updates); 
+            winston.info("updates",updates); 
           });
          
       });
       
 
 
-      // winston.info("Schema updated path for requests "+requests.length);
+      winston.info("Schema updated path for requests "+requests.length);
       return resolve('ok'); 
 
     }); 

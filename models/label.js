@@ -22,7 +22,7 @@ var LabelEntrySchema = new Schema({
     type: Boolean,
     // required: false,
     // get: v => {
-    //   // console.log("v",v)
+    //   console.log("v",v)
     //   if (v) {
     //     return v;
     //   } else {

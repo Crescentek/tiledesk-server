@@ -5,8 +5,8 @@ var winston = require('../config/winston');
 
 router.post('/', function (req, res) {
 
-  // winston.debug(req.body);
-  // winston.debug("req.user", req.user);
+  winston.debug(req.body);
+  winston.debug("req.user", req.user);
 
   var newTag = new TagLibrary({
     tag: req.body.tag,  
@@ -33,7 +33,7 @@ router.post('/', function (req, res) {
 });
 
 router.put('/:tagid', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
   var update = {};
   
 
@@ -55,7 +55,7 @@ router.put('/:tagid', function (req, res) {
 });
 
 router.delete('/:tagid', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   TagLibrary.remove({ _id: req.params.tagid }, function (err, tag) {
     if (err) {
@@ -71,7 +71,7 @@ router.delete('/:tagid', function (req, res) {
 });
 
 router.get('/:tagid', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   TagLibrary.findById(req.params.tagid, function (err, tag) {
     if (err) {
@@ -93,13 +93,13 @@ router.get('/', function (req, res) {
   }
 
   var skip = page * limit;
-  // winston.debug('Tag ROUTE - SKIP PAGE ', skip);
+  winston.debug('Tag ROUTE - SKIP PAGE ', skip);
 
 
   var query = { "id_project": req.projectid};
 
   // if (req.query.full_text) {
-  //   // winston.debug('Tag ROUTE req.query.fulltext', req.query.full_text);
+  //   winston.debug('Tag ROUTE req.query.fulltext', req.query.full_text);
   //   query.$text = { "$search": req.query.full_text };
   // }
 
@@ -117,7 +117,7 @@ router.get('/', function (req, res) {
   var sortQuery = {};
   sortQuery[sortField] = direction;
 
-  // winston.debug("sort query", sortQuery);
+  winston.debug("sort query", sortQuery);
 
   return TagLibrary.find(query).
     skip(skip).limit(limit).

@@ -30,7 +30,7 @@ curl -u andrea.leo@f21.it:123456 \
   */
 
 router.post('/users', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken], upload.single('file'), (req, res, next) => {
-  // winston.info("files/users")
+  winston.info("files/users")
       return res.status(201).json({
           message: 'File uploded successfully',
           filename: req.file.filename
@@ -48,7 +48,7 @@ curl \
   */
 
 router.post('/public', upload.single('file'), (req, res, next) => {
-  // winston.debug("files/public")
+  winston.debug("files/public")
       return res.status(201).json({
           message: 'File uploded successfully',
           filename: req.file.filename
@@ -59,7 +59,7 @@ router.post('/public', upload.single('file'), (req, res, next) => {
 
 
 router.get("/", (req, res) => {
-  // winston.debug('path', req.query.path);
+  winston.debug('path', req.query.path);
   // if (path.indexOf("/users/"))
   fileService.getFileDataAsStream(req.query.path).pipe(res);
   // const file = gfs
@@ -78,10 +78,10 @@ router.get("/", (req, res) => {
 
 
 router.get("/download", (req, res) => {
-  // winston.debug('path', req.query.path);
+  winston.debug('path', req.query.path);
   // if (path.indexOf("/users/"))
   let filename = pathlib.basename(req.query.path);
-  // winston.debug("filename:"+filename);
+  winston.debug("filename:"+filename);
 
   res.attachment(filename);
   fileService.getFileDataAsStream(req.query.path).pipe(res);

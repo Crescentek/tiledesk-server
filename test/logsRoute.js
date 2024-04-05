@@ -62,16 +62,16 @@ describe('LogsRoute', () => {
 
                     mock_log.id_project = savedProject._id;
                     mock_log.transaction_id = "automation-request-" + savedProject._id;
-                    // console.log("mock_log.transaction_id: ", mock_log.transaction_id);
+                    console.log("mock_log.transaction_id: ", mock_log.transaction_id);
 
                     chai.request(server)
                         .post('/' + savedProject._id + '/logs/whatsapp')
                         .auth(email, pwd)
                         .send(mock_log)
                         .end((err, res) => {
-                            // console.log("err: ", err);
-                            // // console.log("res.body: ", res.body);
-                            // console.log("Added example log")
+                            console.log("err: ", err);
+                            // console.log("res.body: ", res.body);
+                            console.log("Added example log")
                             res.should.have.status(200);
                             res.body.should.be.a('object');
 
@@ -79,8 +79,8 @@ describe('LogsRoute', () => {
                                 .get('/' + savedProject._id + '/logs/whatsapp/' + mock_log.transaction_id)
                                 .auth(email, pwd)
                                 .end((err, res) => {
-                                    // console.log("err: ", err);
-                                    // console.log("res.body: ", res.body);
+                                    console.log("err: ", err);
+                                    console.log("res.body: ", res.body);
                                     res.should.have.status(200);
                                     
                                     done();

@@ -35,7 +35,7 @@ var GroupSchema = new Schema({
 
 // GroupSchema.statics.findByProjectId = function (projectId, callback) {
 //   group.find({ "id_project": projectId, trashed: false }, function (err, groups) {
-//     // winston.debug('GROUP MODEL - FIND BY PROJECT ID - ERR ', err)
+//     winston.debug('GROUP MODEL - FIND BY PROJECT ID - ERR ', err)
 //     callback(err, groups);
 //   });
 // };
@@ -44,18 +44,18 @@ module.exports = mongoose.model('group', GroupSchema);
 
 // GroupSchema.statics.findByProjectId = function (projectId, callback) {
 //   group.find({ "id_project": projectId, trashed: false }, function (err, groups) {
-//     // winston.debug('GROUP MODEL - FIND BY PROJECT ID - ERR ', err)
+//     winston.debug('GROUP MODEL - FIND BY PROJECT ID - ERR ', err)
 //     callback(err, groups);
 //   });
 // };
 
 // RETURN ONLY THE GROUP WITH TRASHED = FALSE
 // GroupSchema.statics.findByProjectId = function (projectId, callback) {
-//   // winston.debug('-1')
-//   // winston.debug('GROUP MODEL - FIND BY PROJECT ID');
+//   winston.debug('-1')
+//   winston.debug('GROUP MODEL - FIND BY PROJECT ID');
 
 //   GroupSchema.find({ "id_project": projectId, trashed: false }, function (err, groups) {
-//     // winston.debug('-3');
+//     winston.debug('-3');
     
 //     callback(err, groups);
 //   });

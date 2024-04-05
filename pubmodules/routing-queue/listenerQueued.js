@@ -13,12 +13,12 @@ var ProjectUserUtil = require("../../utils/project_userUtil");
 // TODO riabilitare questo
 
 // const ROUTE_QUEUE_ENDPOINT = process.env.ROUTE_QUEUE_ENDPOINT;
-// // winston.debug("ROUTE_QUEUE_ENDPOINT: " + ROUTE_QUEUE_ENDPOINT);
+// winston.debug("ROUTE_QUEUE_ENDPOINT: " + ROUTE_QUEUE_ENDPOINT);
 
 // if (ROUTE_QUEUE_ENDPOINT) {
-//   // winston.info("Route queue endpoint: " + ROUTE_QUEUE_ENDPOINT);
+//   winston.info("Route queue endpoint: " + ROUTE_QUEUE_ENDPOINT);
 // } else {
-//    // winston.info("Route queue endpoint not configured");
+//    winston.info("Route queue endpoint not configured");
 // }
 
 
@@ -33,7 +33,7 @@ class Listener {
     if (process.env.ROUTE_QUEUE_ENABLED=="false" || process.env.ROUTE_QUEUE_ENABLED==false) {
         this.enabled = false;
     }
-    // winston.debug("Listener this.enabled: "+ this.enabled);
+    winston.debug("Listener this.enabled: "+ this.enabled);
 }
 
  
@@ -41,14 +41,14 @@ class Listener {
 
 
     updateProjectUser(id_user, id_project, operation) {
-      // winston.debug("Route queue updateProjectUser start operation: " +operation+ "id_user "+ id_user + " id_project " + id_project );
+      winston.debug("Route queue updateProjectUser start operation: " +operation+ "id_user "+ id_user + " id_project " + id_project );
       return Project_user       
                     .findOneAndUpdate({id_user: id_user, id_project: id_project}, {$inc : {'number_assigned_requests' : operation}}, {new: true, upsert:false}, function(err, updatedPU) {
                     if (err) {
                      return winston.error(err);
                     }
-                    // winston.debug("Route queue number_assigned_requests +1 :" + updatedPU.id);
-                     // winston.debug("Route queue number_assigned_requests +1 :" + updatedPU.id);
+                    winston.debug("Route queue number_assigned_requests +1 :" + updatedPU.id);
+                     winston.debug("Route queue number_assigned_requests +1 :" + updatedPU.id);
 
                     updatedPU.populate({path:'id_user', select:{'firstname':1, 'lastname':1}},function (err, updatedProject_userPopulated){    
 
@@ -56,7 +56,7 @@ class Listener {
 
                       return Project.findById(id_project).exec(function(err, project) {
                         pu.isBusy = ProjectUserUtil.isBusy(updatedProject_userPopulated, project.settings && project.settings.max_agent_assigned_chat);                  
-                        // winston.debug("Route queue pu.isBusy: "+ pu.isBusy);
+                        winston.debug("Route queue pu.isBusy: "+ pu.isBusy);
                                                
                         authEvent.emit('project_user.update', {updatedProject_userPopulated:pu, req: undefined, skipArchive: true}); //if queued with jobs -> websocket notification on project_user.update doesn't work??? forse si in quanto viene convertito in .pub.queue e poi rifunziiona
 
@@ -74,12 +74,12 @@ class Listener {
     }
 
     updateParticipatingProjectUsers(request, operation) {
-        // winston.debug("Route queue request.participatingAgents", request.participatingAgents);
+        winston.debug("Route queue request.participatingAgents", request.participatingAgents);
         if (request.participatingAgents.length>0) {
             request.participatingAgents.forEach(user => {
-              // winston.debug("request.participatingAgents user",user); //it is a user and not a project_user
+              winston.debug("request.participatingAgents user",user); //it is a user and not a project_user
                 var userid = user.id || user._id;
-                // winston.debug("updateParticipatingProjectUsers userid: "+userid); 
+                winston.debug("updateParticipatingProjectUsers userid: "+userid); 
 
                 this.updateProjectUser(userid, request.id_project, operation);                
             });
@@ -89,9 +89,9 @@ class Listener {
     listen() {
 
       if (this.enabled==true) {
-        // winston.info("Route queue with queue Listener listen");
+        winston.info("Route queue with queue Listener listen");
       } else {
-          return // winston.info("Route queue with queue Listener disabled");
+          return winston.info("Route queue with queue Listener disabled");
       }
 
         var that = this;
@@ -101,11 +101,11 @@ class Listener {
         if (requestEvent.queueEnabled) {
           requestCreateKey = 'request.create.queue';
         }
-        // winston.debug('Route queue requestCreateKey: ' + requestCreateKey);
+        winston.debug('Route queue requestCreateKey: ' + requestCreateKey);
    
         requestEvent.on(requestCreateKey, async (request) => {
             setImmediate(() => {
-              // winston.debug('Route queue requestCreate');
+              winston.debug('Route queue requestCreate');
               this.updateParticipatingProjectUsers(request, +1);  
             });
         });
@@ -115,12 +115,12 @@ class Listener {
         if (requestEvent.queueEnabled) {
           requestCloseKey = 'request.close.queue';
         }
-        // winston.debug('Route queue requestCloseKey: ' + requestCloseKey);
+        winston.debug('Route queue requestCloseKey: ' + requestCloseKey);
 
         requestEvent.on(requestCloseKey, async (request) => {    //request.close event here noqueued
-          // winston.debug("request.close event here 4")
+          winston.debug("request.close event here 4")
           setImmediate(() => {
-            // winston.debug('Route queue requestClose');
+            winston.debug('Route queue requestClose');
             this.updateParticipatingProjectUsers(request, -1);          
           });
         });
@@ -130,10 +130,10 @@ class Listener {
         if (requestEvent.queueEnabled) {
           requestParticipantsJoinKey = 'request.participants.join.queue';
         }
-        // winston.debug('Route queue  requestParticipantsJoinKey: ' + requestParticipantsJoinKey);
+        winston.debug('Route queue  requestParticipantsJoinKey: ' + requestParticipantsJoinKey);
    
         requestEvent.on(requestParticipantsJoinKey, async (data) => {
-          // winston.debug('Route queue ParticipantsJoin');
+          winston.debug('Route queue ParticipantsJoin');
 
           var request = data.request;
           var member = data.member;
@@ -146,10 +146,10 @@ class Listener {
         if (requestEvent.queueEnabled) {
           requestParticipantsLeaveKey = 'request.participants.leave.queue';
         }
-        // winston.debug('Route queue  requestParticipantsLeaveKey: ' + requestParticipantsLeaveKey);
+        winston.debug('Route queue  requestParticipantsLeaveKey: ' + requestParticipantsLeaveKey);
    
         requestEvent.on(requestParticipantsLeaveKey, async (data) => {
-          // winston.debug('Route queue ParticipantsLeave');
+          winston.debug('Route queue ParticipantsLeave');
 
           var request = data.request;
           var member = data.member;
@@ -162,10 +162,10 @@ class Listener {
         if (requestEvent.queueEnabled) {
          requestParticipantsUpdateKey = 'request.participants.update.queue';
         }
-        // winston.debug('Route queue  requestParticipantsUpdateKey: ' + requestParticipantsUpdateKey);
+        winston.debug('Route queue  requestParticipantsUpdateKey: ' + requestParticipantsUpdateKey);
    
         requestEvent.on(requestParticipantsUpdateKey, async (data) => {
-          // winston.debug('Route queue Participants Update');
+          winston.debug('Route queue Participants Update');
 
           var request = data.request;
           var removedParticipants = data.removedParticipants;
@@ -174,12 +174,12 @@ class Listener {
           setImmediate(() => {
 
             addedParticipants.forEach(participant => {
-              // winston.debug('addedParticipants participant', participant);
+              winston.debug('addedParticipants participant', participant);
               this.updateProjectUser(participant, request.id_project, 1);          
             });
 
             removedParticipants.forEach(participant => {
-              // winston.debug('removedParticipants participant', participant);
+              winston.debug('removedParticipants participant', participant);
               this.updateProjectUser(participant, request.id_project, -1);          
             });
 

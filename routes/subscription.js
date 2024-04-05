@@ -9,8 +9,8 @@ var winston = require('../config/winston');
 
 router.post('/', function (req, res) {
 
-  // winston.debug(req.body);
-  // winston.debug("req.user", req.user);
+  winston.debug(req.body);
+  winston.debug("req.user", req.user);
 
   var subscription = new Subscription({
     target: req.body.target,
@@ -43,14 +43,14 @@ router.post('/', function (req, res) {
 
 router.post('/test', function (req, res) {
 
-  // winston.debug("test subscription body", req.body);
+  winston.debug("test subscription body", req.body);
   
   res.json(req);
 });
 
 router.put('/:subscriptionid', function (req, res) {
 
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   Subscription.findByIdAndUpdate(req.params.subscriptionid, req.body, { new: true, upsert: true }, function (err, subscriptionUpd) {
     if (err) {
@@ -64,7 +64,7 @@ router.put('/:subscriptionid', function (req, res) {
 
 router.delete('/:subscriptionid', function (req, res) {
 
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   Subscription.findByIdAndRemove(req.params.subscriptionid, { new: false}, function (err, subscriptionUpd) {
     // Subscription.remove({ _id: req.params.subscriptionid }, function (err, subscriptionUpd) {
@@ -103,7 +103,7 @@ router.get('/history', function (req, res) {
   }
 
   var skip = page * limit;
-  // winston.debug('Subscription ROUTE - SKIP PAGE ', skip);
+  winston.debug('Subscription ROUTE - SKIP PAGE ', skip);
 
 
   return SubscriptionLog.find({ "id_project": req.projectid }).
@@ -123,7 +123,7 @@ router.get('/history', function (req, res) {
 
 router.get('/:subscriptionid', function (req, res) {
 
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   Subscription.findById(req.params.subscriptionid, function (err, subscriptionUpd) {
     if (err) {

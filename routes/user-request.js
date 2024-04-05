@@ -9,7 +9,7 @@ var mongoose = require('mongoose');
 
 
 router.patch('/:requestid/rating', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
   const update = {};
 
 
@@ -23,7 +23,7 @@ router.patch('/:requestid/rating', function (req, res) {
 
 
   
-  // winston.debug("Request user patch update",update);
+  winston.debug("Request user patch update",update);
 
   // var query = {"request_id":req.params.requestid};
   var query = {"request_id":req.params.requestid, "requester": req.projectuser.id};
@@ -57,7 +57,7 @@ router.patch('/:requestid/rating', function (req, res) {
 
 
 router.put('/:requestid/closeg', function (req, res) {
-  // winston.debug(req.body);
+  winston.debug(req.body);
   
     // closeRequestByRequestId(request_id, id_project, skipStatsUpdate, notify, closed_by)
     const closed_by = req.user.id;
@@ -77,9 +77,9 @@ router.put('/:requestid/closeg', function (req, res) {
 
 router.get('/me', function (req, res, next) {
 
-  // winston.debug("req projectid", req.projectid);
-  // winston.debug("req.query.sort", req.query.sort);
-  // winston.debug('REQUEST ROUTE - QUERY ', req.query)
+  winston.debug("req projectid", req.projectid);
+  winston.debug("req.query.sort", req.query.sort);
+  winston.debug('REQUEST ROUTE - QUERY ', req.query)
 
   const DEFAULT_LIMIT = 40;
 
@@ -100,14 +100,14 @@ router.get('/me', function (req, res, next) {
   }
 
   var skip = page * limit;
-  // winston.debug('REQUEST ROUTE - SKIP PAGE ', skip);
+  winston.debug('REQUEST ROUTE - SKIP PAGE ', skip);
 
 
   var user_id = req.user._id;
-  // winston.debug('REQUEST ROUTE - user_id:  '+user_id);
+  winston.debug('REQUEST ROUTE - user_id:  '+user_id);
 
   var isObjectId = mongoose.Types.ObjectId.isValid(user_id);
-  // winston.debug("isObjectId:"+ isObjectId);
+  winston.debug("isObjectId:"+ isObjectId);
 
 
   var query = { "id_project": req.projectid, "status": {$lt:1000}, preflight:false};
@@ -123,23 +123,23 @@ router.get('/me', function (req, res, next) {
 
   // $or:[{"snapshot.requester.id_user": user_id}, {"snapshot.requester.uuid_user": user_id}]};  
 
-  // winston.debug('REQUEST ROUTE - query ', query);
+  winston.debug('REQUEST ROUTE - query ', query);
 
 
   if (req.query.dept_id) {
     query.department = req.query.dept_id;
-    // winston.debug('REQUEST ROUTE - QUERY DEPT ID', query.department);
+    winston.debug('REQUEST ROUTE - QUERY DEPT ID', query.department);
   }
 
   if (req.query.full_text) {
-    // winston.debug('req.query.fulltext', req.query.full_text);
+    winston.debug('req.query.fulltext', req.query.full_text);
     query.$text = { "$search": req.query.full_text };
   }
 
   var history_search = false;
 
   if (req.query.status) {
-    // winston.debug('req.query.status', req.query.status);
+    winston.debug('req.query.status', req.query.status);
     query.status = req.query.status;
 
     if (req.query.status == 1000 || req.query.status == "1000") {
@@ -152,30 +152,30 @@ router.get('/me', function (req, res, next) {
   }
 
   // if (req.query.lead) {
-  //   // winston.debug('req.query.lead', req.query.lead);
+  //   winston.debug('req.query.lead', req.query.lead);
   //   query.lead = req.query.lead;
   // }
 
   // USERS & BOTS
   if (req.query.participant) {
-    // winston.debug('req.query.participant', req.query.participant);
+    winston.debug('req.query.participant', req.query.participant);
     query.participants = req.query.participant;
   }
 
-  // winston.debug('req.query.hasbot', req.query.hasbot);
+  winston.debug('req.query.hasbot', req.query.hasbot);
   if (req.query.hasbot!=undefined) {
-    // winston.debug('req.query.hasbot', req.query.hasbot);
+    winston.debug('req.query.hasbot', req.query.hasbot);
     query.hasBot = req.query.hasbot;
   }
 
   // if (req.query.waiting_time_exists) { //non basta aggiungi anche che nn è null
   //   query.waiting_time = {"$exists": req.query.waiting_time_exists} //{$ne:null}
-  //   // winston.debug('REQUEST ROUTE - QUERY waiting_time_exists', query.waiting_time_exists);
+  //   winston.debug('REQUEST ROUTE - QUERY waiting_time_exists', query.waiting_time_exists);
   // }
 
 
   if (req.query.tags) {
-    // winston.debug('req.query.tags', req.query.tags);
+    winston.debug('req.query.tags', req.query.tags);
     query["tags.tag"] = req.query.tags;
   }
 
@@ -188,7 +188,7 @@ router.get('/me', function (req, res, next) {
   }
 
   // if (req.query.request_id) {
-  //   // console.log('req.query.request_id', req.query.request_id);
+  //   console.log('req.query.request_id', req.query.request_id);
   //   query.request_id = req.query.request_id;
   // }
 
@@ -206,16 +206,16 @@ router.get('/me', function (req, res, next) {
 
     var enddate = moment().format("YYYY-MM-DD");
 
-    // winston.debug('»»» REQUEST ROUTE - startdate ', startdate);
-    // winston.debug('»»» REQUEST ROUTE - enddate ', enddate);
+    winston.debug('»»» REQUEST ROUTE - startdate ', startdate);
+    winston.debug('»»» REQUEST ROUTE - enddate ', enddate);
 
     var enddatePlusOneDay=  moment(new Date()).add(1, 'days').toDate()
-    // winston.debug('»»» REQUEST ROUTE - enddate + 1 days: ', enddatePlusOneDay);
+    winston.debug('»»» REQUEST ROUTE - enddate + 1 days: ', enddatePlusOneDay);
 
     // var enddatePlusOneDay = "2019-09-17T00:00:00.000Z"
 
     query.createdAt = { $gte: new Date(Date.parse(startdate)).toISOString(), $lte: new Date(enddatePlusOneDay).toISOString() }
-    // winston.debug('REQUEST ROUTE - QUERY CREATED AT ', query.createdAt);
+    winston.debug('REQUEST ROUTE - QUERY CREATED AT ', query.createdAt);
 
   }
  
@@ -225,8 +225,8 @@ router.get('/me', function (req, res, next) {
    *  WHEN THE USER SEARCH FOR DATE INTERVAL OF THE HISTORY OF REQUESTS
    */
   if (req.query.start_date && req.query.end_date) {
-    // winston.debug('REQUEST ROUTE - REQ QUERY start_date ', req.query.start_date);
-    // winston.debug('REQUEST ROUTE - REQ QUERY end_date ', req.query.end_date);
+    winston.debug('REQUEST ROUTE - REQ QUERY start_date ', req.query.start_date);
+    winston.debug('REQUEST ROUTE - REQ QUERY end_date ', req.query.end_date);
 
     /**
      * USING TIMESTAMP  in MS    */
@@ -239,23 +239,23 @@ router.get('/me', function (req, res, next) {
     var startDate = moment(req.query.start_date, 'DD/MM/YYYY').format('YYYY-MM-DD');
     var endDate = moment(req.query.end_date, 'DD/MM/YYYY').format('YYYY-MM-DD');
 
-    // winston.debug('REQUEST ROUTE - REQ QUERY FORMATTED START DATE ', startDate);
-    // winston.debug('REQUEST ROUTE - REQ QUERY FORMATTED END DATE ', endDate);
+    winston.debug('REQUEST ROUTE - REQ QUERY FORMATTED START DATE ', startDate);
+    winston.debug('REQUEST ROUTE - REQ QUERY FORMATTED END DATE ', endDate);
 
     // ADD ONE DAY TO THE END DAY
     var date = new Date(endDate);
     var newdate = new Date(date);
     var endDate_plusOneDay = newdate.setDate(newdate.getDate() + 1);
-    // winston.debug('REQUEST ROUTE - REQ QUERY FORMATTED END DATE + 1 DAY ', endDate_plusOneDay);
+    winston.debug('REQUEST ROUTE - REQ QUERY FORMATTED END DATE + 1 DAY ', endDate_plusOneDay);
     // var endDate_plusOneDay =   moment('2018-09-03').add(1, 'd')
     // var endDate_plusOneDay =   endDate.add(1).day();
     // var toDate = new Date(Date.parse(endDate_plusOneDay)).toISOString()
 
     query.createdAt = { $gte: new Date(Date.parse(startDate)).toISOString(), $lte: new Date(endDate_plusOneDay).toISOString() }
-    // winston.debug('REQUEST ROUTE - QUERY CREATED AT ', query.createdAt);
+    winston.debug('REQUEST ROUTE - QUERY CREATED AT ', query.createdAt);
 
   } else if (req.query.start_date && !req.query.end_date) {
-    // winston.debug('REQUEST ROUTE - REQ QUERY END DATE IS EMPTY (so search only for start date)');
+    winston.debug('REQUEST ROUTE - REQ QUERY END DATE IS EMPTY (so search only for start date)');
     var startDate = moment(req.query.start_date, 'DD/MM/YYYY').format('YYYY-MM-DD');
 
     var range = { $gte: new Date(Date.parse(startDate)).toISOString() };
@@ -265,7 +265,7 @@ router.get('/me', function (req, res, next) {
       query.createdAt = range;
     }
     
-    // winston.debug('REQUEST ROUTE - QUERY CREATED AT (only for start date)', query.createdAt);
+    winston.debug('REQUEST ROUTE - QUERY CREATED AT (only for start date)', query.createdAt);
   }
   // }
 
@@ -273,33 +273,33 @@ router.get('/me', function (req, res, next) {
 
   if (req.query.snap_department_routing) {
     query["snapshot.department.routing"] = req.query.snap_department_routing;
-    // winston.debug('REQUEST ROUTE - QUERY snap_department_routing', query.snap_department_routing);
+    winston.debug('REQUEST ROUTE - QUERY snap_department_routing', query.snap_department_routing);
   }
 
   if (req.query.snap_department_default) {
     query["snapshot.department.default"] = req.query.snap_department_default;
-    // winston.debug('REQUEST ROUTE - QUERY snap_department_default', query.snap_department_default);
+    winston.debug('REQUEST ROUTE - QUERY snap_department_default', query.snap_department_default);
   }
 
 
   if (req.query.snap_department_id_bot) {
     query["snapshot.department.id_bot"] = req.query.snap_department_id_bot;
-    // winston.debug('REQUEST ROUTE - QUERY snap_department_id_bot', query.snap_department_id_bot);
+    winston.debug('REQUEST ROUTE - QUERY snap_department_id_bot', query.snap_department_id_bot);
   }
 
   if (req.query.snap_department_id_bot_exists) {
     query["snapshot.department.id_bot"] = {"$exists": req.query.snap_department_id_bot_exists}
-    // winston.debug('REQUEST ROUTE - QUERY snap_department_id_bot_exists', query.snap_department_id_bot_exists);
+    winston.debug('REQUEST ROUTE - QUERY snap_department_id_bot_exists', query.snap_department_id_bot_exists);
   }
 
   // if (req.query.snap_lead_lead_id) {
   //   query["snapshot.lead.lead_id"] = req.query.snap_lead_lead_id;
-  //   // winston.debug('REQUEST ROUTE - QUERY snap_lead_lead_id', query.snap_lead_lead_id);
+  //   winston.debug('REQUEST ROUTE - QUERY snap_lead_lead_id', query.snap_lead_lead_id);
   // }
 
   if (req.query.channel) {
     query["channel.name"] =  req.query.channel
-    // winston.debug('REQUEST ROUTE - QUERY channel', query.channel);
+    winston.debug('REQUEST ROUTE - QUERY channel', query.channel);
   }
 
 
@@ -307,25 +307,25 @@ router.get('/me', function (req, res, next) {
   if (req.query.direction) {
     direction = req.query.direction;
   }
-  // winston.debug("direction", direction);
+  winston.debug("direction", direction);
 
   var sortField = "createdAt";
   if (req.query.sort) {
     sortField = req.query.sort;
   }
-  // winston.debug("sortField", sortField);
+  winston.debug("sortField", sortField);
 
   var sortQuery = {};
   sortQuery[sortField] = direction;
 
-  // winston.debug("sort query", sortQuery);
+  winston.debug("sort query", sortQuery);
 
   winston.verbose('REQUEST ROUTE - REQUEST FIND ', query);
 
   var projection = undefined;
 
   if (req.query.full_text) {  
-    // winston.debug('fulltext projection'); 
+    winston.debug('fulltext projection'); 
 
     projection = {score: { $meta: "textScore" } };
   }
@@ -334,7 +334,7 @@ router.get('/me', function (req, res, next) {
     skip(skip).limit(limit);
 
 
-    // winston.debug('REQUEST ROUTE no_populate:' + req.query.no_populate);
+    winston.debug('REQUEST ROUTE no_populate:' + req.query.no_populate);
 
     if (req.query.no_populate != "true" && req.query.no_populate != true) {        
       winston.verbose('REQUEST ROUTE - no_polutate false ', req.headers);
@@ -349,19 +349,19 @@ router.get('/me', function (req, res, next) {
 
 
     // if (req.query.select_snapshot) {
-    //   // winston.info('select_snapshot');
+    //   winston.info('select_snapshot');
     //   q1.select("+snapshot");
     //   // q1.select({ "snapshot": 1});
     // }
 
     if (req.query.full_text) {     
-      // winston.debug('fulltext sort'); 
+      winston.debug('fulltext sort'); 
       q1.sort( { score: { $meta: "textScore" } } ) //https://docs.mongodb.com/manual/reference/operator/query/text/#sort-by-text-search-score
     } else {
       q1.sort(sortQuery);
     }
 
-    // // winston.info('q1',q1);
+    // winston.info('q1',q1);
 
 
     q1.exec();
@@ -382,7 +382,7 @@ router.get('/me', function (req, res, next) {
       count: results[1],
       requests: results[0]
     };
-    // winston.debug('REQUEST ROUTE - objectToReturn ', objectToReturn);
+    winston.debug('REQUEST ROUTE - objectToReturn ', objectToReturn);
     return res.json(objectToReturn);
 
   }).catch(function(err){

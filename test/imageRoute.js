@@ -38,8 +38,8 @@ describe('ImagesRoute', () => {
             .attach('file',  fs.readFileSync('./test/test-image.png'), 'test-image.png')             
             // .field('delimiter', ';')            
             .end((err, res) => {                        
-                    //// console.log("res",  res);
-                    // console.log("res.body",  res.body);
+                    //console.log("res",  res);
+                    console.log("res.body",  res.body);
                     res.should.have.status(201);
                     res.body.should.be.a('object');
                     expect(res.body.message).to.equal('Image uploded successfully');                                                                              
@@ -69,8 +69,8 @@ describe('ImagesRoute', () => {
             .attach('file',  fs.readFileSync('./test/test-image.png'), 'profile.png')             
             // .field('folder', 'myfolder')            
             .end((err, res) => {                        
-                    //// console.log("res",  res);
-                    // console.log("res.body",  res.body);
+                    //console.log("res",  res);
+                    console.log("res.body",  res.body);
                     res.should.have.status(201);
                     res.body.should.be.a('object');
                     expect(res.body.message).to.equal('Image uploded successfully');                                                                              
@@ -117,9 +117,9 @@ it('upload-avatar', (done) => {
         .attach('file',  fs.readFileSync('./test/test-image.png'), 'profile.png')             
         // .field('folder', 'myfolder')            
         .end((err, res) => {                        
-                //// console.log("res",  res);
-                // console.log("res.body",  res.body);
-                // console.log("res.status",  res.status);
+                //console.log("res",  res);
+                console.log("res.body",  res.body);
+                console.log("res.status",  res.status);
                 res.should.have.status(201);
                 res.body.should.be.a('object');
                 expect(res.body.message).to.equal('Image uploded successfully');                                                                              
@@ -166,9 +166,9 @@ it('upload-avatar-force', (done) => {
         .attach('file',  fs.readFileSync('./test/test-image.png'), 'profile.png')             
         // .field('folder', 'myfolder')            
         .end((err, res) => {                        
-                //// console.log("res",  res);
-                // console.log("res.body",  res.body);
-                // console.log("res.status",  res.status);
+                //console.log("res",  res);
+                console.log("res.body",  res.body);
+                console.log("res.status",  res.status);
                 res.should.have.status(201);
                 res.body.should.be.a('object');
                 expect(res.body.message).to.equal('Image uploded successfully');                                                                              
@@ -214,9 +214,9 @@ it('upload-avatar-another-user', (done) => {
         .attach('file',  fs.readFileSync('./test/test-image.png'), 'profile.png')             
         // .field('folder', 'myfolder')            
         .end((err, res) => {                        
-                //// console.log("res",  res);
-                // console.log("res.body",  res.body);
-                // console.log("res.status",  res.status);
+                //console.log("res",  res);
+                console.log("res.body",  res.body);
+                console.log("res.status",  res.status);
                 res.should.have.status(201);
                 res.body.should.be.a('object');
                 expect(res.body.message).to.equal('Image uploded successfully');                                                                              
@@ -263,8 +263,8 @@ it('delete-user-folder', (done) => {
         .attach('file',  fs.readFileSync('./test/test-image.png'), 'profile.png')             
         // .field('folder', 'myfolder')            
         .end((err, res) => {                        
-                //// console.log("res",  res);
-                // console.log("res.body",  res.body);
+                //console.log("res",  res);
+                console.log("res.body",  res.body);
                 res.should.have.status(201);
                 res.body.should.be.a('object');
                 expect(res.body.message).to.equal('Image uploded successfully');                                                                              
@@ -278,7 +278,7 @@ it('delete-user-folder', (done) => {
                 .delete('/images/users?path='+res.body.filename)
                 .auth(email, pwd)               
                 .end((err, res) => {   
-                    // console.log("res.body",  res.body);
+                    console.log("res.body",  res.body);
                     res.should.have.status(200);
                     expect(res.body.message).to.equal('Image deleted successfully');                      
                     done();
@@ -300,8 +300,8 @@ it('delete-user-folder', (done) => {
             .attach('file',  fs.readFileSync('./test/test-image.png'), 'test-image.png')             
             // .field('delimiter', ';')            
             .end((err, res) => {                        
-                    //// console.log("res",  res);
-                    // console.log("res.body",  res.body);
+                    //console.log("res",  res);
+                    console.log("res.body",  res.body);
                     res.should.have.status(201);
                     res.body.should.be.a('object');
                     expect(res.body.message).to.equal('Image uploded successfully');                                                                              

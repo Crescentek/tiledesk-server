@@ -9,7 +9,7 @@ var url = require('url');
 
 router.get('/load', function(req, res) {
   var query = url.parse(req.url).query;
-  // winston.debug(query);
+  winston.debug(query);
   // TODO chech if query is null
   res.redirect(widgetLocation+'?'+query);
 
@@ -19,7 +19,7 @@ router.get('/load', function(req, res) {
 router.get('/v5/:project_id', function(req, res) {
 
   var project_id = req.params.project_id;
-  // winston.debug("project_id: " + project_id);
+  winston.debug("project_id: " + project_id);
 
   res.type('.js');
 
@@ -39,7 +39,7 @@ router.get('/v5/:project_id', function(req, res) {
     }(document,'script','tiledesk-jssdk'));
   `;
 
-  // winston.debug("js: " + js);
+  winston.debug("js: " + js);
 
   res.send(js);
 

@@ -8,9 +8,9 @@ RUN apt-get update
 # Create app directory
 WORKDIR /usr/src/app
 
-ARG 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
+ARG NPM_TOKEN
 
-RUN if [ "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" ]; \
+RUN if [ "$NPM_TOKEN" ]; \
     then RUN COPY .npmrc_ .npmrc \
     else export SOMEVAR=world; \
     fi

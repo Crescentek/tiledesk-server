@@ -73,7 +73,7 @@ DepartmentSchema.virtual('bot', {
 });
 
 DepartmentSchema.virtual('hasBot').get(function () {
-  // // winston.debug("department hasBot virtual called");
+  // winston.debug("department hasBot virtual called");
   if (this.id_bot!=undefined) {
     return true;
   }else {
@@ -89,7 +89,7 @@ var department = mongoose.model('department', DepartmentSchema);
 
 if (process.env.MONGOOSE_SYNCINDEX) {
   department.syncIndexes();
-  // winston.info("department syncIndexes")
+  winston.info("department syncIndexes")
 }
 
 

@@ -24,8 +24,8 @@ router.post('/', [
   check('name').notEmpty(),  
 ],function (req, res) {
 
-  // winston.debug(req.body);
-  // winston.debug("req.user", req.user);
+  winston.debug(req.body);
+  winston.debug("req.user", req.user);
 
     
   const errors = validationResult(req);
@@ -44,14 +44,14 @@ router.post('/', [
     // // da qui
     
     // performance log
-    // // console.log("************* emit event"+new Date().toISOString());
+    // console.log("************* emit event"+new Date().toISOString());
 
     // // message.senderFullname,     message.recipient, 
     //             // message.recipient_fullname, message.text, message.sender, attributes, message.type, message.metadata, timestamp, message.group
     // var recipient = req.body.attributes.request_id;
-    // // console.log("recipient",recipient);
+    // console.log("recipient",recipient);
     // var sender = req.user.id;
-    // // console.log("sender",sender);
+    // console.log("sender",sender);
 
     // let message = {
     //   recipient: recipient,
@@ -69,7 +69,7 @@ router.post('/', [
     //   }
     // };
     // message.group.members[sender]= 1;
-    // // console.log("message", message)
+    // console.log("message", message)
 
     // messageEvent.emit("message.test", message);
     // res.json({"event":"1"});
@@ -97,7 +97,7 @@ router.get('/:eventid',
   roleChecker.hasRole('agent')],
   function (req, res) {
 
-  // winston.debug(req.body);
+  winston.debug(req.body);
 
   Event.findById(req.params.eventid, function (err, event) {
     if (err) {
@@ -125,7 +125,7 @@ router.get('/',   [passport.authenticate(['basic', 'jwt'],
   }
 
   var skip = page * limit;
-  // winston.debug('Event ROUTE - SKIP PAGE ', skip);
+  winston.debug('Event ROUTE - SKIP PAGE ', skip);
 
 
   var query = { "id_project": req.projectid};
@@ -139,18 +139,18 @@ router.get('/',   [passport.authenticate(['basic', 'jwt'],
   if (req.query.direction) {
     direction = req.query.direction;
   }
-  //// console.log("direction", direction);
+  //console.log("direction", direction);
 
   var sortField = "createdAt";
   if (req.query.sort) {
     sortField = req.query.sort;
   }
-  //// console.log("sortField", sortField);
+  //console.log("sortField", sortField);
 
   var sortQuery = {};
   sortQuery[sortField] = direction;
 
-  // winston.debug("sort query", sortQuery);
+  winston.debug("sort query", sortQuery);
 
   return Event.find(query).
     skip(skip).limit(limit).

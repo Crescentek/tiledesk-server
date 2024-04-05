@@ -27,7 +27,7 @@ describe('Cache', () => {
     if (process.env.CACHE_ENABLED == "true") {
     
     }else {
-        // console.log("Cache disabled");
+        console.log("Cache disabled");
         expect(true).to.equal(false); 
     }
   describe('/project', () => {
@@ -50,9 +50,9 @@ describe('Cache', () => {
                                         .set('content-type', 'application/json')
                                         .send()
                                         .end((err, res) => {
-                                            // console.log("res.body",  JSON.stringify(res.body));
+                                            console.log("res.body",  JSON.stringify(res.body));
                                             // console.dir("res.body 1",  res.body);
-                                            // console.log("res.headers",  res.headers);
+                                            console.log("res.headers",  res.headers);
                                             res.should.have.status(200);
                                             res.body.should.be.a('object');
                                             expect(res.body.name).to.equal("test-getProject"); 
@@ -68,9 +68,9 @@ describe('Cache', () => {
                                         .set('content-type', 'application/json')        //from cache
                                         .send()
                                         .end((err, res) => {
-                                            // console.log("res.body",  JSON.stringify(res.body));
+                                            console.log("res.body",  JSON.stringify(res.body));
                                             // console.dir("res.body 1",  res.body);
-                                            // console.log("res.headers",  res.headers);
+                                            console.log("res.headers",  res.headers);
                                             res.should.have.status(200);
                                             res.body.should.be.a('object');
                                             expect(res.body.name).to.equal("test-getProject"); 

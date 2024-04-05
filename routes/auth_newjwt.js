@@ -45,7 +45,7 @@ router.post('/signup',
       .then(function (savedUser) {
 
 
-        // winston.debug('-- >> -- >> savedUser ', savedUser.toObject());
+        winston.debug('-- >> -- >> savedUser ', savedUser.toObject());
 
         if (!req.body.disableEmail){
           emailService.sendVerifyEmailAddress(savedUser.email, savedUser);
@@ -135,7 +135,7 @@ function (req, res) {
           
           authEvent.emit("projectuser.create", savedProject_user);         
 
-          // winston.info('project user created ', savedProject_user.toObject());
+          winston.info('project user created ', savedProject_user.toObject());
 
           
           // JWT_HERE
@@ -158,27 +158,27 @@ function (req, res) {
 
 
 router.post('/signinWithCustomToken', [
-  // function(req,res,next) {req.disablePassportEntityCheck = true;// winston.debug("disablePassportEntityCheck=true"); next();},
+  // function(req,res,next) {req.disablePassportEntityCheck = true;winston.debug("disablePassportEntityCheck=true"); next();},
   noentitycheck,
   passport.authenticate(['jwt'], { session: false }), 
   validtoken], function (req, res) {
 
-    // winston.debug("signinWithCustomToken req: ", req );
+    winston.debug("signinWithCustomToken req: ", req );
 
     if (!req.user.aud) { //serve??
       return res.status(400).send({ success: false, msg: 'JWT Aud field is required' });
     }
   
     const audUrl  = new URL(req.user.aud);
-    // winston.debug("audUrl: "+ audUrl );
+    winston.debug("audUrl: "+ audUrl );
     const path = audUrl.pathname;
-    // winston.debug("audUrl path: " + path );
+    winston.debug("audUrl path: " + path );
     
     const AudienceType = path.split("/")[1];
-    // winston.debug("audUrl AudienceType: " + AudienceType );
+    winston.debug("audUrl AudienceType: " + AudienceType );
 
     const AudienceId = path.split("/")[2];
-    // winston.debug("audUrl AudienceId: " + AudienceId );
+    winston.debug("audUrl AudienceId: " + AudienceId );
     
     if (!AudienceId) {
       return res.status(400).send({ success: false, msg: 'JWT Aud.AudienceId field is required' });
@@ -215,14 +215,14 @@ router.post('/signinWithCustomToken', [
           
             authEvent.emit("projectuser.create", savedProject_user);         
 
-              // winston.info('project user created ', savedProject_user.toObject());
+              winston.info('project user created ', savedProject_user.toObject());
 
               
 
             return res.json({ success: true, token: req.headers["authorization"], user: req.user });
         });
       }else {
-        // winston.info('project user already exists ');
+        winston.info('project user already exists ');
         return res.json({ success: true, token: req.headers["authorization"], user: req.user });
       }
 
@@ -244,7 +244,7 @@ router.post('/signinWithCustomToken', [
 
 //caso UNI. pass jwt token with project secret sign. so aud=project/id subject=user
 // router.post('/signinWithCustomTokenAndCreateUser', [
-//   // function(req,res,next) {req.disablePassportEntityCheck = true;// winston.debug("disablePassportEntityCheck=true"); next();},
+//   // function(req,res,next) {req.disablePassportEntityCheck = true;winston.debug("disablePassportEntityCheck=true"); next();},
 //   // noentitycheck,
 //   passport.authenticate(['jwt'], { session: false }), 
 //   validtoken], function (req, res) {
@@ -255,38 +255,38 @@ router.post('/signinWithCustomToken', [
 //     }
   
 //     const audUrl  = new URL(req.user.aud);
-//     // winston.debug("audUrl: "+ audUrl );
+//     winston.debug("audUrl: "+ audUrl );
 //     const path = audUrl.pathname;
-//     // winston.debug("audUrl path: " + path );
+//     winston.debug("audUrl path: " + path );
     
 //     const AudienceType = path.split("/")[1];
-//     // winston.debug("audUrl AudienceType: " + AudienceType );
+//     winston.debug("audUrl AudienceType: " + AudienceType );
 
 //     const AudienceId = path.split("/")[2];
-//     // winston.debug("audUrl AudienceId: " + AudienceId );
+//     winston.debug("audUrl AudienceId: " + AudienceId );
     
 //     if (!AudienceId) {
 //       return res.status(400).send({ success: false, msg: 'JWT Aud.AudienceId field is required' });
 //     }
 
-//     // // winston.info('signinWithCustomToken req: ' , req);
+//     // winston.info('signinWithCustomToken req: ' , req);
 
 //     var email = uuidv4() + '@tiledesk.com';
 //     if (req.user.email) {
 //       email = req.user.email;
 //     }
   
-//   // winston.info('signinWithCustomToken email: ' + email);
+//   winston.info('signinWithCustomToken email: ' + email);
 
 //   var password = uuidv4();
-//   // winston.info('signinWithCustomToken password: ' + password);
+//   winston.info('signinWithCustomToken password: ' + password);
 
 //   // signup ( email, password, firstname, lastname, emailverified)
 //   return userService.signup(email, password, req.user.firstname, req.user.lastname, false, "custom")
 //     .then(function (savedUser) {
 
 
-//       // winston.debug('-- >> -- >> savedUser ', savedUser.toObject());
+//       winston.debug('-- >> -- >> savedUser ', savedUser.toObject());
 
 
 //       var newProject_user = new Project_user({
@@ -312,7 +312,7 @@ router.post('/signinWithCustomToken', [
         
 //         authEvent.emit("projectuser.create", savedProject_user);         
 
-//           // winston.info('project user created ', savedProject_user.toObject());
+//           winston.info('project user created ', savedProject_user.toObject());
 
           
 //         //remove password 
@@ -345,7 +345,7 @@ router.post('/signinWithCustomToken', [
 
 
 router.post('/signin', function (req, res) {
-  // winston.debug("req.body.email", req.body.email);
+  winston.debug("req.body.email", req.body.email);
 // authType
   User.findOne({
     email: req.body.email, status: 100
@@ -462,19 +462,19 @@ router.post('/signin', function (req, res) {
 // VERIFY EMAIL
 router.put('/verifyemail/:userid', function (req, res) {
 
-  // winston.debug('VERIFY EMAIL - REQ BODY ', req.body);
+  winston.debug('VERIFY EMAIL - REQ BODY ', req.body);
 
   User.findByIdAndUpdate(req.params.userid, req.body, { new: true, upsert: true }, function (err, findUser) {
     if (err) {
       winston.error(err);
       return res.status(500).send({ success: false, msg: err });
     }
-    // winston.debug(findUser);
+    winston.debug(findUser);
     if (!findUser) {
       winston.warn('User not found for verifyemail' );
       return res.status(404).send({ success: false, msg: 'User not found' });
     }
-    // winston.debug('VERIFY EMAIL - RETURNED USER ', findUser);
+    winston.debug('VERIFY EMAIL - RETURNED USER ', findUser);
 
 
 
@@ -488,7 +488,7 @@ router.put('/verifyemail/:userid', function (req, res) {
  */
 router.get('/pendinginvitationsnoauth/:pendinginvitationid', function (req, res) {
 
-  // console.log('PENDING INVITATION NO AUTH GET BY ID - BODY ');
+  console.log('PENDING INVITATION NO AUTH GET BY ID - BODY ');
 
   PendingInvitation.findById(req.params.pendinginvitationid, function (err, pendinginvitation) {
     if (err) {
@@ -508,7 +508,7 @@ router.get('/pendinginvitationsnoauth/:pendinginvitationid', function (req, res)
  */
 router.put('/requestresetpsw', function (req, res) {
 
-  // winston.debug('REQUEST RESET PSW - EMAIL REQ BODY ', req.body);
+  winston.debug('REQUEST RESET PSW - EMAIL REQ BODY ', req.body);
 // auttype
   User.findOne({ email: req.body.email, status: 100
     // , authType: 'email_password' 
@@ -523,11 +523,11 @@ router.put('/requestresetpsw', function (req, res) {
       res.json({ success: false, msg: 'User not found.' });
     } else if (user) {
 
-      // winston.debug('REQUEST RESET PSW - USER FOUND ', user);
-      // winston.debug('REQUEST RESET PSW - USER FOUND - ID ', user._id);
+      winston.debug('REQUEST RESET PSW - USER FOUND ', user);
+      winston.debug('REQUEST RESET PSW - USER FOUND - ID ', user._id);
       var reset_psw_request_id = uniqid()
 
-      // winston.debug('REQUEST RESET PSW - UNIC-ID GENERATED ', reset_psw_request_id)
+      winston.debug('REQUEST RESET PSW - UNIC-ID GENERATED ', reset_psw_request_id)
 
       User.findByIdAndUpdate(user._id, { resetpswrequestid: reset_psw_request_id }, { new: true, upsert: true }, function (err, updatedUser) {
 
@@ -541,7 +541,7 @@ router.put('/requestresetpsw', function (req, res) {
           return res.status(404).send({ success: false, msg: 'User not found' });
         }
 
-        // winston.debug('REQUEST RESET PSW - UPDATED USER ', updatedUser);
+        winston.debug('REQUEST RESET PSW - UPDATED USER ', updatedUser);
 
         if (updatedUser) {
 
@@ -559,7 +559,7 @@ router.put('/requestresetpsw', function (req, res) {
           return res.json({ success: true, user: updatedUser });
           // }
           // catch (err) {
-          //   // winston.debug('PSW RESET REQUEST - SEND EMAIL ERR ', err)
+          //   winston.debug('PSW RESET REQUEST - SEND EMAIL ERR ', err)
           // }
 
         }
@@ -574,8 +574,8 @@ router.put('/requestresetpsw', function (req, res) {
  * *** RESET PSW ***
  */
 router.put('/resetpsw/:resetpswrequestid', function (req, res) {
-  // winston.debug("--> RESET PSW - REQUEST ID", req.params.resetpswrequestid);
-  // winston.debug("--> RESET PSW - NEW PSW ", req.body.password);
+  winston.debug("--> RESET PSW - REQUEST ID", req.params.resetpswrequestid);
+  winston.debug("--> RESET PSW - NEW PSW ", req.body.password);
 
   User.findOne({ resetpswrequestid: req.params.resetpswrequestid }, function (err, user) {
 
@@ -590,8 +590,8 @@ router.put('/resetpsw/:resetpswrequestid', function (req, res) {
     }
 
     if (user && req.body.password) {
-      // winston.debug('--> RESET PSW - User Found ', user);
-      // winston.debug('--> RESET PSW - User ID Found ', user._id);
+      winston.debug('--> RESET PSW - User Found ', user);
+      winston.debug('--> RESET PSW - User ID Found ', user._id);
 
       user.password = req.body.password;
       user.resetpswrequestid = '';
@@ -602,7 +602,7 @@ router.put('/resetpsw/:resetpswrequestid', function (req, res) {
           winston.error('--- > USER SAVE -ERROR ', err)
           return res.status(500).send({ success: false, msg: 'Error saving object.' });
         }
-        // winston.debug('--- > USER SAVED  ', saveUser)
+        winston.debug('--- > USER SAVED  ', saveUser)
 
         emailService.sendYourPswHasBeenChangedEmail(saveUser.email, saveUser.firstname, saveUser.lastname);
 
@@ -622,7 +622,7 @@ router.put('/resetpsw/:resetpswrequestid', function (req, res) {
  * if no
  */
 router.get('/checkpswresetkey/:resetpswrequestid', function (req, res) {
-  // winston.debug("--> CHECK RESET PSW REQUEST ID", req.params.resetpswrequestid);
+  winston.debug("--> CHECK RESET PSW REQUEST ID", req.params.resetpswrequestid);
 
   User.findOne({ resetpswrequestid: req.params.resetpswrequestid }, function (err, user) {
 

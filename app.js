@@ -275,14 +275,14 @@ if (process.env.ENABLE_ALTERNATIVE_CORS_MIDDLEWARE === "true") {
 // https://stackoverflow.com/questions/18710225/node-js-get-raw-request-body-using-express
 
 const JSON_BODY_LIMIT = process.env.JSON_BODY_LIMIT || '500KB';
-// winston.debug("JSON_BODY_LIMIT : " + JSON_BODY_LIMIT);
+winston.debug("JSON_BODY_LIMIT : " + JSON_BODY_LIMIT);
 
 app.use(bodyParser.json({limit: JSON_BODY_LIMIT,
   verify: function (req, res, buf) {
     // var url = req.originalUrl;
     // if (url.indexOf('/stripe/')) {
       req.rawBody = buf.toString();
-      // winston.debug("bodyParser verify stripe", req.rawBody);
+      winston.debug("bodyParser verify stripe", req.rawBody);
     // } 
   }
 }));
@@ -383,14 +383,14 @@ if (process.env.ROUTELOGGER_ENABLED==="true") {
 
       try {
         var projectid = req.projectid;
-        // winston.debug("RouterLogger projectIdSetter projectid:" + projectid);
+        winston.debug("RouterLogger projectIdSetter projectid:" + projectid);
 
       var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-      // winston.debug("fullUrl:"+ fullUrl);
-      // winston.debug(" req.get('host'):"+  req.get('host'));
+      winston.debug("fullUrl:"+ fullUrl);
+      winston.debug(" req.get('host'):"+  req.get('host'));
      
-      // winston.debug("req.get('origin'):" + req.get('origin'));
-      // winston.debug("req.get('referer'):" + req.get('referer'));
+      winston.debug("req.get('origin'):" + req.get('origin'));
+      winston.debug("req.get('referer'):" + req.get('referer'));
 
       var routerLogger = new RouterLogger({
         origin: req.get('origin'),
@@ -403,7 +403,7 @@ if (process.env.ROUTELOGGER_ENABLED==="true") {
         if (err) {
           winston.error('Error saving RouterLogger ', err)
         }
-        // winston.debug("RouterLogger saved "+ savedRouterLogger);
+        winston.debug("RouterLogger saved "+ savedRouterLogger);
         next();
       });
       }catch(e) {
@@ -425,7 +425,7 @@ app.get('/', function (req, res) {
 
 var projectIdSetter = function (req, res, next) {
   var projectid = req.params.projectid;
-  // winston.debug("projectIdSetter projectid: "+ projectid);
+  winston.debug("projectIdSetter projectid: "+ projectid);
 
   // if (projectid) {
     req.projectid = projectid;
@@ -436,25 +436,26 @@ var projectIdSetter = function (req, res, next) {
 
 
 
+
 var projectSetter = function (req, res, next) {
   var projectid = req.params.projectid;
-  // winston.debug("projectSetter projectid:" + projectid);
-// if(projectid != 'api') 
+  winston.debug("projectSetter projectid:" + projectid);
+
   if (projectid) {
     
     let q =  Project.findOne({_id: projectid, status: 100});
     if (cacheEnabler.project) { 
       q.cache(cacheUtil.longTTL, "projects:id:"+projectid)  //project_cache
-      // winston.debug('project cache enabled');
+      winston.debug('project cache enabled');
     }
     q.exec(function(err, project){
       if (err) {
         winston.warn("Problem getting project with id: " + projectid + " req.originalUrl:  " + req.originalUrl);
       }
 
-      // winston.debug("projectSetter project:" + project);
+      winston.debug("projectSetter project:" + project);
       if (!project) {
-        winston.warn("ProjectSetter project not found with id test: " + projectid);
+        winston.warn("ProjectSetter project not found with id: " + projectid);
         next();
       } else {
         req.project = project;
@@ -643,7 +644,7 @@ app.use(function (err, req, res, next) {
 // error handler
 app.use((err, req, res, next) => {
 
-  // winston.debug("err.name", err.name)
+  winston.debug("err.name", err.name)
   if (err.name === "IpDeniedError") {
     winston.info("IpDeniedError");
     return res.status(401).json({ err: "error ip filter" });

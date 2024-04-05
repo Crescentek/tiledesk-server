@@ -39,8 +39,8 @@ describe('KeysRoute', () => {
                         .auth(email, pwd)
                         .send()
                         .end((err, res) => {
-                            //// console.log("res",  res);
-                            // console.log("res.body",  res.body);
+                            //console.log("res",  res);
+                            console.log("res.body",  res.body);
                             res.should.have.status(200);
                             res.body.should.be.a('object');
                             expect(res.body.jwtSecret).to.not.equal(null);                                                                              

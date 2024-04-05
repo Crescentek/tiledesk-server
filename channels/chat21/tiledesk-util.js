@@ -23,16 +23,16 @@ class TiledeskUtil {
         var parts = text.split(split_pattern)
         for (var i=0; i < parts.length; i++) {
             let p = parts[i]
-            // winston.debug("part: " + p)
+            winston.debug("part: " + p)
             if (i % 2 != 0) {
             // split command
-            // winston.debug("split command: " + p)
+            winston.debug("split command: " + p)
             var split_parts = p.split(":")
             var wait_time = 1000
             if (split_parts.length == 2) {
                 wait_time = split_parts[1]
             }
-            // winston.debug("wait time: " + wait_time)
+            winston.debug("wait time: " + wait_time)
             var command = {}
             command.type = "wait"
             command.time = parseInt(wait_time, 10)
@@ -76,9 +76,9 @@ class TiledeskUtil {
         // or with optional size:
         // \image:100-100:http://image.com/image.gif
         var image_pattern = /^\\image:.*/mg;
-        // // console.log("Searching images with image_pattern: ", image_pattern)
+        // console.log("Searching images with image_pattern: ", image_pattern)
         var images = text.match(image_pattern);
-        // // console.log("images: ", images)
+        // console.log("images: ", images)
         if (images && images.length > 0) {
           const image_text = images[0]
           var text = text.replace(image_text,"").trim()
@@ -92,8 +92,8 @@ class TiledeskUtil {
           if (image_size_text && image_size_text.length == 3) {
             image_url = image_size_text[2]
             let image_size = image_size_text[1]
-            // winston.debug("size: " + image_size)
-            // winston.debug("imageì url: " + image_url)
+            winston.debug("size: " + image_size)
+            winston.debug("imageì url: " + image_url)
             let split_pattern = /-/
             let size_splits = image_size.split(split_pattern)
             if (size_splits.length == 2) {
@@ -126,7 +126,7 @@ class TiledeskUtil {
             button[TYPE_KEY] = "text"
             button["value"] = button_text
             buttons.push(button)
-            // winston.debug("Added button: " + button_text)
+            winston.debug("Added button: " + button_text)
           });
           if (reply.message[ATTRIBUTES_KEY] == null) {
             reply.message[ATTRIBUTES_KEY] = {}
@@ -143,10 +143,10 @@ class TiledeskUtil {
         var webhooks = text.match(webhook_pattern);
         if (webhooks && webhooks.length > 0) {
           const webhook_text = webhooks[0]
-          // winston.debug("webhook_text: " + webhook_text)
+          winston.debug("webhook_text: " + webhook_text)
           text = text.replace(webhook_text,"").trim()
           const webhook_url = webhook_text.replace("\\webhook:", "")
-          // winston.debug("webhook_url " + webhook_url)
+          winston.debug("webhook_url " + webhook_url)
           reply.webhook = webhook_url
         }
   

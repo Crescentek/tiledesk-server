@@ -128,7 +128,7 @@ var Faq_kbSchema = new Schema({
 );
 
 Faq_kbSchema.virtual('fullName').get(function () {
-  // // winston.debug("faq_kb fullName virtual called");
+  // winston.debug("faq_kb fullName virtual called");
   return (this.name);
 });
 
@@ -143,7 +143,7 @@ var faq_kb = mongoose.model('faq_kb', Faq_kbSchema);
 
 if (process.env.MONGOOSE_SYNCINDEX) {
   faq_kb.syncIndexes();
-  // winston.info("faq_kb syncIndexes")
+  winston.info("faq_kb syncIndexes")
 }
 
 

@@ -12,12 +12,12 @@ const departmentEvent = new DepartmentEvent();
 DepartmentEvent.prototype.callNextEvent = function(nextEventName, res) {
   var operatorSelectedEvent = res.result;
   var count = departmentEvent.listenerCount(nextEventName);
-  // winston.debug('count', count);   
+  winston.debug('count', count);   
   if (count<1) {
-    // winston.debug('operator.select count <1 return default resolve');   
+    winston.debug('operator.select count <1 return default resolve');   
     return res.resolve(operatorSelectedEvent);
   } else {
-    // winston.debug('operator.select count >1 launch ' + nextEventName);
+    winston.debug('operator.select count >1 launch ' + nextEventName);
     departmentEvent.emit(nextEventName, res);   
   }
 }

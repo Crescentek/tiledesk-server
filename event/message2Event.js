@@ -17,34 +17,34 @@ const message2Event = new Message2Event({
   wildcard: true,
 });
 
-// winston.debug("message2Event init");
+winston.debug("message2Event init");
 
 
 
 // messageEvent.on('message.create', function(message) {
 
-//   // winston.debug("message2Event message.create", message);
+//   winston.debug("message2Event message.create", message);
 
 //   message2Event.emit('message.create', message);
 
 //   if (message.status === MessageConstants.CHAT_MESSAGE_STATUS.RECEIVED) {
-//     // winston.debug("message2Event.emit message.received", message);
+//     winston.debug("message2Event.emit message.received", message);
 //     message2Event.emit('message.received', message);
 //   }
 
 //   if (message.status === MessageConstants.CHAT_MESSAGE_STATUS.SENDING) {
-//     // winston.debug("message2Event.emit message.sending", message);
+//     winston.debug("message2Event.emit message.sending", message);
 //     message2Event.emit('message.sending', message);
 //   }
 // });
 
 // messageEvent.on('message.create.first', function(message) {
-//   // winston.debug("message2Event.emit message.create.first", message);
+//   winston.debug("message2Event.emit message.create.first", message);
 //   message2Event.emit('message.create.first', message);
 // });
 
 // messageEvent.on('message.create.from.requester', function(message) {
-//   // winston.debug("message2Event.emit message.create.from.requester", message);
+//   winston.debug("message2Event.emit message.create.from.requester", message);
 //   message2Event.emit('message.create.from.requester', message);
 // });
 
@@ -54,7 +54,7 @@ const message2Event = new Message2Event({
 
 // messageEvent.on('message.update', function(message) {
 
-//   // winston.debug("message2Event message.update", message);
+//   winston.debug("message2Event message.update", message);
 
 //   message2Event.emit('message.update', message);
 

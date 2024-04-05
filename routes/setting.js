@@ -5,7 +5,7 @@ var router = express.Router();
 
 
 // router.get('/', function (req, res) {
-//   // console.log('Setting')
+//   console.log('Setting')
 //   Setting.findOne({}).
 //     exec(function (err, setting) {  
 //       res.json(setting);

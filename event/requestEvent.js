@@ -19,10 +19,10 @@ requestEvent.on('request.create.simple', function(request) {
 
 
     // TODO setImmediate here?
-    // winston.debug('requestEvent here', request);
-    // winston.debug('executin query populate on requestEvent');
+    winston.debug('requestEvent here', request);
+    winston.debug('executin query populate on requestEvent');
 
-    // winston.debug("request.create.simple");
+    winston.debug("request.create.simple");
     //no cache required here. because is always new (empty)
     request
         .populate(
@@ -41,7 +41,7 @@ requestEvent.on('request.create.simple', function(request) {
                 return requestEvent.emit('request.create', request);
             }
 
-            // winston.debug('emitting request.create', requestComplete.toObject());
+            winston.debug('emitting request.create', requestComplete.toObject());
 
             requestEvent.emit('request.create', requestComplete);
 
@@ -50,7 +50,7 @@ requestEvent.on('request.create.simple', function(request) {
         //   if (err) {
         //         winston.error('err', err);
         //   }
-        //   // winston.debug('requestComplete',requestComplete.toObject());
+        //   winston.debug('requestComplete',requestComplete.toObject());
         //   requestComplete.messages = messages;
         //   requestEvent.emit('request.create', requestComplete);
 

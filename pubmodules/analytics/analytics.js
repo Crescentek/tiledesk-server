@@ -20,8 +20,8 @@ var ObjectId = require('mongodb').ObjectId;
 
 router.get('/requests/count', function(req, res) {
   
-  // winston.debug(req.params);
-  // winston.debug("req.projectid",  req.projectid);    
+  winston.debug(req.params);
+  winston.debug("req.projectid",  req.projectid);    
  
     
   AnalyticResult.aggregate([
@@ -37,10 +37,10 @@ router.get('/requests/count', function(req, res) {
    
 //, function (err, result) {
       if (err) {
-          // winston.debug(err);
+          winston.debug(err);
           return res.status(500).send({success: false, msg: 'Error getting analytics.'});
         }
-        // winston.debug(result);
+        winston.debug(result);
 
         res.json(result);
   });
@@ -51,8 +51,8 @@ router.get('/requests/count', function(req, res) {
 
 router.get('/requests/aggregate/status', function(req, res) {
   
-  // winston.debug(req.params);
-  // winston.debug("req.projectid",  req.projectid);    
+  winston.debug(req.params);
+  winston.debug("req.projectid",  req.projectid);    
  
     
   AnalyticResult.aggregate([
@@ -68,10 +68,10 @@ router.get('/requests/aggregate/status', function(req, res) {
    
 //, function (err, result) {
       if (err) {
-          // winston.debug(err);
+          winston.debug(err);
           return res.status(500).send({success: false, msg: 'Error getting analytics.'});
         }
-        // winston.debug(result);
+        winston.debug(result);
 
         res.json(result);
   });
@@ -122,11 +122,11 @@ router.get('/requests/aggregate/status', function(req, res) {
 
     
     
-  //   // winston.debug("QueryParams:", lastdays,req.query.department_id)
-  //   // winston.debug("Query", query)
+  //   winston.debug("QueryParams:", lastdays,req.query.department_id)
+  //   winston.debug("Query", query)
 
-  //   // winston.debug(req.params);
-  //   // winston.debug("req.projectid",  req.projectid);    
+  //   winston.debug(req.params);
+  //   winston.debug("req.projectid",  req.projectid);    
    
   //   AnalyticResult.aggregate([
   //       // { "$match": {"id_project": req.projectid } },
@@ -151,12 +151,12 @@ router.get('/requests/aggregate/status', function(req, res) {
      
   // //, function (err, result) {
   //       if (err) {
-  //           // winston.debug(err);
-  //           // winston.debug("ERR",err)
+  //           winston.debug(err);
+  //           winston.debug("ERR",err)
   //           return res.status(500).send({success: false, msg: 'Error getting analytics.'});
   //         }
-  //         // winston.debug(result);
-  //         // winston.debug("RES",result)
+  //         winston.debug(result);
+  //         winston.debug("RES",result)
   //         res.json(result);
   //   });
 
@@ -183,15 +183,15 @@ router.get('/requests/aggregate/status', function(req, res) {
     }
 
     if (req.query.participant) {
-      // winston.debug('req.query.participant', req.query.participant);
+      winston.debug('req.query.participant', req.query.participant);
       query.participants = req.query.participant;
     }
     
-    // winston.debug("QueryParams_LastDayCHART:", lastdays,req.query.department_id)
-    // winston.debug("Query_LastDayCHART", query)
+    winston.debug("QueryParams_LastDayCHART:", lastdays,req.query.department_id)
+    winston.debug("Query_LastDayCHART", query)
 
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
     AnalyticResult.aggregate([
         // { "$match": {"id_project": req.projectid } },
@@ -216,12 +216,12 @@ router.get('/requests/aggregate/status', function(req, res) {
      
   //, function (err, result) {
         if (err) {
-            // winston.debug(err);
-            // winston.debug("ERR",err)
+            winston.debug(err);
+            winston.debug("ERR",err)
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
-          // winston.debug("RESULT",result)
+          winston.debug(result);
+          winston.debug("RESULT",result)
           res.json(result);
     });
 
@@ -250,15 +250,15 @@ router.get('/requests/aggregate/status', function(req, res) {
     }
 
     if (req.query.participant) {
-      // winston.debug('req.query.participant', req.query.participant);
+      winston.debug('req.query.participant', req.query.participant);
       query.participants = req.query.participant;
     }
     
-    // winston.debug("QueryParams_LastDayCHART:", lastdays,req.query.department_id)
-    // winston.debug("Query_LastDayCHART", query)
+    winston.debug("QueryParams_LastDayCHART:", lastdays,req.query.department_id)
+    winston.debug("Query_LastDayCHART", query)
 
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
     AnalyticResult.aggregate([
         // { "$match": {"id_project": req.projectid } },
@@ -284,12 +284,12 @@ router.get('/requests/aggregate/status', function(req, res) {
      
   //, function (err, result) {
         if (err) {
-            // winston.debug(err);
-            // winston.debug("ERR",err)
+            winston.debug(err);
+            winston.debug("ERR",err)
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
-          // winston.debug("RESULT",result)
+          winston.debug(result);
+          winston.debug("RESULT",result)
           res.json(result);
     });
 
@@ -308,11 +308,11 @@ router.get('/requests/aggregate/status', function(req, res) {
       
     }
     
-    // winston.debug("QueryParams_MonthCHART:", req.query.department_id)
-    // winston.debug("Query_LastDayCHART", query)
+    winston.debug("QueryParams_MonthCHART:", req.query.department_id)
+    winston.debug("Query_LastDayCHART", query)
 
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
     AnalyticResult.aggregate([
          { "$match":  query},
@@ -337,12 +337,12 @@ router.get('/requests/aggregate/status', function(req, res) {
      
   //, function (err, result) {
         if (err) {
-            // winston.debug(err);
-            // winston.debug("ERR",err)
+            winston.debug(err);
+            winston.debug("ERR",err)
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
-          // winston.debug("RESULT",result)
+          winston.debug(result);
+          winston.debug("RESULT",result)
           res.json(result);
     });
 
@@ -360,11 +360,11 @@ router.get('/requests/aggregate/status', function(req, res) {
       
     }
     
-    //// winston.debug("QueryParams_WeekCHART:", lastdays,req.query.department_id)
-    //// winston.debug("Query_LastDayCHART", query)
+    //winston.debug("QueryParams_WeekCHART:", lastdays,req.query.department_id)
+    //winston.debug("Query_LastDayCHART", query)
 
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
     AnalyticResult.aggregate([
          { "$match": {"id_project": req.projectid, $or:[ {preflight:false}, { preflight : { $exists: false } } ] } },
@@ -392,12 +392,12 @@ router.get('/requests/aggregate/status', function(req, res) {
      
   //, function (err, result) {
         if (err) {
-            // winston.debug(err);
-            // winston.debug("ERR",err)
+            winston.debug(err);
+            winston.debug("ERR",err)
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
-          // winston.debug("RESULT",result)
+          winston.debug(result);
+          winston.debug("RESULT",result)
           res.json(result);
     });
 
@@ -421,11 +421,11 @@ router.get('/requests/aggregate/status', function(req, res) {
   // ])
 
   router.get('/requests/aggregate/hours', function(req, res) {  
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
     let timezone = req.query.timezone || "+00:00";
-    // winston.debug("timezone", timezone);
+    winston.debug("timezone", timezone);
 
     AnalyticResult.aggregate([
         // { "$match": {"id_project": req.projectid } },
@@ -447,10 +447,10 @@ router.get('/requests/aggregate/status', function(req, res) {
      
   //, function (err, result) {
         if (err) {
-            // winston.debug(err);
+            winston.debug(err);
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
+          winston.debug(result);
 
           res.json(result);
     });
@@ -475,11 +475,11 @@ router.get('/requests/aggregate/status', function(req, res) {
 //     { "$sort": {"_id":-1}}
 // ])
   router.get('/requests/aggregate/dayoftheweek/hours', function(req, res) {  
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);  
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);  
 
     let timezone = req.query.timezone || "+00:00";
-    // winston.debug("timezone", timezone);
+    winston.debug("timezone", timezone);
 
     AnalyticResult.aggregate([
         // { "$match": {"id_project": req.projectid } },
@@ -500,10 +500,10 @@ router.get('/requests/aggregate/status', function(req, res) {
 
      
         if (err) {
-            // winston.debug(err);
+            winston.debug(err);
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
+          winston.debug(result);
 
           res.json(result);
     });
@@ -528,8 +528,8 @@ router.get('/requests/aggregate/status', function(req, res) {
     
   router.get('/requests/waiting', function(req, res) {
   
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
     var last = 30 * 24 * 60 * 60;
       
@@ -549,10 +549,10 @@ router.get('/requests/aggregate/status', function(req, res) {
       .exec(function(err, result) {
 
           if (err) {
-            // winston.debug(err);
+            winston.debug(err);
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
+          winston.debug(result);
 
           res.json(result);
     });
@@ -578,8 +578,8 @@ router.get('/requests/aggregate/status', function(req, res) {
 
   router.get('/requests/waiting/day/last', function(req, res) {
   
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
       
     AnalyticResult.aggregate([
@@ -595,10 +595,10 @@ router.get('/requests/aggregate/status', function(req, res) {
       .exec(function(err, result) {
 
           if (err) {
-            // winston.debug(err);
+            winston.debug(err);
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
+          winston.debug(result);
 
           res.json(result);
     });
@@ -628,16 +628,16 @@ router.get('/requests/aggregate/status', function(req, res) {
     }
 
     if (req.query.participant) {
-      // winston.debug('req.query.participant', req.query.participant);
+      winston.debug('req.query.participant', req.query.participant);
       query.participants = req.query.participant;
     }
 
     
-    // winston.debug("QueryParams_AvgTime:", lastdays,req.query.department_id)
-    // winston.debug("Query_AvgTIME", query)
+    winston.debug("QueryParams_AvgTime:", lastdays,req.query.department_id)
+    winston.debug("Query_AvgTIME", query)
 
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
       
     AnalyticResult.aggregate([
@@ -659,11 +659,11 @@ router.get('/requests/aggregate/status', function(req, res) {
       .exec(function(err, result) {
 
           if (err) {
-            // winston.debug(err);
+            winston.debug(err);
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
-          // winston.debug("RES",result)
+          winston.debug(result);
+          winston.debug("RES",result)
           res.json(result);
     });
 
@@ -673,8 +673,8 @@ router.get('/requests/aggregate/status', function(req, res) {
 
   router.get('/requests/waiting/month', function(req, res) {
   
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
       
     AnalyticResult.aggregate([
@@ -694,10 +694,10 @@ router.get('/requests/aggregate/status', function(req, res) {
       .exec(function(err, result) {
 
           if (err) {
-            // winston.debug(err);
+            winston.debug(err);
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
+          winston.debug(result);
 
           res.json(result);
     });
@@ -726,8 +726,8 @@ router.get('/requests/aggregate/status', function(req, res) {
 
   router.get('/requests/duration', function(req, res) {
   
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
       
     AnalyticResult.aggregate([
@@ -746,10 +746,10 @@ router.get('/requests/aggregate/status', function(req, res) {
       .exec(function(err, result) {
 
           if (err) {
-            // winston.debug(err);
+            winston.debug(err);
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
+          winston.debug(result);
 
           res.json(result);
     });
@@ -797,16 +797,16 @@ router.get('/requests/aggregate/status', function(req, res) {
     }
     
     if (req.query.participant) {
-      // winston.debug('req.query.participant', req.query.participant);
+      winston.debug('req.query.participant', req.query.participant);
       query.participants = req.query.participant;
     }
 
 
-    // winston.debug("QueryParams_DurationTIME:", lastdays,req.query.department_id)
-    // winston.debug("Query_DurationTIME", query)
+    winston.debug("QueryParams_DurationTIME:", lastdays,req.query.department_id)
+    winston.debug("Query_DurationTIME", query)
 
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
       
     AnalyticResult.aggregate([
@@ -828,10 +828,10 @@ router.get('/requests/aggregate/status', function(req, res) {
       .exec(function(err, result) {
 
           if (err) {
-            // winston.debug(err);
+            winston.debug(err);
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
+          winston.debug(result);
 
           res.json(result);
     });
@@ -841,8 +841,8 @@ router.get('/requests/aggregate/status', function(req, res) {
 
   router.get('/requests/duration/month', function(req, res) {
   
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
       
     AnalyticResult.aggregate([
@@ -863,10 +863,10 @@ router.get('/requests/aggregate/status', function(req, res) {
       .exec(function(err, result) {
 
           if (err) {
-            // winston.debug(err);
+            winston.debug(err);
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
+          winston.debug(result);
 
           res.json(result);
     });
@@ -879,8 +879,8 @@ router.get('/requests/aggregate/status', function(req, res) {
     
   router.get('/requests/satisfaction', function(req, res) {
   
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
       
     AnalyticResult.aggregate([
@@ -895,10 +895,10 @@ router.get('/requests/aggregate/status', function(req, res) {
       .exec(function(err, result) {
 
           if (err) {
-            // winston.debug(err);
+            winston.debug(err);
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
+          winston.debug(result);
 
           res.json(result);
     });
@@ -926,17 +926,17 @@ router.get('/requests/aggregate/status', function(req, res) {
     }
     
     if (req.query.participant) {
-      // winston.debug('req.query.participant', req.query.participant);
+      winston.debug('req.query.participant', req.query.participant);
       query.participants = req.query.participant;
     }
 
 
     
-    // winston.debug("QueryParams_SatisfactionTIME:", lastdays,req.query.department_id)
-    // winston.debug("Query_SatisfactionTIME", query)
+    winston.debug("QueryParams_SatisfactionTIME:", lastdays,req.query.department_id)
+    winston.debug("Query_SatisfactionTIME", query)
 
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
       
     AnalyticResult.aggregate([
@@ -958,10 +958,10 @@ router.get('/requests/aggregate/status', function(req, res) {
       .exec(function(err, result) {
 
           if (err) {
-            // winston.debug(err);
+            winston.debug(err);
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
+          winston.debug(result);
 
           res.json(result);
     });
@@ -971,8 +971,8 @@ router.get('/requests/aggregate/status', function(req, res) {
 
   router.get('/requests/satisfaction/month', function(req, res) {
   
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
       
     AnalyticResult.aggregate([
@@ -992,10 +992,10 @@ router.get('/requests/aggregate/status', function(req, res) {
       .exec(function(err, result) {
 
           if (err) {
-            // winston.debug(err);
+            winston.debug(err);
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
+          winston.debug(result);
 
           res.json(result);
     });
@@ -1007,8 +1007,8 @@ router.get('/requests/aggregate/status', function(req, res) {
 
 router.get('/requests/hasBot/count', function(req, res) {
   
-  // winston.debug(req.params);
-  // winston.debug("req.projectid",  req.projectid);    
+  winston.debug(req.params);
+  winston.debug("req.projectid",  req.projectid);    
  
     
   AnalyticResult.aggregate([
@@ -1024,10 +1024,10 @@ router.get('/requests/hasBot/count', function(req, res) {
    
 //, function (err, result) {
       if (err) {
-          // winston.debug(err);
+          winston.debug(err);
           return res.status(500).send({success: false, msg: 'Error getting analytics.'});
         }
-        // winston.debug(result);
+        winston.debug(result);
 
         res.json(result);
   });
@@ -1057,11 +1057,11 @@ router.get('/requests/hasBot/count', function(req, res) {
       
     }
     
-    // winston.debug("QueryParams_LastDayCHART:", lastdays,req.query.department_id)
-    // winston.debug("Query_LastDayCHART", query)
+    winston.debug("QueryParams_LastDayCHART:", lastdays,req.query.department_id)
+    winston.debug("Query_LastDayCHART", query)
 
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
     AnalyticResult.aggregate([
         // { "$match": {"id_project": req.projectid } },
@@ -1087,12 +1087,12 @@ router.get('/requests/hasBot/count', function(req, res) {
      
   //, function (err, result) {
         if (err) {
-            // winston.debug(err);
-            // winston.debug("ERR",err)
+            winston.debug(err);
+            winston.debug("ERR",err)
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
-          // winston.debug("RESULT",result)
+          winston.debug(result);
+          winston.debug("RESULT",result)
           res.json(result);
     });
 
@@ -1118,11 +1118,11 @@ router.get('/requests/hasBot/count', function(req, res) {
        
      }
      
-     // winston.debug("QueryParams_LastDayCHART:", lastdays,req.query.department_id)
-     // winston.debug("Query_LastDayCHART", query)
+     winston.debug("QueryParams_LastDayCHART:", lastdays,req.query.department_id)
+     winston.debug("Query_LastDayCHART", query)
  
-     // winston.debug(req.params);
-     // winston.debug("req.projectid",  req.projectid);    
+     winston.debug(req.params);
+     winston.debug("req.projectid",  req.projectid);    
     
      AnalyticResult.aggregate([
          // { "$match": {"id_project": req.projectid } },
@@ -1145,12 +1145,12 @@ router.get('/requests/hasBot/count', function(req, res) {
       
    //, function (err, result) {
          if (err) {
-             // winston.debug(err);
-             // winston.debug("ERR",err)
+             winston.debug(err);
+             winston.debug("ERR",err)
              return res.status(500).send({success: false, msg: 'Error getting analytics.'});
            }
-           // winston.debug(result);
-           // winston.debug("RESULT",result)
+           winston.debug(result);
+           winston.debug("RESULT",result)
            res.json(result);
      });
  
@@ -1166,8 +1166,8 @@ router.get('/requests/hasBot/count', function(req, res) {
 
 router.get('/project_users/count', function(req, res) {
   
-  // winston.debug(req.params);
-  // winston.debug("req.projectid: "+  req.projectid);    
+  winston.debug(req.params);
+  winston.debug("req.projectid: "+  req.projectid);    
  
   AnalyticProject_UsersResult.aggregate([     
        { "$match": {"id_project":new ObjectId(req.projectid), role: { $in : [RoleConstants.GUEST, RoleConstants.USER]}, status: "active", "createdAt" : { $gte : new Date((new Date().getTime() - (30 * 24 * 60 * 60 * 1000))) }} },
@@ -1176,10 +1176,10 @@ router.get('/project_users/count', function(req, res) {
   ])
     .exec(function(err, result) {   
       if (err) {
-          // winston.debug(err);
+          winston.debug(err);
           return res.status(500).send({success: false, msg: 'Error getting analytics.'});
         }
-        // winston.debug(result);
+        winston.debug(result);
 
         res.json(result);
   });
@@ -1203,10 +1203,10 @@ router.get('/project_users/count', function(req, res) {
     let query={"id_project":new ObjectId(req.projectid), role: { $in : [RoleConstants.GUEST, RoleConstants.USER]}, status: "active", "createdAt" : { $gte : new Date((new Date().getTime() - (lastdays * 24 * 60 * 60 * 1000))) }}
   
     
-    // winston.debug("Query_LastDayCHART", query)
+    winston.debug("Query_LastDayCHART", query)
 
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
     AnalyticProject_UsersResult.aggregate([
         // { "$match": {"id_project": req.projectid } },
@@ -1231,12 +1231,12 @@ router.get('/project_users/count', function(req, res) {
      
   //, function (err, result) {
         if (err) {
-            // winston.debug(err);
-            // winston.debug("ERR",err)
+            winston.debug(err);
+            winston.debug("ERR",err)
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
-          // winston.debug("RESULT",result)
+          winston.debug(result);
+          winston.debug("RESULT",result)
           res.json(result);
     });
 
@@ -1247,10 +1247,10 @@ router.get('/project_users/count', function(req, res) {
     
     let query={"id_project": new ObjectId(req.projectid), role: { $in : [RoleConstants.GUEST, RoleConstants.USER]}, status: "active"}
       
-    // winston.debug("Query_LastDayCHART", query)
+    winston.debug("Query_LastDayCHART", query)
 
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
     AnalyticProject_UsersResult.aggregate([
          { "$match":  query},
@@ -1275,12 +1275,12 @@ router.get('/project_users/count', function(req, res) {
      
   //, function (err, result) {
         if (err) {
-            // winston.debug(err);
-            // winston.debug("ERR",err)
+            winston.debug(err);
+            winston.debug("ERR",err)
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
-          // winston.debug("RESULT",result)
+          winston.debug(result);
+          winston.debug("RESULT",result)
           res.json(result);
     });
 
@@ -1289,8 +1289,8 @@ router.get('/project_users/count', function(req, res) {
   router.get('/project_users/aggregate/week', function(req, res) {
           
 
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
     AnalyticProject_UsersResult.aggregate([
          { "$match": {"id_project": new ObjectId(req.projectid), role: { $in : [RoleConstants.GUEST, RoleConstants.USER]}, status: "active" } },
@@ -1318,12 +1318,12 @@ router.get('/project_users/count', function(req, res) {
      
   //, function (err, result) {
         if (err) {
-            // winston.debug(err);
-            // winston.debug("ERR",err)
+            winston.debug(err);
+            winston.debug("ERR",err)
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
-          // winston.debug("RESULT",result)
+          winston.debug(result);
+          winston.debug("RESULT",result)
           res.json(result);
     });
 
@@ -1345,8 +1345,8 @@ router.get('/project_users/count', function(req, res) {
 
 router.get('/messages/count', function(req, res) {
   
-  // winston.debug(req.params);
-  // winston.debug("req.projectid: "+  req.projectid);    
+  winston.debug(req.params);
+  winston.debug("req.projectid: "+  req.projectid);    
   
   var query = {"id_project":req.projectid, "createdAt" : { $gte : new Date((new Date().getTime() - (30 * 24 * 60 * 60 * 1000))) }};
 
@@ -1367,7 +1367,7 @@ router.get('/messages/count', function(req, res) {
   }
 
 
-  // winston.debug("query ", query);    
+  winston.debug("query ", query);    
     
   AnalyticMessagesResult.aggregate([     
       { "$match":query},
@@ -1376,10 +1376,10 @@ router.get('/messages/count', function(req, res) {
   ])
     .exec(function(err, result) {   
       if (err) {
-          // winston.debug(err);
+          winston.debug(err);
           return res.status(500).send({success: false, msg: 'Error getting analytics.'});
         }
-        // winston.debug(result);
+        winston.debug(result);
 
         res.json(result);
   });
@@ -1411,10 +1411,10 @@ router.get('/messages/count', function(req, res) {
     }
 
     
-    // winston.debug("Query_LastDayCHART", query)
+    winston.debug("Query_LastDayCHART", query)
 
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
     AnalyticMessagesResult.aggregate([       
         { $match: query },
@@ -1434,12 +1434,12 @@ router.get('/messages/count', function(req, res) {
 
      
         if (err) {
-            // winston.debug(err);
-            // winston.debug("ERR",err)
+            winston.debug(err);
+            winston.debug("ERR",err)
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
-          // winston.debug("RESULT",result)
+          winston.debug(result);
+          winston.debug("RESULT",result)
           res.json(result);
     });
 
@@ -1459,10 +1459,10 @@ router.get('/messages/count', function(req, res) {
         query.recipient = req.query.recipient;
     }
       
-    // winston.debug("Query_LastDayCHART", query)
+    winston.debug("Query_LastDayCHART", query)
 
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
     AnalyticMessagesResult.aggregate([
          { "$match":  query},
@@ -1480,12 +1480,12 @@ router.get('/messages/count', function(req, res) {
     ])
       .exec(function(err, result) {
         if (err) {
-            // winston.debug(err);
-            // winston.debug("ERR",err)
+            winston.debug(err);
+            winston.debug("ERR",err)
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
-          // winston.debug("RESULT",result)
+          winston.debug(result);
+          winston.debug("RESULT",result)
           res.json(result);
     });
 
@@ -1494,8 +1494,8 @@ router.get('/messages/count', function(req, res) {
   router.get('/messages/aggregate/week', function(req, res) {
           
 
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
     let query={"id_project": req.projectid}
       
@@ -1527,12 +1527,12 @@ router.get('/messages/count', function(req, res) {
     ])
       .exec(function(err, result) {
         if (err) {
-            // winston.debug(err);
-            // winston.debug("ERR",err)
+            winston.debug(err);
+            winston.debug("ERR",err)
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
-          // winston.debug("RESULT",result)
+          winston.debug(result);
+          winston.debug("RESULT",result)
           res.json(result);
     });
 
@@ -1563,10 +1563,10 @@ router.get('/messages/count', function(req, res) {
     }
 
     
-    // winston.debug("Query_LastDayCHART", query)
+    winston.debug("Query_LastDayCHART", query)
 
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
     AnalyticMessagesResult.aggregate([       
         { $match: query },
@@ -1584,12 +1584,12 @@ router.get('/messages/count', function(req, res) {
 
      
         if (err) {
-            // winston.debug(err);
-            // winston.debug("ERR",err)
+            winston.debug(err);
+            winston.debug("ERR",err)
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
-          // winston.debug("RESULT",result)
+          winston.debug(result);
+          winston.debug("RESULT",result)
           res.json(result);
     });
 
@@ -1618,10 +1618,10 @@ router.get('/messages/count', function(req, res) {
    }
 
    
-   // winston.debug("Query_LastDayCHART", query)
+   winston.debug("Query_LastDayCHART", query)
 
-   // winston.debug(req.params);
-   // winston.debug("req.projectid",  req.projectid);    
+   winston.debug(req.params);
+   winston.debug("req.projectid",  req.projectid);    
   
    AnalyticMessagesResult.aggregate([       
        { $match: query },
@@ -1639,12 +1639,12 @@ router.get('/messages/count', function(req, res) {
 
     
        if (err) {
-           // winston.debug(err);
-           // winston.debug("ERR",err)
+           winston.debug(err);
+           winston.debug("ERR",err)
            return res.status(500).send({success: false, msg: 'Error getting analytics.'});
          }
-         // winston.debug(result);
-         // winston.debug("RESULT",result)
+         winston.debug(result);
+         winston.debug("RESULT",result)
          res.json(result);
    });
 
@@ -1680,10 +1680,10 @@ router.get('/messages/count', function(req, res) {
 
 
     
-    // winston.debug("Query_LastDayCHART", query)
+    winston.debug("Query_LastDayCHART", query)
 
-    // winston.debug(req.params);
-    // winston.debug("req.projectid",  req.projectid);    
+    winston.debug(req.params);
+    winston.debug("req.projectid",  req.projectid);    
    
     AnalyticEventsResult.aggregate([       
         { $match: query },
@@ -1704,12 +1704,12 @@ router.get('/messages/count', function(req, res) {
 
      
         if (err) {
-            // winston.debug(err);
-            // winston.debug("ERR",err)
+            winston.debug(err);
+            winston.debug("ERR",err)
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          // winston.debug(result);
-          // winston.debug("RESULT",result)
+          winston.debug(result);
+          winston.debug("RESULT",result)
           res.json(result);
     });
 
