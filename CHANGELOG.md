@@ -5,6 +5,37 @@
 🚀        IN PRODUCTION                        🚀
 (https://www.npmjs.com/package/@tiledesk/tiledesk-server/v/2.3.77) 
 
+# 2.7.6
+- Fix auth with admin token
+
+# 2.7.5
+- Added support for bot PRIVATE and PUB ket in auth.js
+
+# 2.7.4
+- Bug fix '\start' in rulesTrigger
+- SSO fix
+- Updated tybot-connector to 0.2.60
+- Updated project profile call whit super admin token
+- Updated user signup with super admin token
+
+# 2.7.3
+- Updated project profile call
+- Updated tybot-connector to 0.2.59
+
+# 2.7.2
+- Improved QuoteManager with kbs and chatbots (disabled)
+- Improved QuoteManager with AI multipliers
+
+# 2.7.1
+- Updated widget.json translation file
+- Improved widget White Label 
+
+# 2.7.0
+- Lead update queued
+- Updated tybot-connector to 0.2.57
+- Updated kb route
+- Added trainer job worker
+
 # 2.5.3
 - Updated whatsapp-connector to 0.1.64
 

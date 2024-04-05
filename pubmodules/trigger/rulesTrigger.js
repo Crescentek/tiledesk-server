@@ -686,6 +686,9 @@ class RulesTrigger {
 
             try {
     
+              winston.debug('triggerEventEmitter eventTrigger:', eventTrigger);
+
+
               winston.debug('runAction eventTrigger.eventSuccess:', eventTrigger.eventSuccess);
               var trigger = eventTrigger.trigger;         
               winston.debug('runAction trigger', trigger.toObject());
@@ -706,6 +709,16 @@ class RulesTrigger {
               var id_project = eventTrigger.event.id_project;
               winston.debug('runAction action id_project: ' + id_project);
   
+
+
+              var startText = "/start";
+              // var startText = "\\start";
+              if (action.parameters && action.parameters.text) {
+                startText = action.parameters.text;
+              }
+              winston.debug('runAction action startText: ' + startText);
+
+
               // reroute(request_id, id_project, nobot) {
               requestService.reroute(request_id, id_project).then(function(request) {
 
@@ -716,7 +729,7 @@ class RulesTrigger {
                   'system', 
                   'Bot',                                     
                   request_id,
-                  '\\start',
+                  startText, // /start controlla se chatbot nuovo manda /start altrimenti per i vecchi \start
                   id_project,
                   null,
                   {subtype:'info', updateconversation : false}
@@ -775,7 +788,7 @@ class RulesTrigger {
                     'system', 
                     'Bot',                                     
                     request_id,
-                    '\\start',
+                    '/start', // TODO CHANGE TO / start
                     id_project,
                     null,
                     {subtype:'info', updateconversation : false}
@@ -1025,7 +1038,8 @@ class RulesTrigger {
                if (eventAttributes.participants && eventAttributes.participants.length>0) { 
                 participants = eventAttributes.participants;
                 if (participants[0].indexOf("bot_")>-1) {
-                  text = "\\start";  //if participants is passed than the bot reply to the first message "welcome" so I changed "welcome" with "\start"
+                  // TODO CHANGE TO /start
+                  text = "/start";  //if participants is passed than the bot reply to the first message "welcome" so I changed "welcome" with "\start"
                 }              
                 // status = RequestConstants.ASSIGNED;
                 // console.log("eventAttributes.participants",eventAttributes.participants);
