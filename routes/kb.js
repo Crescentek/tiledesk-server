@@ -457,7 +457,7 @@ router.post('/qa', async (req, res) => {
     // }
 
     if (!data.gptkey) {
-        let gptkey = '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';
+        let gptkey = '';
         if (!gptkey) {
             return res.status(403).send({ success: false, error: "GPT apikey undefined" })
         }
@@ -660,7 +660,7 @@ async function scheduleScrape(resources) {
 async function startScrape(data) {
 
     if (!data.gptkey) {
-        let gptkey = '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';
+        let gptkey = '';
         if (!gptkey) {
             return { error: "GPT apikey undefined" }
         }
