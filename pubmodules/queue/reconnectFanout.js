@@ -33,7 +33,7 @@ function start() {
       return setTimeout(start, 1000);
     });
 
-    winston.info("[AMQP Fanout] connected");
+    // winston.info("[AMQP Fanout] connected");
     amqpConn = conn;
 
     whenConnected();
@@ -54,7 +54,7 @@ function startPublisher() {
       winston.error("[AMQP Fanout] channel error", err);
     });
     ch.on("close", function() {
-      winston.info("[AMQP Fanout] channel closed");
+      // winston.info("[AMQP Fanout] channel closed");
     });
 
     pubChannel = ch;
@@ -96,7 +96,7 @@ function startWorker() {
         winston.error("[AMQP Fanout] channel error", err);
       });
       ch.on("close", function() {
-        winston.info("[AMQP Fanout] channel closed");
+        // winston.info("[AMQP Fanout] channel closed");
       });
       ch.prefetch(10);//leggila da env
 
@@ -115,28 +115,28 @@ function startWorker() {
         
       //MOD4 
         ch.bindQueue(_ok.queue, exchange, '', {}, function(err3, oka) {
-          winston.info("Queue Fanout bind: "+_ok.queue+ " err: "+err3);
-          winston.info("Data Queue Fanout", oka)
+          // winston.info("Queue Fanout bind: "+_ok.queue+ " err: "+err3);
+          // winston.info("Data Queue Fanout", oka)
         });
 
         // ch.bindQueue(_ok.queue, exchange, "request_create", {}, function(err3, oka) {
-        //     console.log("queue bind: "+_ok.queue+ " err: "+err3+ " key: request_create");
-        //     console.log("data queue", oka)
+        //     // console.log("queue bind: "+_ok.queue+ " err: "+err3+ " key: request_create");
+        //     // console.log("data queue", oka)
         // });
         // ch.bindQueue(_ok.queue, exchange, "request_update", {}, function(err3, oka) {
-        //     console.log("queue bind: "+_ok.queue+ " err: "+err3+ " key: request_update");
-        //     console.log("data queue", oka)
+        //     // console.log("queue bind: "+_ok.queue+ " err: "+err3+ " key: request_update");
+        //     // console.log("data queue", oka)
         // });
         // ch.bindQueue(_ok.queue, exchange, "message_create", {}, function(err3, oka) {
-        //       console.log("queue bind: "+_ok.queue+ " err: "+err3+ " key: message_create");
-        //       console.log("data queue", oka)
+        //       // console.log("queue bind: "+_ok.queue+ " err: "+err3+ " key: message_create");
+        //       // console.log("data queue", oka)
         // });
         // ch.bindQueue(_ok.queue, exchange, "project_user_update", {}, function(err3, oka) {
-        //   console.log("queue bind: "+_ok.queue+ " err: "+err3+ " key: project_user_update");
-        //   console.log("data queue", oka)
+        //   // console.log("queue bind: "+_ok.queue+ " err: "+err3+ " key: project_user_update");
+        //   // console.log("data queue", oka)
         // });
         ch.consume(_ok.queue, processMsg, { noAck: false });
-        winston.info("Worker Fanout is started");
+        // winston.info("Worker Fanout is started");
       });
   
 
@@ -159,29 +159,29 @@ function work(msg, cb) {
   const message_string = msg.content.toString();
   const topic = msg.fields.routingKey //.replace(/[.]/g, '/');
 
-  winston.debug("Got Fanout msg topic:" + topic);
+  // winston.debug("Got Fanout msg topic:" + topic);
   
-  winston.debug("Got Fanout msg:"+ message_string +  " topic:" + topic);
+  // winston.debug("Got Fanout msg:"+ message_string +  " topic:" + topic);
 
   if (topic === 'request_create') {
-    winston.debug("reconnectfanout here topic:" + topic);
-    winston.debug("reconnect request.update")
+    // winston.debug("reconnectfanout here topic:" + topic);
+    // winston.debug("reconnect request.update")
     requestEvent.emit('request.create.queue.pubsub', JSON.parse(message_string));
   }
   if (topic === 'request_update') {
-    winston.debug("reconnectfanout here topic:" + topic);
+    // winston.debug("reconnectfanout here topic:" + topic);
     requestEvent.emit('request.update.queue.pubsub',  JSON.parse(message_string));
   }
   if (topic === 'message_create') {
-    winston.debug("reconnectfanout here topic:" + topic);
+    // winston.debug("reconnectfanout here topic:" + topic);
     messageEvent.emit('message.create.queue.pubsub', JSON.parse(message_string));
   }
   if (topic === 'project_user_update') {
-    winston.debug("reconnectfanout here topic:" + topic);
+    // winston.debug("reconnectfanout here topic:" + topic);
     authEvent.emit('project_user.update.queue.pubsub', JSON.parse(message_string));
   }
   if (topic === 'faqbot_update') {
-    winston.debug("reconnectfanout here topic faqbot_update:" + topic);
+    // winston.debug("reconnectfanout here topic faqbot_update:" + topic);
     botEvent.emit('faqbot.update.queue.pubsub', JSON.parse(message_string));
   }
   cb(true);
@@ -243,7 +243,7 @@ function listen() {
           }
         }
         var dat = {updatedProject_userPopulated: data.updatedProject_userPopulated, req: {user: user, body: body}}; //remove request
-        winston.debug("dat",dat);
+        // winston.debug("dat",dat);
 
       publish(exchange, "project_user_update", Buffer.from(JSON.stringify(dat)));
     });
@@ -252,9 +252,9 @@ function listen() {
 
   botEvent.on('faqbot.update', function(bot) {
     setImmediate(() => {
-      winston.debug("reconnect faqbot.update")
+      // winston.debug("reconnect faqbot.update")
       publish(exchange, "faqbot_update", Buffer.from(JSON.stringify(bot)));
-      winston.debug("reconnect fan: "+ Buffer.from(JSON.stringify(bot)))
+      // winston.debug("reconnect fan: "+ Buffer.from(JSON.stringify(bot)))
     });
   });
 
@@ -268,6 +268,6 @@ if (process.env.QUEUE_ENABLED === "true") {
     botEvent.queueEnabled = true;
     listen();
     start();
-    winston.info("Queue Fanout enabled. endpoint: " + url );
+    // winston.info("Queue Fanout enabled. endpoint: " + url );
 } 
 

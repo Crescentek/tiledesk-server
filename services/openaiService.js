@@ -2,7 +2,7 @@ var winston = require('../config/winston');
 const axios = require("axios").default;
 require('dotenv').config();
 
-let openai_endpoint = process.env.OPENAI_ENDPOINT;
+let openai_endpoint = 'https://api.openai.com/v1';
 let kb_endpoint = process.env.KB_ENDPOINT;
 let kb_endpoint_dev = process.env.KB_ENDPOINT_DEV;
 
@@ -79,7 +79,6 @@ class OpenaiService {
 
   ask(data) {
     winston.debug("[OPENAI SERVICE] kb endpoint: " + kb_endpoint);
-
     return new Promise((resolve, reject) => {
 
       axios({
@@ -142,7 +141,6 @@ class OpenaiService {
 
   askNamespace(data) {
     winston.debug("[OPENAI SERVICE] kb endpoint: " + kb_endpoint_dev);
-
     return new Promise((resolve, reject) => {
 
       axios({

@@ -164,7 +164,7 @@ describe('KbSettingsRoute', () => {
                             chai.request(server)
                                 .put('/' + savedProject._id + "/kbsettings/" + res.body._id)
                                 .auth(email, pwd)
-                                .send({ gptkey: "sk-12345678" })
+                                .send({ gptkey: "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" })
                                 .end((err, res) => {
                                     if (log) { console.log("add kb to kb settings res.body: ", res.body); }
                                     res.should.have.status(200);

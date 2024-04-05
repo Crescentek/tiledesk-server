@@ -62,7 +62,7 @@ describe('Chat21WebHook', () => {
                 .post('/chat21/requests')
                 .send(webhookContent)
                 .end((err, res) => {
-                    console.log("res.body",  res.body);
+                    // console.log("res.body",  res.body);
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.property('request_id').eql(request_id);
@@ -141,7 +141,7 @@ describe('Chat21WebHook', () => {
                   .post('/chat21/requests')
                   .send(webhookContent)
                   .end((err, res) => {
-                      console.log("res.body",  res.body);
+                      // console.log("res.body",  res.body);
                       res.should.have.status(200);
                       res.body.should.be.a('object');
                       res.body.should.have.property('request_id').eql(request_id);
@@ -158,7 +158,7 @@ describe('Chat21WebHook', () => {
                         expect(message.sender).to.equal(savedUser._id.toString());    
                         expect(message.recipient).to.equal(request_id);     
                         Lead.findById(res.body.lead, function (err, lead){
-                            console.log("lead.attributes", JSON.stringify(lead.attributes));
+                            // console.log("lead.attributes", JSON.stringify(lead.attributes));
                             expect(lead.fullname).to.equal("userFullname");   
                             expect(lead.email).to.equal("user@email.com");   
                             expect(lead.attributes.projectId).to.equal(savedProject._id.toString());   
@@ -210,7 +210,7 @@ describe('Chat21WebHook', () => {
                                 .post('/chat21/requests')
                                 .send(webhookContent)
                                 .end((err, res) => {
-                                    console.log("res.body",  res.body);
+                                    // console.log("res.body",  res.body);
                                     res.should.have.status(200);
                                     res.body.should.be.a('object');
                                     res.body.should.have.property('request_id').eql(request_id);
@@ -281,7 +281,7 @@ describe('Chat21WebHook', () => {
                                 .post('/chat21/requests')
                                 .send(webhookContent)
                                 .end((err, res) => {
-                                    console.log("res.body",  res.body);
+                                    // console.log("res.body",  res.body);
                                     res.should.have.status(200);
                                     res.body.should.be.a('object');
                                     res.body.should.have.property('request_id').eql(request_id);
@@ -351,8 +351,8 @@ describe('Chat21WebHook', () => {
                         .post('/chat21/requests')
                         .send(webhookContent)
                         .end((err, res) => {
-                            //console.log("res",  res);
-                            console.log("res.body",  res.body);
+                            //// console.log("res",  res);
+                            // console.log("res.body",  res.body);
                             res.should.have.status(200);
                             res.body.should.be.a('object');
                             res.body.should.have.property('status').eql(200);
@@ -395,8 +395,8 @@ describe('Chat21WebHook', () => {
     //                     .post('/chat21/requests')
     //                     .send(webhookContent)
     //                     .end((err, res) => {
-    //                         //console.log("res",  res);
-    //                         console.log("res.body",  res.body);
+    //                         //// console.log("res",  res);
+    //                         // console.log("res.body",  res.body);
     //                         res.should.have.status(400);
                             
                            
@@ -429,8 +429,8 @@ describe('Chat21WebHook', () => {
                         .post('/chat21/requests')
                         .send(webhookContent)
                         .end((err, res) => {
-                            //console.log("res",  res);
-                            console.log("res.body",  res.body);
+                            //// console.log("res",  res);
+                            // console.log("res.body",  res.body);
                             res.should.have.status(200);
                             res.body.should.be.a('object');
                             res.body.should.have.property('status').eql(100);
@@ -466,8 +466,8 @@ describe('Chat21WebHook', () => {
                             .post('/chat21/requests')
                             .send(webhookContent)
                             .end((err, res) => {
-                                console.log("res",  res);
-                                console.log("res.body",  res.body);
+                                // console.log("res",  res);
+                                // console.log("res.body",  res.body);
                                 res.should.have.status(200);
                                 res.body.should.be.a('object');
                                 res.body.should.have.property('status').eql(200);

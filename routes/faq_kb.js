@@ -20,7 +20,7 @@ const trainingService = require('../services/trainingService');
 let chatbot_templates_api_url = process.env.CHATBOT_TEMPLATES_API_URL
 
 router.post('/', function (req, res) {
-  winston.debug('create BOT ', req.body);
+  // winston.debug('create BOT ', req.body);
   //create(name, url, projectid, user_id, type, description, webhook_url, webhook_enabled, language, template)
   //faqService.create(req.body.name, req.body.url, req.projectid, req.user.id, req.body.type, req.body.description, undefined, undefined, req.body.language, req.body.template, req.body.mainCategory, req.body.intentsEngine).then(function (savedFaq_kb) {
   faqService.create(req.body.name, req.body.url, req.projectid, req.user.id, req.body.type, req.body.description, req.body.webhook_url, req.body.webhook_enabled, req.body.language, req.body.template, req.body.mainCategory, req.body.intentsEngine, req.body.attributes).then(function (savedFaq_kb) {
@@ -32,7 +32,7 @@ router.post('/', function (req, res) {
 
 router.post('/train', function (req, res) {
 
-  winston.info('train BOT ', req.body);
+  // winston.info('train BOT ', req.body);
 
   Faq_kb.findById(req.body.id_faq_kb).exec(function (err, faq_kb) {
     if (err) {
@@ -41,9 +41,9 @@ router.post('/train', function (req, res) {
     if (!faq_kb) {
       return res.status(404).send({ success: false, msg: 'Object not found.' });
     }
-    winston.debug('faq_kb ', faq_kb.toJSON());
+    // winston.debug('faq_kb ', faq_kb.toJSON());
 
-    winston.debug('faq_kb.type :' + faq_kb.type);
+    // winston.debug('faq_kb.type :' + faq_kb.type);
     if (faq_kb.type == "internal" && faq_kb.url) {
 
 
@@ -52,7 +52,7 @@ router.post('/train', function (req, res) {
         language: faq_kb.language,
         nlu: []
       };
-      winston.info("train", train);
+      // winston.info("train", train);
 
 
       var query = { "id_project": req.projectid, "id_faq_kb": req.body.id_faq_kb };
@@ -65,7 +65,7 @@ router.post('/train', function (req, res) {
             return res.status(500).send({ success: false, msg: 'Error getting object.' });
           }
           if (faqs && faqs.length > 0) {
-            winston.info("faqs exact", faqs);
+            // winston.info("faqs exact", faqs);
 
             faqs.forEach(function (f) {
               var intent = {
@@ -73,16 +73,16 @@ router.post('/train', function (req, res) {
                 examples: []
               }
               var questions = f.question.split("\n");
-              winston.info("questions", questions);
+              // winston.info("questions", questions);
 
               questions.forEach(function (q) {
-                winston.info("q", q);
+                // winston.info("q", q);
                 intent.examples.push(q);
               });
-              winston.info("intent", intent);
+              // winston.info("intent", intent);
               train.nlu.push(intent);
             });
-            winston.info("train", train);
+            // winston.info("train", train);
 
             try {
               var trainHttp = await httpUtil.call(faq_kb.url + "/trainandload", undefined, train, "POST");
@@ -98,7 +98,7 @@ router.post('/train', function (req, res) {
           }
         });
     } else {
-      winston.debug('external query: ');
+      // winston.debug('external query: ');
       return res.status(400).send({ success: false, msg: 'you can train a standard internal bot or an external bot.' });
     }
 
@@ -149,7 +149,7 @@ router.post('/aitrain/', async (req, res) => {
 
       // Option 2: call service directly
       trainingService.train(null, id_faq_kb, webhook_enabled).then((training_result) => {
-        winston.info("training result: ", training_result);
+        // winston.info("training result: ", training_result);
         let response = {
           succes: true,
           message: "Training started"
@@ -177,7 +177,7 @@ router.post('/aitrain/', async (req, res) => {
 
 router.post('/askbot', function (req, res) {
 
-  winston.debug('ASK BOT ', req.body);
+  // winston.debug('ASK BOT ', req.body);
 
   Faq_kb.findById(req.body.id_faq_kb).exec(function (err, faq_kb) {
     if (err) {
@@ -186,8 +186,8 @@ router.post('/askbot', function (req, res) {
     if (!faq_kb) {
       return res.status(404).send({ success: false, msg: 'Object not found.' });
     }
-    winston.debug('faq_kb ', faq_kb.toJSON());
-    winston.debug('faq_kb.type :' + faq_kb.type);
+    // winston.debug('faq_kb ', faq_kb.toJSON());
+    // winston.debug('faq_kb.type :' + faq_kb.type);
     if (faq_kb.type == "internal" || faq_kb.type == "tilebot") {
 
 
@@ -203,7 +203,7 @@ router.post('/askbot', function (req, res) {
             return res.status(500).send({ success: false, msg: 'Error getting object.' });
           }
           if (faqs && faqs.length > 0) {
-            winston.debug("faqs exact", faqs);
+            // winston.debug("faqs exact", faqs);
 
             faqs.forEach(f => {
               f.score = 100;
@@ -221,10 +221,10 @@ router.post('/askbot', function (req, res) {
               search_obj["$language"] = faq_kb.language;
             }
             query.$text = search_obj;
-            winston.debug("fulltext search query", query);
+            // winston.debug("fulltext search query", query);
 
 
-            winston.debug('internal ft query: ' + query);
+            // winston.debug('internal ft query: ' + query);
 
             Faq.find(query, { score: { $meta: "textScore" } })
               .sort({ score: { $meta: "textScore" } }) //https://docs.mongodb.com/manual/reference/operator/query/text/#sort-by-text-search-score
@@ -235,7 +235,7 @@ router.post('/askbot', function (req, res) {
                   return res.status(500).send({ success: false, msg: 'Error getting fulltext object.' });
                 }
 
-                winston.debug("faqs", faqs);
+                // winston.debug("faqs", faqs);
 
                 var result = { hits: faqs };
                 res.json(result);
@@ -249,7 +249,7 @@ router.post('/askbot', function (req, res) {
 
 
     } else {
-      winston.debug('external query: ');
+      // winston.debug('external query: ');
       return res.status(400).send({ success: false, msg: 'askbot on external bot.' });
     }
 
@@ -263,13 +263,13 @@ router.post('/askbot', function (req, res) {
 router.put('/:faq_kbid/publish', async (req, res) => {
 
   let id_faq_kb = req.params.faq_kbid;
-  winston.debug('id_faq_kb: ' + id_faq_kb);
+  // winston.debug('id_faq_kb: ' + id_faq_kb);
 
   const api_url = process.env.API_URL || configGlobal.apiUrl;
-  winston.debug("fork --> base_url: " + api_url); // check if correct
+  // winston.debug("fork --> base_url: " + api_url); // check if correct
 
   let current_project_id = req.projectid;
-  winston.debug("current project id: " + current_project_id);
+  // winston.debug("current project id: " + current_project_id);
 
   let token = req.headers.authorization;
 
@@ -278,23 +278,23 @@ router.put('/:faq_kbid/publish', async (req, res) => {
   try {
       //  fork(id_faq_kb, api_url, token, project_id)
     let forked = await cs.fork(id_faq_kb, api_url, token, current_project_id);
-  // winston.debug("forked: ", forked)
+  // // winston.debug("forked: ", forked)
 
     let forkedChatBotId = forked.bot_id;
-    winston.debug("forkedChatBotId: "+forkedChatBotId);
+    // winston.debug("forkedChatBotId: "+forkedChatBotId);
 
 
     let updatedForkedChabot = await Faq_kb.findByIdAndUpdate(forkedChatBotId, {trashed: true, publishedBy: req.user.id, publishedAt: new Date().getTime()}, { new: true, upsert: true }).exec();
-    winston.debug("updatedForkedChabot: ",updatedForkedChabot);
+    // winston.debug("updatedForkedChabot: ",updatedForkedChabot);
     botEvent.emit('faqbot.update', updatedForkedChabot);
 
 
     const port = process.env.PORT || '3000';
     const TILEBOT_ENDPOINT = process.env.TILEBOT_ENDPOINT || "http://localhost:" + port+ "/modules/tilebot/ext/";
-    winston.debug("TILEBOT_ENDPOINT: " + TILEBOT_ENDPOINT);
+    // winston.debug("TILEBOT_ENDPOINT: " + TILEBOT_ENDPOINT);
 
     let updatedOriginalChabot = await Faq_kb.findByIdAndUpdate(id_faq_kb,  {url:TILEBOT_ENDPOINT+forkedChatBotId}, { new: true, upsert: true }).exec();
-    winston.debug("updatedOriginalChabot: ",updatedOriginalChabot);
+    // winston.debug("updatedOriginalChabot: ",updatedOriginalChabot);
 
     botEvent.emit('faqbot.update', updatedOriginalChabot);
 
@@ -316,7 +316,7 @@ router.put('/:faq_kbid/publish', async (req, res) => {
 
 router.put('/:faq_kbid', function (req, res) {
 
-  winston.debug(req.body);
+  // winston.debug(req.body);
 
   var update = {};
   if (req.body.name != undefined) {
@@ -374,7 +374,7 @@ router.put('/:faq_kbid', function (req, res) {
   }
   // update._id = req.params.faq_kbid;
   
-  winston.debug("update", update);
+  // winston.debug("update", update);
   // "$set": req.params.faq_kbid
 
   Faq_kb.findByIdAndUpdate(req.params.faq_kbid, update, { new: true, upsert: true }, function (err, updatedFaq_kb) {   //TODO add cache_bot_here
@@ -389,14 +389,14 @@ router.put('/:faq_kbid', function (req, res) {
 
 router.put('/:faq_kbid/language/:language', (req, res) => {
   
-  winston.debug("update language: ", req.params);
+  // winston.debug("update language: ", req.params);
 
   let update = {};
   if (req.params.language != undefined) {
     update.language = req.params.language;
   }
 
-  winston.debug("update", update);
+  // winston.debug("update", update);
   Faq_kb.findByIdAndUpdate(req.params.faq_kbid, update, { new: true }, (err, updatedFaq_kb) => {
     if (err) {
       return res.status(500).send({ success: false, msg: 'Error updating object.' });
@@ -437,19 +437,19 @@ router.patch('/:faq_kbid/attributes', function (req, res) {   //TODO add cache_b
       }
       
       if (!updatedBot.attributes) {
-        winston.debug("empty attributes")
+        // winston.debug("empty attributes")
         updatedBot.attributes = {};
       }
 
-      winston.debug(" updatedBot attributes", updatedBot.attributes)
+      // winston.debug(" updatedBot attributes", updatedBot.attributes)
         
         Object.keys(data).forEach(function(key) {
           var val = data[key];
-          winston.debug("data attributes "+key+" " +val)
+          // winston.debug("data attributes "+key+" " +val)
           updatedBot.attributes[key] = val;
         });     
         
-        winston.debug("updatedBot attributes", updatedBot.attributes)
+        // winston.debug("updatedBot attributes", updatedBot.attributes)
 
         // https://stackoverflow.com/questions/24054552/mongoose-not-saving-nested-object
         updatedBot.markModified('attributes');
@@ -470,7 +470,7 @@ router.patch('/:faq_kbid/attributes', function (req, res) {   //TODO add cache_b
 
 router.delete('/:faq_kbid', function (req, res) {
 
-  winston.debug(req.body);
+  // winston.debug(req.body);
 
 
   Faq_kb.remove({ _id: req.params.faq_kbid }, function (err, faq_kb) {
@@ -485,7 +485,7 @@ router.delete('/:faq_kbid', function (req, res) {
 
 router.get('/:faq_kbid', function (req, res) {
 
-  winston.debug(req.query);
+  // winston.debug(req.query);
 
   Faq_kb.findById(req.params.faq_kbid, function (err, faq_kb) {   //TODO add cache_bot_here
     if (err) {
@@ -497,7 +497,7 @@ router.get('/:faq_kbid', function (req, res) {
 
     if (req.query.departmentid) {
 
-      winston.debug("»»» »»» req.query.departmentid", req.query.departmentid);
+      // winston.debug("»»» »»» req.query.departmentid", req.query.departmentid);
 
       Department.findById(req.query.departmentid, function (err, department) {
         if (err) {
@@ -506,22 +506,22 @@ router.get('/:faq_kbid', function (req, res) {
           res.json(faq_kb);
         }
         if (!department) {
-          winston.debug("Department not found", req.query.departmentid);
+          // winston.debug("Department not found", req.query.departmentid);
           // return res.status(404).send({ success: false, msg: 'Department not found.' });
           res.json(faq_kb);
         } else {
-          winston.debug("department", department);
+          // winston.debug("department", department);
 
           // https://github.com/Automattic/mongoose/issues/4614
           faq_kb._doc.department = department;
-          winston.debug("faq_kb", faq_kb);
+          // winston.debug("faq_kb", faq_kb);
 
           res.json(faq_kb);
         }
       });
 
     } else {
-      winston.debug('¿¿ MY USECASE ?? ')
+      // winston.debug('¿¿ MY USECASE ?? ')
       res.json(faq_kb);
     }
 
@@ -532,7 +532,7 @@ router.get('/:faq_kbid', function (req, res) {
 
 router.get('/:faq_kbid/jwt', function (req, res) {
 
-  winston.debug(req.query);
+  // winston.debug(req.query);
 
   Faq_kb.findById(req.params.faq_kbid).select("+secret").exec(function (err, faq_kb) {   //TODO add cache_bot_here
     if (err) {
@@ -556,7 +556,7 @@ router.get('/:faq_kbid/jwt', function (req, res) {
     let botPayload = faq_kb.toObject();
 
     let botSecret = botPayload.secret;
-    // winston.info("botSecret: " + botSecret);
+    // // winston.info("botSecret: " + botSecret);
 
     delete botPayload.secret;
     delete botPayload.description;
@@ -574,10 +574,10 @@ router.get('/:faq_kbid/jwt', function (req, res) {
 // NEW - GET ALL FAQKB WITH THE PASSED PROJECT ID
 router.get('/', function (req, res) {
 
-  winston.debug("req.query", req.query);
+  // winston.debug("req.query", req.query);
 
 
-  winston.debug("GET FAQ-KB req projectid", req.projectid);
+  // winston.debug("GET FAQ-KB req projectid", req.projectid);
   /**
    * if filter only for 'trashed = false', 
    * the bots created before the implementation of the 'trashed' property are not returned 
@@ -606,7 +606,7 @@ router.get('/', function (req, res) {
   }
                     
 
-  winston.debug("query", query);
+  // winston.debug("query", query);
 
   Faq_kb.find(query, function (err, faq_kb) {  //TODO add cache_bot_here
     if (err) {
@@ -623,22 +623,22 @@ router.get('/', function (req, res) {
 router.post('/fork/:id_faq_kb', async (req, res) => {
 
   let id_faq_kb = req.params.id_faq_kb;
-  winston.debug('id_faq_kb: ' + id_faq_kb);
+  // winston.debug('id_faq_kb: ' + id_faq_kb);
 
   const api_url = process.env.API_URL || configGlobal.apiUrl;
-  winston.debug("fork --> base_url: " + api_url); // check if correct
+  // winston.debug("fork --> base_url: " + api_url); // check if correct
 
   let current_project_id = req.projectid;
-  winston.debug("current project id: " + current_project_id);
+  // winston.debug("current project id: " + current_project_id);
 
   let landing_project_id = req.query.projectid;
-  winston.debug("landing project id " + landing_project_id)
+  // winston.debug("landing project id " + landing_project_id)
 
   let public = req.query.public;
-  winston.debug("public " + public);
+  // winston.debug("public " + public);
 
   let globals = req.query.globals;
-  winston.debug("export globals " + globals);
+  // winston.debug("export globals " + globals);
 
 
   let token = req.headers.authorization;
@@ -646,7 +646,7 @@ router.post('/fork/:id_faq_kb', async (req, res) => {
   let cs = req.app.get('chatbot_service')
 
   let chatbot = await cs.getBotById(id_faq_kb, public, api_url, chatbot_templates_api_url, token, current_project_id, globals);
-  winston.debug("chatbot: ", chatbot)
+  // winston.debug("chatbot: ", chatbot)
 
   if (!chatbot) {
     return res.status(500).send({ success: false, message: "Unable to get chatbot" });
@@ -659,14 +659,14 @@ router.post('/fork/:id_faq_kb', async (req, res) => {
   }
 
   let savedChatbot = await cs.createBot(api_url, token, chatbot, landing_project_id);
-  winston.debug("savedChatbot: ", savedChatbot)
+  // winston.debug("savedChatbot: ", savedChatbot)
 
   if (!savedChatbot) {
     return res.status(500).send({ success: false, message: "Unable to create new chatbot" });
   }
 
   let import_result = await cs.importFaqs(api_url, savedChatbot._id, token, chatbot, landing_project_id);
-  winston.debug("imported: ", import_result);
+  // winston.debug("imported: ", import_result);
 
   if (import_result.success == "false") {
     return res.status(500).send({ success: false, message: "Unable to import intents in the new chatbot" });
@@ -680,7 +680,7 @@ router.post('/fork/:id_faq_kb', async (req, res) => {
 router.post('/importjson/:id_faq_kb', upload.single('uploadFile'), async (req, res) => {
 
   let id_faq_kb = req.params.id_faq_kb;
-  winston.debug('import on id_faq_kb: ' + id_faq_kb);
+  // winston.debug('import on id_faq_kb: ' + id_faq_kb);
 
   let json_string;
   let json;
@@ -691,12 +691,12 @@ router.post('/importjson/:id_faq_kb', upload.single('uploadFile'), async (req, r
     json = req.body;
   }
 
-  winston.debug("json source " + json_string)
+  // winston.debug("json source " + json_string)
 
   // intentOnly still existing?
   if (req.query.intentsOnly && req.query.intentsOnly == "true") {
 
-    winston.debug("intents only")
+    // winston.debug("intents only")
 
     await json.intents.forEach((intent) => {
 
@@ -724,10 +724,10 @@ router.post('/importjson/:id_faq_kb', upload.single('uploadFile'), async (req, r
             winston.error("findOneAndUpdate (upsert) FAQ ERROR ", err);
           } else {
             if (savingResult.lastErrorObject.updatedExisting == true) {
-              winston.debug("updated existing intent")
+              // winston.debug("updated existing intent")
               faqBotEvent.emit('faq.update', savingResult.value);
             } else {
-              winston.debug("new intent created")
+              // winston.debug("new intent created")
               faqBotEvent.emit('faq.create', savingResult.value);
             }
           }
@@ -737,12 +737,12 @@ router.post('/importjson/:id_faq_kb', upload.single('uploadFile'), async (req, r
       } else {
         Faq.create(new_faq, (err, savedFaq) => {
           if (err) {
-            winston.debug("create new FAQ ERROR ", err);
+            // winston.debug("create new FAQ ERROR ", err);
             if (err.code == 11000) {
               winston.error("Duplicate intent_display_name.");
-              winston.debug("Skip duplicated intent_display_name");
+              // winston.debug("Skip duplicated intent_display_name");
             } else {
-              winston.debug("new intent created")
+              // winston.debug("new intent created")
               faqBotEvent.emit('faq.create', savedFaq);
             }
           }
@@ -759,7 +759,7 @@ router.post('/importjson/:id_faq_kb', upload.single('uploadFile'), async (req, r
 
       
       faqService.create(json.name, undefined, req.projectid, req.user.id, "tilebot", json.description, json.webhook_url, json.webhook_enabled, json.language, undefined, undefined, undefined, json.attributes).then( async (savedFaq_kb) => {
-        winston.debug("saved (and imported) faq kb: ", savedFaq_kb);
+        // winston.debug("saved (and imported) faq kb: ", savedFaq_kb);
         
         // edit attributes.rules
         let attributes = json.attributes;
@@ -774,7 +774,7 @@ router.post('/importjson/:id_faq_kb', upload.single('uploadFile'), async (req, r
                     rule.do[0].message.participants &&
                     rule.do[0].message.participants[0]) {
                       rule.do[0].message.participants[0] = "bot_" + savedFaq_kb._id
-                      winston.debug("attributes rule new participant: ", rule.do[0].message.participants[0])
+                      // winston.debug("attributes rule new participant: ", rule.do[0].message.participants[0])
                     }
               })
             }
@@ -814,10 +814,10 @@ router.post('/importjson/:id_faq_kb', upload.single('uploadFile'), async (req, r
                       } else {
         
                         if (savingResult.lastErrorObject.updatedExisting == true) {
-                          winston.debug("updated existing intent")
+                          // winston.debug("updated existing intent")
                           faqBotEvent.emit('faq.update', savingResult.value);
                         } else {
-                          winston.debug("new intent created")
+                          // winston.debug("new intent created")
                           faqBotEvent.emit('faq.create', savingResult.value);
                         }
         
@@ -828,12 +828,12 @@ router.post('/importjson/:id_faq_kb', upload.single('uploadFile'), async (req, r
                   } else {
                     Faq.create(new_faq, (err, savedFaq) => {
                       if (err) {
-                        winston.debug("create new FAQ ERROR ", err);
+                        // winston.debug("create new FAQ ERROR ", err);
                         if (err.code == 11000) {
                           winston.error("Duplicate intent_display_name.");
-                          winston.debug("Skip duplicated intent_display_name");
+                          // winston.debug("Skip duplicated intent_display_name");
                         } else {
-                          winston.debug("new intent created")
+                          // winston.debug("new intent created")
                           faqBotEvent.emit('faq.create', savedFaq);
                         }
                       }
@@ -892,7 +892,7 @@ router.post('/importjson/:id_faq_kb', upload.single('uploadFile'), async (req, r
                       rule.do[0].message.participants &&
                       rule.do[0].message.participants[0]) {
                         rule.do[0].message.participants[0] = "bot_" + faq_kb._id
-                        winston.debug("attributes rule new participant: " + rule.do[0].message.participants[0])
+                        // winston.debug("attributes rule new participant: " + rule.do[0].message.participants[0])
                       }
                 })
                 faq_kb.attributes = json.attributes;
@@ -938,10 +938,10 @@ router.post('/importjson/:id_faq_kb', upload.single('uploadFile'), async (req, r
                   } else {
     
                     if (savingResult.lastErrorObject.updatedExisting == true) {
-                      winston.info("updated existing intent")
+                      // winston.info("updated existing intent")
                       faqBotEvent.emit('faq.update', savingResult.value);
                     } else {
-                      winston.info("new intent created")
+                      // winston.info("new intent created")
                       faqBotEvent.emit('faq.create', savingResult.value);
                     }
     
@@ -953,12 +953,12 @@ router.post('/importjson/:id_faq_kb', upload.single('uploadFile'), async (req, r
               } else {
                 Faq.create(new_faq, (err, savedFaq) => {
                   if (err) {
-                    winston.debug("create new FAQ ERROR ", err);
+                    // winston.debug("create new FAQ ERROR ", err);
                     if (err.code == 11000) {
                       winston.error("Duplicate intent_display_name.");
-                      winston.info("Skip duplicated intent_display_name");
+                      // winston.info("Skip duplicated intent_display_name");
                     } else {
-                      winston.info("new intent created")
+                      // winston.info("new intent created")
                       faqBotEvent.emit('faq.create', savedFaq);
                     }
                   }
@@ -981,7 +981,7 @@ router.post('/importjson/:id_faq_kb', upload.single('uploadFile'), async (req, r
 
 router.get('/exportjson/:id_faq_kb', (req, res) => {
 
-  winston.debug("exporting bot...")
+  // winston.debug("exporting bot...")
 
   let id_faq_kb = req.params.id_faq_kb;
 
@@ -990,7 +990,7 @@ router.get('/exportjson/:id_faq_kb', (req, res) => {
       winston.error('GET FAQ-KB ERROR ', err)
       return res.status(500).send({ success: false, msg: 'Error getting bot.' });
     } else {
-      winston.debug('FAQ-KB: ', faq_kb)
+      // winston.debug('FAQ-KB: ', faq_kb)
 
       faqService.getAll(id_faq_kb).then((faqs) => {
 
@@ -1048,14 +1048,14 @@ router.get('/exportjson/:id_faq_kb', (req, res) => {
 
 router.post('/:faq_kbid/training', function (req, res) {
 
-  winston.debug(req.body);
-  winston.info(req.params.faq_kbid + "/training called" );
+  // winston.debug(req.body);
+  // winston.info(req.params.faq_kbid + "/training called" );
 
   var update = {};
   update.trained = true;
   // update._id = req.params.faq_kbid;
   
-  winston.debug("update", update);
+  // winston.debug("update", update);
   // "$set": req.params.faq_kbid
 
   Faq_kb.findByIdAndUpdate(req.params.faq_kbid, update, { new: true, upsert: true }, function (err, updatedFaq_kb) {   //TODO add cache_bot_here

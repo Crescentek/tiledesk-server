@@ -11,13 +11,13 @@ const integrationEvent = require('../event/integrationEvent');
 router.get('/', async (req, res) => {
 
     let id_project = req.projectid;
-    winston.debug("Get all integration for the project " + id_project);
+    // winston.debug("Get all integration for the project " + id_project);
 
     let i = Integration.find({ id_project: id_project });
     if (cacheEnabler.integrations) {
         // cacheUtil.longTTL is 1 hour (default), evaluate 1 month (2592000 s)
         i.cache(cacheUtil.longTTL, "project:" + id_project + ":integrations");
-        winston.debug('integration cache enabled for get all integrations');
+        // winston.debug('integration cache enabled for get all integrations');
     }
     i.exec((err, integrations) => {
         if (err) {
@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
     //         console.error("Error finding all integrations for the project " + id_project + " - err: " + err);
     //         return res.status(404).send({ success: false, err: err })
     //     }
-    //     console.log("Integrations found: ", integrations);
+    //     // console.log("Integrations found: ", integrations);
     //     res.status(200).send(integrations);
     // })
 })
@@ -41,7 +41,7 @@ router.get('/', async (req, res) => {
 router.get('/:integration_id', async (req, res) => {
     
     let integration_id = req.params.integration_id;
-    winston.debug("Get integration with id " + integration_id);
+    // winston.debug("Get integration with id " + integration_id);
 
     Integration.findById(integration_id, (err, integration) => {
         if (err) {
@@ -56,10 +56,10 @@ router.get('/:integration_id', async (req, res) => {
 router.get('/name/:integration_name', async (req, res) => {
 
     let id_project = req.projectid;
-    winston.debug("Get all integration for the project " + id_project);
+    // winston.debug("Get all integration for the project " + id_project);
 
     let integration_name = req.params.integration_name;
-    winston.debug("Get integration with id " + integration_name);
+    // winston.debug("Get integration with id " + integration_name);
 
     Integration.findOne({ id_project: id_project, name: integration_name }, (err, integration) => {
         if (err) {
@@ -68,7 +68,7 @@ router.get('/name/:integration_name', async (req, res) => {
         }
 
         if (!integration) {
-            winston.debug("Integration not found");
+            // winston.debug("Integration not found");
             return res.status(200).send("Integration not found");
         }
         
@@ -80,7 +80,7 @@ router.get('/name/:integration_name', async (req, res) => {
 router.post('/', async (req, res) => {
 
     let id_project = req.projectid;
-    winston.debug("Add new integration ", req.body);
+    // winston.debug("Add new integration ", req.body);
 
 
     let newIntegration = {
@@ -97,7 +97,7 @@ router.post('/', async (req, res) => {
             return res.status(404).send({ success: false, err: err })
         }
 
-        winston.debug("New integration created: ", savedIntegration);
+        // winston.debug("New integration created: ", savedIntegration);
         
         Integration.find({ id_project: id_project }, (err, integrations) => {
             if (err) {
@@ -122,13 +122,13 @@ router.post('/', async (req, res) => {
     //         return res.status(404).send({ success: false, err: err })
     //     }
 
-    //     console.log("New integration created: ", savedIntegration);
+    //     // console.log("New integration created: ", savedIntegration);
 
     //     Integration.find({ id_project: id_project }, (err, integrations) => {
     //         if (err) {
     //             console.error("Error getting all integrations");
     //         } else {
-    //             console.log("emit integration.create event")
+    //             // console.log("emit integration.create event")
     //             integrationEvent.emit('integration.create', integrations, id_project);
     //         }
 

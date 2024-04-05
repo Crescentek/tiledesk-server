@@ -47,8 +47,8 @@ describe('MessageRoute', () => {
             .set('content-type', 'application/json')
             .send({"text":"text"})
             .end(function(err, res) {
-                //console.log("res",  res);
-                console.log("res.body",  res.body);
+                //// console.log("res",  res);
+                // console.log("res.body",  res.body);
                 res.should.have.status(200);
                 res.body.should.be.a('object');                          
 
@@ -110,8 +110,8 @@ describe('MessageRoute', () => {
             .set('content-type', 'application/json')
             .send({"text":""})
             .end(function(err, res) {
-                //console.log("res",  res);
-                console.log("res.body",  res.body);
+                //// console.log("res",  res);
+                // console.log("res.body",  res.body);
                 res.should.have.status(422);                                
           
                done();
@@ -143,8 +143,8 @@ it('createSimpleNoText', function (done) {
           .set('content-type', 'application/json')
           .send({})
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(422);                                
         
              done();
@@ -175,8 +175,8 @@ it('createSimpleWithAttributes', function (done) {
           .set('content-type', 'application/json')
           .send({"text":"text","attributes": {"a":"b"}})
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');                          
 
@@ -262,8 +262,8 @@ it('createWithSender', function (done) {
                 .set('content-type', 'application/json')
                 .send({"text":"text", "sender": savedUser2._id.toString()})
                 .end(function(err, res) {
-                    //console.log("res",  res);
-                    console.log("res.body",  res.body);
+                    //// console.log("res",  res);
+                    // console.log("res.body",  res.body);
                     res.should.have.status(200);
                     res.body.should.be.a('object');                          
 
@@ -345,7 +345,7 @@ it('createWithSenderFromLead', function (done) {
 
             // createIfNotExistsWithLeadId(lead_id, fullname, email, id_project, createdBy, attributes, status) {
           leadService.createIfNotExistsWithLeadId(uid,"leadfullname", "email@email.com", savedProject._id).then(function(createdLead) {
-          // console.log("createdLead",createdLead);
+          // // console.log("createdLead",createdLead);
 
           var now = Date.now();
               chai.request(server)
@@ -354,8 +354,8 @@ it('createWithSenderFromLead', function (done) {
                 .set('content-type', 'application/json')
                 .send({"text":"text", "sender": uid})                
                 .end(function(err, res) {
-                    // console.log("res",  res);
-                    console.log("res.body",  res.body);
+                    // // console.log("res",  res);
+                    // console.log("res.body",  res.body);
                     res.should.have.status(200);
                     res.body.should.be.a('object');                          
 
@@ -422,8 +422,8 @@ it('createWithLocation', function (done) {
           .set('content-type', 'application/json')
           .send({text:"text", location: {country: "Italy", streetAddress: "Via Roma, 767b", ipAddress: "192.168.1.1", geometry: {type: "Point", coordinates: [-109, 41]}  } })
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');                          
 
@@ -475,8 +475,8 @@ it('createWithLocationAsAttributes', function (done) {
           .set('content-type', 'application/json')
           .send({text:"text", attributes: {ipAddress: "95.255.73.34"} })
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');                          
 
@@ -500,8 +500,8 @@ it('createWithLocationAsAttributes', function (done) {
               .set('content-type', 'application/json')
               .send()
               .end(function(err, res) {
-                  //console.log("res",  res);
-                  console.log("res.body",  res.body);
+                  //// console.log("res",  res);
+                  // console.log("res.body",  res.body);
                   res.should.have.status(200);
                   res.body.should.be.a('object');                 
 
@@ -537,8 +537,8 @@ it('createDifferentChannel', function (done) {
           .set('content-type', 'application/json')
           .send({text:"text", channel: {name:"channel1"}})
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');                          
 
@@ -598,8 +598,8 @@ it('createWithMessageStatus', function (done) {
           .set('content-type', 'application/json')
           .send({"text":"text", "status":999})
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');                          
 
@@ -614,7 +614,7 @@ it('createWithMessageStatus', function (done) {
 
               expect(res.body.request.request_id).to.equal("req123-createWithMessageStatus");
 
-              console.log("res.body.request.requester",JSON.stringify(res.body.request.requester));
+              // console.log("res.body.request.requester",JSON.stringify(res.body.request.requester));
               expect(res.body.request.requester._id).to.equal(savedProjectAndPU.project_user._id.toString());
               // expect(res.body.request.requester_id).to.equal("sender");
               expect(res.body.request.first_text).to.equal("text");
@@ -669,8 +669,8 @@ it('createWithParticipants', function (done) {
           .set('content-type', 'application/json')
           .send({"text":"text", "participants":[savedUser._id] })
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');                          
 
@@ -697,7 +697,7 @@ it('createWithParticipants', function (done) {
               expect(res.body.request.participants.length).to.equal(1);
               expect(res.body.request.participants[0]).to.equal(savedUser._id.toString());
 
-              console.log("res.body.request.participatingAgents[0]",JSON.stringify(res.body.request.participatingAgents[0]))
+              // console.log("res.body.request.participatingAgents[0]",JSON.stringify(res.body.request.participatingAgents[0]))
               expect(res.body.request.participatingAgents[0]._id).to.equal(savedUser._id.toString());
               expect(res.body.request.department).to.equal(undefined);
               expect(res.body.request.lead).to.not.equal(null);               
@@ -741,8 +741,8 @@ it('createWithPriority', function (done) {
           .set('content-type', 'application/json')
           .send({"text":"text", "priority": "hight"})
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');                          
 
@@ -810,8 +810,8 @@ it('createSimpleWithFollowers', function (done) {
           .set('content-type', 'application/json')
           .send({"text":"text", "followers": [savedProjectAndPU.project_user._id.toString()]})
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  JSON.stringify(res.body));
+              //// console.log("res",  res);
+              // console.log("res.body",  JSON.stringify(res.body));
               res.should.have.status(200);
               res.body.should.be.a('object');                          
 
@@ -884,13 +884,13 @@ it('createMultiTextNoSender1', function (done) {
     .send({"first_text":"first_text"})
     .end(function(err, res) {
 
-      console.log("res.body",  res.body);
+      // console.log("res.body",  res.body);
       res.should.have.status(200);
       res.body.should.be.a('object');
       res.body.should.have.property('first_text').eql('first_text');
 
       var request_id = res.body.request_id;
-      console.log("request_id",request_id);
+      // console.log("request_id",request_id);
 
         chai.request(server)
           .post('/'+ savedProject._id + '/requests/'+request_id+'/messages/multi')
@@ -898,8 +898,8 @@ it('createMultiTextNoSender1', function (done) {
           .set('content-type', 'application/json')
           .send([{"text":"text1"}, {"text":"text2"}])
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('array');                          
 
@@ -956,13 +956,13 @@ it('createMultiTextNoSenderNoText', function (done) {
     .send({"first_text":"first_text"})
     .end(function(err, res) {
 
-      console.log("res.body",  res.body);
+      // console.log("res.body",  res.body);
       res.should.have.status(200);
       res.body.should.be.a('object');
       res.body.should.have.property('first_text').eql('first_text');
 
       var request_id = res.body.request_id;
-      console.log("request_id",request_id);
+      // console.log("request_id",request_id);
 
         chai.request(server)
           .post('/'+ savedProject._id + '/requests/'+request_id+'/messages/multi')
@@ -970,8 +970,8 @@ it('createMultiTextNoSenderNoText', function (done) {
           .set('content-type', 'application/json')
           .send([{}, {"text":"text2"}])
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               
              done();
@@ -1025,14 +1025,14 @@ it('createMultiTextWithSender', function (done) {
     .send({"first_text":"first_text"})
     .end(function(err, res) {
 
-      console.log("res.body",  res.body);
+      // console.log("res.body",  res.body);
       res.should.have.status(200);
       res.body.should.be.a('object');
 
       res.body.should.have.property('first_text').eql('first_text');
 
       var request_id = res.body.request_id;
-      console.log("request_id",request_id);
+      // console.log("request_id",request_id);
 
         chai.request(server)
           .post('/'+ savedProject._id + '/requests/'+request_id+'/messages/multi')
@@ -1040,8 +1040,8 @@ it('createMultiTextWithSender', function (done) {
           .set('content-type', 'application/json')
           .send([{"sender":savedUser2._id,"text":"text1"}, {"sender":savedUser2._id,"text":"text2"}])
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('array');                          
 
@@ -1107,14 +1107,14 @@ it('createMultiTextWithHardcodedSender', function (done) {
     .send({"first_text":"first_text"})
     .end(function(err, res) {
 
-      console.log("res.body",  res.body);
+      // console.log("res.body",  res.body);
       res.should.have.status(200);
       res.body.should.be.a('object');
 
       res.body.should.have.property('first_text').eql('first_text');
 
       var request_id = res.body.request_id;
-      console.log("request_id",request_id);
+      // console.log("request_id",request_id);
 
         chai.request(server)
           .post('/'+ savedProject._id + '/requests/'+request_id+'/messages/multi')
@@ -1122,8 +1122,8 @@ it('createMultiTextWithHardcodedSender', function (done) {
           .set('content-type', 'application/json')
           .send([{"sender":"andrealeo","text":"text1"}, {"sender":"rocco","text":"text2"}])
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('array');                          
 
@@ -1185,14 +1185,14 @@ it('createMultiTextWithHardcodedSenderAndSenderFullname', function (done) {
     .send({"first_text":"first_text"})
     .end(function(err, res) {
 
-      console.log("res.body",  res.body);
+      // console.log("res.body",  res.body);
       res.should.have.status(200);
       res.body.should.be.a('object');
 
       res.body.should.have.property('first_text').eql('first_text');
 
       var request_id = res.body.request_id;
-      console.log("request_id",request_id);
+      // console.log("request_id",request_id);
 
         chai.request(server)
           .post('/'+ savedProject._id + '/requests/'+request_id+'/messages/multi')
@@ -1200,8 +1200,8 @@ it('createMultiTextWithHardcodedSenderAndSenderFullname', function (done) {
           .set('content-type', 'application/json')
           .send([{"sender":"andrealeo", "senderFullname":"Andrea","text":"text1"}, {"sender":"rocco", "senderFullname":"Rocco", "text":"text2"}])
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('array');                          
 
@@ -1266,8 +1266,8 @@ it('getall', function (done) {
                   .auth(email, pwd)
                   .set('content-type', 'application/json')
                   .end(function(err, res) {
-                      //console.log("res",  res);
-                      console.log("res.body",  res.body);
+                      //// console.log("res",  res);
+                      // console.log("res.body",  res.body);
                       res.should.have.status(200);
                       res.body.should.be.a('array');                          
 
@@ -1331,8 +1331,8 @@ describe('/SendMessageSigninWithCustomToken', () => {
               .auth(email, pwd)
               .send()
               .end((err, res) => {
-                  //console.log("res",  res);
-                  console.log("res.body",  res.body);
+                  //// console.log("res",  res);
+                  // console.log("res.body",  res.body);
                   res.should.have.status(200);
                   res.body.should.be.a('object');
                   expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -1341,7 +1341,7 @@ describe('/SendMessageSigninWithCustomToken', () => {
                   var externalUserId = "123";
                   var externalUserObj = {_id: externalUserId, firstname:"andrea", lastname:"leo", email: "email2@email.com"};
                   
-                  console.log("externalUserObj", externalUserObj);
+                  // console.log("externalUserObj", externalUserObj);
 
 
                   var signOptions = {                                                            
@@ -1352,7 +1352,7 @@ describe('/SendMessageSigninWithCustomToken', () => {
 
                   var jwtToken = jwt.sign(externalUserObj, res.body.jwtSecret,signOptions);
               
-                  console.log("jwtToken", jwtToken);
+                  // console.log("jwtToken", jwtToken);
 
 
                   chai.request(server)
@@ -1361,8 +1361,8 @@ describe('/SendMessageSigninWithCustomToken', () => {
                       //.send({ id_project: savedProject._id})
                       .send()
                       .end((err, res) => {
-                          //console.log("res",  res);
-                          console.log("res.body",  res.body);
+                          //// console.log("res",  res);
+                          // console.log("res.body",  res.body);
                           res.should.have.status(200);
                           res.body.should.be.a('object');
                           expect(res.body.success).to.equal(true);                                                                                                                     
@@ -1379,8 +1379,8 @@ describe('/SendMessageSigninWithCustomToken', () => {
                               .set('content-type', 'application/json')
                               .send({"text":"text"})
                               .end(function(err, res) {
-                                  //console.log("res",  res);
-                                  console.log("res.body",  res.body);
+                                  //// console.log("res",  res);
+                                  // console.log("res.body",  res.body);
                                   res.should.have.status(200);
                                   res.body.should.be.a('object');                          
 
@@ -1412,8 +1412,8 @@ describe('/SendMessageSigninWithCustomToken', () => {
                                     .auth(email, pwd)
                                     .set('content-type', 'application/json')                                   
                                     .end(function(err, res) {
-                                        //console.log("res",  res);
-                                        console.log("res.body",  res.body);
+                                        //// console.log("res",  res);
+                                        // console.log("res.body",  res.body);
                                         expect(res.body.lead.lead_id).to.equal(externalUserId);
                                         expect(res.body.lead.email).to.equal("email2@email.com");
                                         expect(res.body.lead.fullname).to.equal("andrea leo");
@@ -1453,8 +1453,8 @@ describe('/SendMessageSigninWithCustomToken', () => {
             .auth(email, pwd)
             .send()
             .end((err, res) => {
-                //console.log("res",  res);
-                console.log("res.body",  res.body);
+                //// console.log("res",  res);
+                // console.log("res.body",  res.body);
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -1463,7 +1463,7 @@ describe('/SendMessageSigninWithCustomToken', () => {
                 var externalUserId = "123";
                 var externalUserObj = {_id: externalUserId, firstname:"andrea", lastname:"leo", email: "email2@email.com"};
                 
-                console.log("externalUserObj", externalUserObj);
+                // console.log("externalUserObj", externalUserObj);
 
 
                 var signOptions = {                                                            
@@ -1475,7 +1475,7 @@ describe('/SendMessageSigninWithCustomToken', () => {
                 var secret = res.body.jwtSecret;
                 var jwtToken = jwt.sign(externalUserObj, res.body.jwtSecret,signOptions);
             
-                console.log("jwtToken", jwtToken);
+                // console.log("jwtToken", jwtToken);
 
 
                 chai.request(server)
@@ -1484,8 +1484,8 @@ describe('/SendMessageSigninWithCustomToken', () => {
                     //.send({ id_project: savedProject._id})
                     .send()
                     .end((err, res) => {
-                        //console.log("res",  res);
-                        console.log("res.body",  res.body);
+                        //// console.log("res",  res);
+                        // console.log("res.body",  res.body);
                         res.should.have.status(200);
                         res.body.should.be.a('object');
                         expect(res.body.success).to.equal(true);                                                                                                                     
@@ -1502,8 +1502,8 @@ describe('/SendMessageSigninWithCustomToken', () => {
                             .set('content-type', 'application/json')
                             .send({"text":"text"})
                             .end(function(err, res) {
-                                //console.log("res",  res);
-                                console.log("res.body",  res.body);
+                                //// console.log("res",  res);
+                                // console.log("res.body",  res.body);
                                 res.should.have.status(200);
                                 res.body.should.be.a('object');                          
 
@@ -1536,8 +1536,8 @@ describe('/SendMessageSigninWithCustomToken', () => {
                                   .auth(email, pwd)
                                   .set('content-type', 'application/json')                                   
                                   .end(function(err, res) {
-                                      //console.log("res",  res);
-                                      console.log("res.body",  res.body);
+                                      //// console.log("res",  res);
+                                      // console.log("res.body",  res.body);
                                       expect(res.body.lead.lead_id).to.equal(externalUserId);
                                       expect(res.body.lead.email).to.equal("email2@email.com");
                                       expect(res.body.lead.fullname).to.equal("andrea leo");
@@ -1551,7 +1551,7 @@ describe('/SendMessageSigninWithCustomToken', () => {
                                       externalUserObj.email = "email33@email.com";
 
                                       jwtToken = jwt.sign(externalUserObj,secret, signOptions);
-                                      console.log("jwtToken2", jwtToken);
+                                      // console.log("jwtToken2", jwtToken);
 
                                       chai.request(server)
                                       .post('/auth/signinWithCustomToken' )
@@ -1559,8 +1559,8 @@ describe('/SendMessageSigninWithCustomToken', () => {
                                       //.send({ id_project: savedProject._id})
                                       .send()
                                       .end((err, res) => {
-                                          //console.log("res",  res);
-                                          console.log("res.body",  res.body);
+                                          //// console.log("res",  res);
+                                          // console.log("res.body",  res.body);
                                           res.should.have.status(200);
                                           res.body.should.be.a('object');
                                           expect(res.body.success).to.equal(true);                                                                                                                     
@@ -1573,8 +1573,8 @@ describe('/SendMessageSigninWithCustomToken', () => {
                                           .set('content-type', 'application/json')
                                           .send({"text":"text"})
                                           .end(function(err, res) {
-                                              //console.log("res",  res);
-                                              console.log("res.body",  res.body);
+                                              //// console.log("res",  res);
+                                              // console.log("res.body",  res.body);
                                               res.should.have.status(200);
                                               res.body.should.be.a('object');               
                                               
@@ -1632,8 +1632,8 @@ describe('/SendMessageSigninAnonym', () => {
                       .post('/auth/signinAnonymously' )
                       .send({ id_project: savedProject._id})
                       .end((err, res) => {
-                          //console.log("res",  res);
-                          console.log("res.body",  res.body);
+                          //// console.log("res",  res);
+                          // console.log("res.body",  res.body);
                           res.should.have.status(200);
                           res.body.should.be.a('object');
                           var userId = res.body.user._id;
@@ -1651,8 +1651,8 @@ describe('/SendMessageSigninAnonym', () => {
                               .set('content-type', 'application/json')
                               .send({"text":"text"})
                               .end(function(err, res) {
-                                  //console.log("res",  res);
-                                  console.log("res.body",  res.body);
+                                  //// console.log("res",  res);
+                                  // console.log("res.body",  res.body);
                                   res.should.have.status(200);
                                   res.body.should.be.a('object');                          
 
@@ -1684,8 +1684,8 @@ describe('/SendMessageSigninAnonym', () => {
                                     .auth(email, pwd)
                                     .set('content-type', 'application/json')                                   
                                     .end(function(err, res) {
-                                        //console.log("res",  res);
-                                        console.log("res.body",  res.body);
+                                        //// console.log("res",  res);
+                                        // console.log("res.body",  res.body);
                                         expect(res.body.lead.lead_id).to.equal(userId);
                                         expect(res.body.lead.email).to.equal(undefined);
                                         expect(res.body.lead.fullname).to.contains("guest#"); // guest_here

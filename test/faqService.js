@@ -41,8 +41,8 @@ describe('FaqService()', function () {
               });
             
               newFaq.save(function (err, savedFaq) {
-                winston.debug("err", err);
-                winston.debug("resolve", savedFaq);
+                // winston.debug("err", err);
+                // winston.debug("resolve", savedFaq);
                 expect(savedBot.name).to.equal("testbot");
                 expect(savedBot.secret).to.not.equal(null);
                 expect(savedFaq.question).to.equal("question");
@@ -60,7 +60,7 @@ describe('FaqService()', function () {
                 .sort( { score: { $meta: "textScore" } } ) //https://docs.mongodb.com/manual/reference/operator/query/text/#sort-by-text-search-score
                 .lean().               
                   exec(function (err, faqs) {
-                    console.log("faqs", faqs);
+                    // console.log("faqs", faqs);
                     // expect(faqs.length).to.equal(1);
                     expect(faqs[0]._id.toString()).to.equal(savedFaq._id.toString());
                     expect(faqs[0].answer).to.equal("answer");
@@ -108,8 +108,8 @@ it('create-with-intent_display_name-and-search', (done) => {
             });
           
             newFaq.save(function (err, savedFaq) {
-              winston.debug("err", err);
-              winston.debug("resolve", savedFaq);
+              // winston.debug("err", err);
+              // winston.debug("resolve", savedFaq);
               expect(savedBot.name).to.equal("testbot");
               expect(savedBot.secret).to.not.equal(null);
               expect(savedFaq.question).to.equal("question");
@@ -127,7 +127,7 @@ it('create-with-intent_display_name-and-search', (done) => {
               .sort( { score: { $meta: "textScore" } } ) //https://docs.mongodb.com/manual/reference/operator/query/text/#sort-by-text-search-score
               .lean().               
                 exec(function (err, faqs) {
-                  console.log("faqs", faqs);
+                  // console.log("faqs", faqs);
                   // expect(faqs.length).to.equal(1);
                   expect(faqs[0]._id.toString()).to.equal(savedFaq._id.toString());
                   expect(faqs[0].answer).to.equal("answer");
@@ -191,7 +191,7 @@ it('create-with-duplicated-intent_display_name-and-search', (done) => {
             
               newFaq.save(function (err, savedFaq) {
 
-                console.log("err.code ",err.code );
+                // console.log("err.code ",err.code );
                 if (err.code == 11000) {
                   done()
                 }

@@ -25,7 +25,7 @@ class RoleChecker {
       
     isType(type) {        
       var that = this;   
-        winston.debug("isType",isType);
+        // winston.debug("isType",isType);
         return function(req, res, next) {
           if (that.isTypeAsFunction(type)) {
             return next();
@@ -39,17 +39,17 @@ class RoleChecker {
 
 
       isTypeAsFunction(type, user) {                 
-            winston.debug("isType:"+type);
-            winston.debug("user", user);
+            // winston.debug("isType:"+type);
+            // winston.debug("user", user);
            //TODO Check if belongs to project
             if (type=='subscription' && user instanceof Subscription){
-              winston.debug("isTypeAsFunction is subscription");
+              // winston.debug("isTypeAsFunction is subscription");
               return true
             } else if (type=='bot' && user instanceof Faq_kb){
-              winston.debug("isTypeAsFunction is bot");
+              // winston.debug("isTypeAsFunction is bot");
               return true
             } else {
-              winston.debug("isTypeAsFunction is false");
+              // winston.debug("isTypeAsFunction is false");
 
               var adminEmail = process.env.ADMIN_EMAIL || "admin@tiledesk.com";
 
@@ -62,17 +62,17 @@ class RoleChecker {
 
 
       isTypesAsFunction(types, user) {                 
-        winston.debug("isTypes:"+types);
-        winston.debug("user", user);
+        // winston.debug("isTypes:"+types);
+        // winston.debug("user", user);
         var isType = false;
         var BreakException = {};
 
         if (types && types.length>0) {
           try {
             types.forEach(type => {
-              winston.debug("type:"+type);
+              // winston.debug("type:"+type);
               isType = this.isTypeAsFunction(type, user);
-              winston.debug("isType:"+ isType);
+              // winston.debug("isType:"+ isType);
               if (isType==true) {
                 throw BreakException; //https://stackoverflow.com/questions/2641347/short-circuit-array-foreach-like-calling-break
               }
@@ -97,43 +97,43 @@ class RoleChecker {
            
         var that = this;
 
-        // winston.debug("HasRole");
+        // // winston.debug("HasRole");
         return function(req, res, next) {
           
-          // winston.debug("req.originalUrl" + req.originalUrl);
-          // winston.debug("req.params" + JSON.stringify(req.params));
+          // // winston.debug("req.originalUrl" + req.originalUrl);
+          // // winston.debug("req.params" + JSON.stringify(req.params));
 
         // same route doesnt contains projectid so you can't use that
-          // winston.debug("req.params.projectid: " + req.params.projectid);
+          // // winston.debug("req.params.projectid: " + req.params.projectid);
           if (!req.params.projectid) {
             return res.status(400).send({success: false, msg: 'req.params.projectid is not defined.'});
           }
 
 
-        //  winston.info("req.user._id: " + req.user._id);
+        //  // winston.info("req.user._id: " + req.user._id);
 
-          // winston.info("req.projectuser: " + req.projectuser);
-          //winston.debug("req.user", req.user);
-          //winston.debug("role", role);
+          // // winston.info("req.projectuser: " + req.projectuser);
+          //// winston.debug("req.user", req.user);
+          //// winston.debug("role", role);
       
 
-          // console.log("QUIIIIIIIIIIIIIIIIIIIIIII",type);
+          // // console.log("QUIIIIIIIIIIIIIIIIIIIIIII",type);
           if (types && types.length>0) {
-            // console.log("QUIIIIIIIIIIIIIIIIIIIIIII");
+            // // console.log("QUIIIIIIIIIIIIIIIIIIIIIII");
             var checkRes = that.isTypesAsFunction(types, req.user);
-            winston.debug("checkRes: " + checkRes);
+            // winston.debug("checkRes: " + checkRes);
 
             if (checkRes) {
              return next();
             }            
             // return that.isType(type)(req,res,next);
-            // console.log("typers",typers);
+            // // console.log("typers",typers);
           }
 
           // if (!req.user._id) {
           //   res.status(403).send({success: false, msg: 'req.user._id not defined.'});
           // }
-          winston.debug("hasRoleOrType req.user._id " +req.user._id);
+          // winston.debug("hasRoleOrType req.user._id " +req.user._id);
           // project_user_qui_importante
 
           // JWT_HERE
@@ -144,12 +144,12 @@ class RoleChecker {
             query = { id_project: req.params.projectid, uuid_user: req.user._id, status: "active"};
             cache_key = req.params.projectid+":project_users:uuid_user:"+req.user._id
           }
-          winston.debug("hasRoleOrType query " + JSON.stringify(query));
+          // winston.debug("hasRoleOrType query " + JSON.stringify(query));
 
           let q = Project_user.findOne(query);
           if (cacheEnabler.project_user) { 
             q.cache(cacheUtil.defaultTTL, cache_key);
-            winston.debug("cacheEnabler.project_user enabled");
+            // winston.debug("cacheEnabler.project_user enabled");
 
           }
             q.exec(function (err, project_user) {
@@ -157,24 +157,24 @@ class RoleChecker {
                 winston.error("Error getting project_user for hasrole",err);
                 return next(err);
               }
-              winston.debug("project_user: ", JSON.stringify(project_user));
+              // winston.debug("project_user: ", JSON.stringify(project_user));
               
               
       
               if (project_user) {
                 
                 req.projectuser = project_user;
-                winston.debug("req.projectuser", req.projectuser);
+                // winston.debug("req.projectuser", req.projectuser);
 
                 var userRole = project_user.role;
-                winston.debug("userRole", userRole);
+                // winston.debug("userRole", userRole);
       
                 if (!role) {
                   next();
                 }else {
       
                   var hierarchicalRoles = that.ROLES[userRole];
-                  winston.debug("hierarchicalRoles", hierarchicalRoles);
+                  // winston.debug("hierarchicalRoles", hierarchicalRoles);
       
                   if ( hierarchicalRoles && hierarchicalRoles.includes(role)) {
                     next();
@@ -221,14 +221,14 @@ class RoleChecker {
                 var project_user= project_users[0];
 
                 var userRole = project_user.role;
-                // winston.debug("userRole", userRole);
+                // // winston.debug("userRole", userRole);
       
                 if (!role) {
                   resolve(project_user);
                 }else {
       
                   var hierarchicalRoles = that.ROLES[userRole];
-                  // winston.debug("hierarchicalRoles", hierarchicalRoles);
+                  // // winston.debug("hierarchicalRoles", hierarchicalRoles);
       
                   if ( hierarchicalRoles.includes(role)) {
                     resolve(project_user);

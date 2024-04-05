@@ -31,7 +31,7 @@ router.post('/', [passport.authenticate(['basic', 'jwt'], { session: false }), v
 
 // DOWNGRADE PLAN. UNUSED
 router.put('/:projectid/downgradeplan', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('owner')], function (req, res) {
-  winston.debug('downgradeplan - UPDATE PROJECT REQ BODY ', req.body);
+  // winston.debug('downgradeplan - UPDATE PROJECT REQ BODY ', req.body);
   Project.findByIdAndUpdate(req.params.projectid, req.body, { new: true, upsert: true }, function (err, updatedProject) {
       if (err) {
           winston.error('Error putting project ', err);
@@ -44,7 +44,7 @@ router.put('/:projectid/downgradeplan', [passport.authenticate(['basic', 'jwt'],
 
 
 router.delete('/:projectid/physical', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('owner')], function (req, res) {
-  winston.debug(req.body);
+  // winston.debug(req.body);
   // TODO delete also department, faq_kb, faq, group, label, lead, message, project_users, requests, subscription
   
   // TODO use findByIdAndRemove otherwise project don't contains label object
@@ -59,7 +59,7 @@ router.delete('/:projectid/physical', [passport.authenticate(['basic', 'jwt'], {
 });
 
 router.delete('/:projectid', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('owner')], function (req, res) {
-  winston.debug(req.body);
+  // winston.debug(req.body);
   // TODO delete also department, faq_kb, faq, group, label, lead, message, project_users, requests, subscription
   Project.findByIdAndUpdate(req.params.projectid, {status:0}, { new: true, upsert: true }, function (err, project) {
       if (err) {
@@ -72,7 +72,7 @@ router.delete('/:projectid', [passport.authenticate(['basic', 'jwt'], { session:
 });
 
 router.put('/:projectid', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('admin')], function (req, res) {
-  winston.debug('UPDATE PROJECT REQ BODY ', req.body);
+  // winston.debug('UPDATE PROJECT REQ BODY ', req.body);
 
   var update = {};
   
@@ -162,14 +162,14 @@ router.put('/:projectid', [passport.authenticate(['basic', 'jwt'], { session: fa
 
   if (req.body.settings.email.templates.assignedRequest!=undefined) {
     // if (req.body["settings.email.templates.assignedRequest.html"]!=undefined) {
-    console.log("assignedRequest");
+    // console.log("assignedRequest");
     update["settings.email.templates.assignedRequest"] = req.body.settings.email.templates.assignedRequest;
   }
   if (req.body["settings.email.templates.assignedEmailMessage.html"]!=undefined) {
     update["settings.email.templates.assignedEmailMessage.html"] = req.body["settings.email.templates.assignedEmailMessage.html"];
   }
   if (req.body.settings.email.templates.pooledRequest!=undefined) {
-    console.log("pooledRequest");
+    // console.log("pooledRequest");
     update["settings.email.templates.pooledRequest"] = req.body.settings.email.templates.pooledRequest;
   }
 */
@@ -242,9 +242,9 @@ router.put('/:projectid', [passport.authenticate(['basic', 'jwt'], { session: fa
   // }
 
   
-  winston.debug('UPDATE PROJECT REQ BODY ', update);
+  // winston.debug('UPDATE PROJECT REQ BODY ', update);
 
-  // console.log("update",JSON.stringify(update));
+  // // console.log("update",JSON.stringify(update));
 
   Project.findByIdAndUpdate(req.params.projectid, update, { new: true, upsert: true }, function (err, updatedProject) {
     if (err) {
@@ -257,7 +257,7 @@ router.put('/:projectid', [passport.authenticate(['basic', 'jwt'], { session: fa
 });
 
 router.patch('/:projectid', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('admin')], function (req, res) {
-  winston.debug('PATCH PROJECT REQ BODY ', req.body);
+  // winston.debug('PATCH PROJECT REQ BODY ', req.body);
 
   var update = {};
   
@@ -402,7 +402,7 @@ router.patch('/:projectid', [passport.authenticate(['basic', 'jwt'], { session: 
   // }
 
  
-  winston.debug('UPDATE PROJECT REQ BODY ', update);
+  // winston.debug('UPDATE PROJECT REQ BODY ', update);
 
   Project.findByIdAndUpdate(req.params.projectid, update, { new: true, upsert: true }, function (err, updatedProject) {
     if (err) {
@@ -430,19 +430,19 @@ router.patch('/:projectid/attributes', [passport.authenticate(['basic', 'jwt'], 
       }
       
       if (!updatedProject.attributes) {
-        winston.debug("empty attributes")
+        // winston.debug("empty attributes")
         updatedProject.attributes = {};
       }
 
-      winston.debug(" updatedProject attributes", updatedProject.attributes)
+      // winston.debug(" updatedProject attributes", updatedProject.attributes)
         
         Object.keys(data).forEach(function(key) {
           var val = data[key];
-          winston.debug("data attributes "+key+" " +val)
+          // winston.debug("data attributes "+key+" " +val)
           updatedProject.attributes[key] = val;
         });     
         
-        winston.debug(" updatedProject attributes", updatedProject.attributes)
+        // winston.debug(" updatedProject attributes", updatedProject.attributes)
 
         // https://stackoverflow.com/questions/24054552/mongoose-not-saving-nested-object
         updatedProject.markModified('attributes');
@@ -464,7 +464,7 @@ router.patch('/:projectid/attributes', [passport.authenticate(['basic', 'jwt'], 
 
 
 router.post('/:projectid/ban', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('admin')], function (req, res) {
-  winston.debug('PATCH PROJECT REQ BODY ', req.body);
+  // winston.debug('PATCH PROJECT REQ BODY ', req.body);
 
   var ban = {};
   ban.id = req.body.id;
@@ -483,7 +483,7 @@ router.post('/:projectid/ban', [passport.authenticate(['basic', 'jwt'], { sessio
 });
 router.delete('/:projectid/ban/:banid', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('admin')], function (req, res) {
   
-  // winston.info('quiiiiii');
+  // // winston.info('quiiiiii');
   //cacheinvalidation
 
   
@@ -504,11 +504,11 @@ Project.findByIdAndUpdate(req.params.projectid, { $pull: { bannedUsers: { "_id":
 
 //roleChecker.hasRole('agent') works because req.params.projectid is valid using :projectid of this method
 router.get('/:projectid', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRoleOrTypes('agent', ['subscription'])], function (req, res) {
-  winston.debug(req.body);
+  // winston.debug(req.body);
   let q = Project.findOne({_id: req.params.projectid, status:100});
   if (cacheEnabler.project) { 
     q.cache(cacheUtil.longTTL, "projects:id:"+req.params.projectid)  //project_cache
-    winston.debug('project cache enabled for /project detail');
+    // winston.debug('project cache enabled for /project detail');
   }
   q.exec(function (err, project) {
     if (err) {
@@ -529,19 +529,19 @@ router.get('/:projectid', [passport.authenticate(['basic', 'jwt'], { session: fa
 // router.get('/', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('agent')], function (req, res) {
   // altrimenti 403
 router.get('/', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken], function (req, res) {
-  winston.debug('REQ USER ID ', req.user._id);
+  // winston.debug('REQ USER ID ', req.user._id);
 
   var direction = -1; //-1 descending , 1 ascending
   if (req.query.direction) {
     direction = req.query.direction;
   } 
-  winston.debug("direction",direction);
+  // winston.debug("direction",direction);
 
   var sortField = "updatedAt";
   if (req.query.sort) {
     sortField = req.query.sort;
   } 
-  winston.debug("sortField",sortField);
+  // winston.debug("sortField",sortField);
 
   var sortQuery={};
   sortQuery[sortField] = direction;
@@ -563,40 +563,40 @@ router.get('/', [passport.authenticate(['basic', 'jwt'], { session: false }), va
 
 
       //organization: if third sub domain iterate and put only project with organization==subdomain otherwise remove projects with org
-      winston.debug("orgUtil.ORGANIZATION_ENABLED: " + orgUtil.ORGANIZATION_ENABLED);
+      // winston.debug("orgUtil.ORGANIZATION_ENABLED: " + orgUtil.ORGANIZATION_ENABLED);
       if (orgUtil.ORGANIZATION_ENABLED == true ) {
 
-              // winston.info("project_users", project_users);
-        winston.debug("project_users.length:"+ project_users.length);
+              // // winston.info("project_users", project_users);
+        // winston.debug("project_users.length:"+ project_users.length);
 
         let org = orgUtil.getOrg(req);
-        winston.debug("org:"+ org);
+        // winston.debug("org:"+ org);
         
         if (org!=undefined) {
-          winston.debug("org!=undefined");
+          // winston.debug("org!=undefined");
 
           var project_users = project_users.filter(function (projectUser) {
             if (projectUser.id_project.organization && projectUser.id_project.organization === org ) {
-              winston.debug("keep");
+              // winston.debug("keep");
               return true;
             }
           });
 
         /* for (var i = 0; i < project_users.length; i++) { 
-            winston.info("project_users[i].id_project.organization: " + project_users[i].id_project.organization);
+            // winston.info("project_users[i].id_project.organization: " + project_users[i].id_project.organization);
             if (project_users[i].id_project.organization && project_users[i].id_project.organization === org ) {
               //keep
-              winston.info("keep");
+              // winston.info("keep");
             } else {
               // project_users.splice(i, 1); // 2nd parameter means remove one item only
-              winston.info("splice");
+              // winston.info("splice");
             }
           }*/
         } else {
 
             var project_users = project_users.filter(function (projectUser) {
               if (projectUser.id_project.organization == undefined ) {
-                // winston.info("keep");
+                // // winston.info("keep");
                 return true;
               }
             });        
@@ -604,14 +604,14 @@ router.get('/', [passport.authenticate(['basic', 'jwt'], { session: false }), va
 
           /*
           for (var i = 0; i < project_users.length; i++) { 
-            winston.info("project_users[i].id_project.organization: " + project_users[i].id_project.organization);
+            // winston.info("project_users[i].id_project.organization: " + project_users[i].id_project.organization);
             if (project_users[i].id_project.organization) {
               project_users.splice(i, 1); // 2nd parameter means remove one item only
             }
           }*/
         }
       } else {
-        winston.debug("no")
+        // winston.debug("no")
       }
 
 
@@ -626,7 +626,7 @@ router.get('/', [passport.authenticate(['basic', 'jwt'], { session: false }), va
 // GET ALL PROJECTS BY CURRENT USER ID. usaed by unisalento to know if a project is open 
 router.get('/:projectid/isopen', function (req, res) {
    operatingHoursService.projectIsOpenNow(req.params.projectid, function (isOpen, err) {
-    winston.debug('project', req.params.projectid, 'isopen: ', isOpen);
+    // winston.debug('project', req.params.projectid, 'isopen: ', isOpen);
 
     if (err) {
       winston.error('Error getting projectIsOpenNow', err);
@@ -640,13 +640,13 @@ router.get('/:projectid/isopen', function (req, res) {
 //togli questo route da qui e mettilo in altra route
 // NEW -  RETURN  THE USER NAME AND THE USER ID OF THE AVAILABLE PROJECT-USER FOR THE PROJECT ID PASSED
 router.get('/:projectid/users/availables', function (req, res) {
-  //winston.debug("PROJECT ROUTES FINDS AVAILABLES project_users: projectid", req.params.projectid);
+  //// winston.debug("PROJECT ROUTES FINDS AVAILABLES project_users: projectid", req.params.projectid);
 
   operatingHoursService.projectIsOpenNow(req.params.projectid, function (isOpen, err) {
-    //winston.debug('P ---> [ OHS ] -> [ PROJECT ROUTES ] -> IS OPEN THE PROJECT: ', isOpen);
+    //// winston.debug('P ---> [ OHS ] -> [ PROJECT ROUTES ] -> IS OPEN THE PROJECT: ', isOpen);
 
     if (err) {
-      winston.debug('P ---> [ OHS ] -> [ PROJECT ROUTES ] -> IS OPEN THE PROJECT - EROR: ', err)
+      // winston.debug('P ---> [ OHS ] -> [ PROJECT ROUTES ] -> IS OPEN THE PROJECT - EROR: ', err)
       // sendError(err, res);
       return res.status(500).send({ success: false, msg: err });
     } else if (isOpen) {
@@ -655,7 +655,7 @@ router.get('/:projectid/users/availables', function (req, res) {
         populate('id_user').
         exec(function (err, project_users) {
           if (err) {
-            winston.debug('PROJECT ROUTES - FINDS AVAILABLES project_users - ERROR: ', err);
+            // winston.debug('PROJECT ROUTES - FINDS AVAILABLES project_users - ERROR: ', err);
             return res.status(500).send({ success: false, msg: 'Error getting object.' });
           }
           if (project_users) {
@@ -663,14 +663,14 @@ router.get('/:projectid/users/availables', function (req, res) {
             user_available_array = [];
             project_users.forEach(project_user => {
               if (project_user.id_user) {
-                // winston.debug('PROJECT ROUTES - AVAILABLES PROJECT-USER: ', project_user)
+                // // winston.debug('PROJECT ROUTES - AVAILABLES PROJECT-USER: ', project_user)
                 user_available_array.push({ "id": project_user.id_user._id, "firstname": project_user.id_user.firstname });
               } else {
-                // winston.debug('PROJECT ROUTES - AVAILABLES PROJECT-USER (else): ', project_user)
+                // // winston.debug('PROJECT ROUTES - AVAILABLES PROJECT-USER (else): ', project_user)
               }
             });
 
-            //winston.debug('ARRAY OF THE AVAILABLE USER ', user_available_array);
+            //// winston.debug('ARRAY OF THE AVAILABLE USER ', user_available_array);
 
             res.json(user_available_array);
           }
@@ -678,7 +678,7 @@ router.get('/:projectid/users/availables', function (req, res) {
 
 
     } else {
-     // winston.debug('P ---> [ OHS ] -> [ PROJECT ROUTES ] -> IS OPEN THE PRJCT: ', isOpen, ' -> AVAILABLE EMPTY');
+     // // winston.debug('P ---> [ OHS ] -> [ PROJECT ROUTES ] -> IS OPEN THE PRJCT: ', isOpen, ' -> AVAILABLE EMPTY');
       // closed
       user_available_array = [];
       res.json(user_available_array);

@@ -8,10 +8,10 @@ class FirebaseService {
     createCustomToken(uid) {
 
         return new Promise(function (resolve, reject) {          
-            winston.debug("createCustomToken for uid", uid);
+            // winston.debug("createCustomToken for uid", uid);
               const tokenPromise = admin.auth().createCustomToken(uid);
               return tokenPromise.then(token => {
-                winston.debug('Created Custom token for UID "', uid, '" Token:', token);
+                // winston.debug('Created Custom token for UID "', uid, '" Token:', token);
                 return resolve(token);
               });
               
@@ -21,10 +21,10 @@ class FirebaseService {
     createCustomTokenWithAttribute(uid, customAttributes) {
 
       return new Promise(function (resolve, reject) {          
-          winston.debug("createCustomToken for uid", uid, " and customAttributes : ",customAttributes);
+          // winston.debug("createCustomToken for uid", uid, " and customAttributes : ",customAttributes);
             const tokenPromise = admin.auth().createCustomToken(uid, customAttributes);
             return tokenPromise.then(token => {
-              winston.debug('Created Custom token for UID "', uid, '" Token:', token);
+              // winston.debug('Created Custom token for UID "', uid, '" Token:', token);
               return resolve(token);
             });
             

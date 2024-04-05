@@ -5,9 +5,9 @@ class UIDGenerator {
 
     generate() {        
         let uid = uuidv4();
-        // console.log("uid",uid);
+        // // console.log("uid",uid);
         let uidWithoutChar = stringUtil.replaceAll(uid, "-", "");
-        // console.log("uidWithoutChar",uidWithoutChar);
+        // // console.log("uidWithoutChar",uidWithoutChar);
         return uidWithoutChar;
     }
 }

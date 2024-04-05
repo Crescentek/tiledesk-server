@@ -11,13 +11,13 @@ var config = require('../config/database');
 var mongoose = require('mongoose');
 var winston = require('../config/winston');
 
-// var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
+var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 // if (!databaseUri) {
-//   console.log('DATABASE_URI not specified, falling back to localhost.');
+//   // console.log('DATABASE_URI not specified, falling back to localhost.');
 // }
 
-// mongoose.connect(databaseUri || config.database);
-mongoose.connect(config.databasetest);
+mongoose.connect(databaseUri || config.database);
+// mongoose.connect(config.databasetest);
 require('../services/mongoose-cache-fn')(mongoose);
 
 var requestService = require('../services/requestService');
@@ -52,18 +52,18 @@ tdCache.connect();
 // connectRedis();
 
 // function connectRedis() {
-//   console.log(">>> connectRedis for test")
+//   // console.log(">>> connectRedis for test")
 //   redis_client = redis.createClient({
 //     host: "127.0.0.1",
 //     port: 6379,
 //   });
 
 //   redis_client.on('error', err => {
-//     winston.info('(wab) Connect Redis Error ' + err);
+//     // winston.info('(wab) Connect Redis Error ' + err);
 //   })
 
 //   redis_client.on('ready', () => {
-//     winston.info("(wab) Redis ready!")
+//     // winston.info("(wab) Redis ready!")
 //   })
 
 // }
@@ -127,7 +127,7 @@ describe('RequestService', function () {
               let obj = { createdAt: new Date() }
   
               let quotes = await qm.getAllQuotes(savedProject, obj);
-              console.log("quotes: ", quotes);
+              // console.log("quotes: ", quotes);
               // quotes.requests.quote.should.be.a('string');
               // expect(quotes.requests.quote).to.equal('1');
               
@@ -136,7 +136,7 @@ describe('RequestService', function () {
 
 
           }).catch(function (err) {
-            console.log("test reject", err);
+            // console.log("test reject", err);
             assert.isNotOk(err, 'Promise error');
             // done();
           });
@@ -180,11 +180,11 @@ describe('RequestService', function () {
             expect(savedRequest.participantsAgents).to.contains(userid);
             expect(savedRequest.participantsBots).to.have.lengthOf(0);
             expect(savedRequest.hasBot).to.equal(false);
-            console.log("savedRequest.participants[0]", savedRequest.participants[0]);
+            // console.log("savedRequest.participants[0]", savedRequest.participants[0]);
             expect(savedRequest.participants[0].toString()).to.equal(userid);
             expect(savedRequest.participantsAgents[0].toString()).to.equal(userid);
             expect(savedRequest.assigned_at).to.not.equal(null);
-            console.log("savedRequest.participants1");
+            // console.log("savedRequest.participants1");
 
             expect(savedRequest.snapshot.department.name).to.not.equal(null);
             expect(savedRequest.snapshot.agents).to.have.lengthOf(1);
@@ -193,28 +193,28 @@ describe('RequestService', function () {
             expect(savedRequest.snapshot.requester.role).to.equal("owner");
             expect(savedRequest.snapshot.requester.isAuthenticated).to.equal(true);
             // expect(savedRequest.snapshot.requester.role).to.equal("owner");
-            console.log("savedRequest.participants2");
+            // console.log("savedRequest.participants2");
 
             expect(savedRequest.createdBy).to.equal(savedProjectAndPU.project_user._id.toString());
 
-            // console.log("savedProject._id", savedProject._id, typeof savedProject._id);
-            // console.log("savedRequest.id_project", savedRequest.id_project, typeof savedRequest.id_project);
+            // // console.log("savedProject._id", savedProject._id, typeof savedProject._id);
+            // // console.log("savedRequest.id_project", savedRequest.id_project, typeof savedRequest.id_project);
 
             expect(savedRequest.id_project).to.equal(savedProject._id.toString());
-            console.log("savedRequest.participants3");
+            // console.log("savedRequest.participants3");
             // aiuto
             // expect(savedRequest.department).to.equal("requester_id1");
 
             requestService.create(request).then(function (savedRequest) {
               // assert.isNotOk('No duplicate check index');
-              console.log("no index check ???");
+              // console.log("no index check ???");
               // done();
             }).catch(function (err) {
-              console.log("ok duplicate check index ", err);
+              // console.log("ok duplicate check index ", err);
               done();
             });
           }).catch(function (err) {
-            console.log("test reject", err);
+            // console.log("test reject", err);
             assert.isNotOk(err, 'Promise error');
             // done();
           });
@@ -247,7 +247,7 @@ describe('RequestService', function () {
           };
 
           requestService.create(request).then(function (savedRequest) {
-            winston.info("resolve", savedRequest.toObject());
+            // winston.info("resolve", savedRequest.toObject());
             expect(savedRequest.request_id).to.equal("request_idcreateObjSimpleUpdateLeadUpdateSnapshot-" + now);
             expect(savedRequest.requester.toString()).to.equal(savedProjectAndPU.project_user._id.toString());
             expect(savedRequest.first_text).to.equal("first_text");
@@ -258,7 +258,7 @@ describe('RequestService', function () {
             expect(savedRequest.participantsAgents).to.contains(userid);
             expect(savedRequest.participantsBots).to.have.lengthOf(0);
             expect(savedRequest.hasBot).to.equal(false);
-            console.log("savedRequest.participants[0]", savedRequest.participants[0]);
+            // console.log("savedRequest.participants[0]", savedRequest.participants[0]);
             expect(savedRequest.participants[0].toString()).to.equal(userid);
             expect(savedRequest.participantsAgents[0].toString()).to.equal(userid);
             expect(savedRequest.assigned_at).to.not.equal(null);
@@ -273,8 +273,8 @@ describe('RequestService', function () {
 
             expect(savedRequest.createdBy).to.equal(savedProjectAndPU.project_user._id.toString());
 
-            // console.log("savedProject._id", savedProject._id, typeof savedProject._id);
-            // console.log("savedRequest.id_project", savedRequest.id_project, typeof savedRequest.id_project);
+            // // console.log("savedProject._id", savedProject._id, typeof savedProject._id);
+            // // console.log("savedRequest.id_project", savedRequest.id_project, typeof savedRequest.id_project);
 
             expect(savedRequest.id_project).to.equal(savedProject._id.toString());
 
@@ -285,12 +285,12 @@ describe('RequestService', function () {
               expect(updatedLead.email).to.equal("email2@email2.com");
               expect(updatedLead.id_project).to.equal(savedProject._id.toString());
               expect(updatedLead.lead_id).to.not.equal(createdLead.id);
-              console.log("updatedLead", updatedLead);
+              // console.log("updatedLead", updatedLead);
 
               requestEvent.on('request.update.snapshot.lead', function (data) {
 
                 Request.findById(savedRequest._id, function (err, request) {
-                  console.log("err", err);
+                  // console.log("err", err);
                   expect(request.request_id).to.equal("request_idcreateObjSimpleUpdateLeadUpdateSnapshot-" + now);
                   expect(request.snapshot.lead.fullname).to.equal("fullname2");
                   done();
@@ -304,7 +304,7 @@ describe('RequestService', function () {
 
 
           }).catch(function (err) {
-            console.log("test reject", err);
+            // console.log("test reject", err);
             assert.isNotOk(err, 'Promise error');
             done();
           });
@@ -339,7 +339,7 @@ describe('RequestService', function () {
           };
 
           requestService.create(request).then(function (savedRequest) {
-            winston.debug("resolve", savedRequest.toObject());
+            // winston.debug("resolve", savedRequest.toObject());
             expect(savedRequest.request_id).to.equal("request_id-createObjParticipantsAgent-" + now);
             expect(savedRequest.requester.toString()).to.equal(savedProjectAndPU.project_user._id.toString());
             expect(savedRequest.first_text).to.equal("first_text");
@@ -351,7 +351,7 @@ describe('RequestService', function () {
             expect(savedRequest.participantsAgents).to.contains(userid);
             expect(savedRequest.participantsBots).to.have.lengthOf(0);
             expect(savedRequest.hasBot).to.equal(false);
-            console.log("savedRequest.participants[0]", savedRequest.participants[0]);
+            // console.log("savedRequest.participants[0]", savedRequest.participants[0]);
             expect(savedRequest.participants[0].toString()).to.equal(userid);
             expect(savedRequest.participantsAgents[0].toString()).to.equal(userid);
             expect(savedRequest.assigned_at).to.not.equal(null);
@@ -365,8 +365,8 @@ describe('RequestService', function () {
 
             expect(savedRequest.createdBy).to.equal(savedProjectAndPU.project_user._id.toString());
 
-            // console.log("savedProject._id", savedProject._id, typeof savedProject._id);
-            // console.log("savedRequest.id_project", savedRequest.id_project, typeof savedRequest.id_project);
+            // // console.log("savedProject._id", savedProject._id, typeof savedProject._id);
+            // // console.log("savedRequest.id_project", savedRequest.id_project, typeof savedRequest.id_project);
 
             expect(savedRequest.id_project).to.equal(savedProject._id.toString());
 
@@ -374,7 +374,7 @@ describe('RequestService', function () {
             // expect(savedRequest.department).to.equal("requester_id1");
             done();
           }).catch(function (err) {
-            console.log("test reject", err);
+            // console.log("test reject", err);
             assert.isNotOk(err, 'Promise error');
             done();
           });
@@ -411,7 +411,7 @@ describe('RequestService', function () {
           };
 
           requestService.create(request).then(function (savedRequest) {
-            winston.debug("resolve", savedRequest.toObject());
+            // winston.debug("resolve", savedRequest.toObject());
             expect(savedRequest.request_id).to.equal("request_id-createObjTemp-" + now);
             expect(savedRequest.requester.toString()).to.equal(savedProjectAndPU.project_user._id.toString());
             expect(savedRequest.first_text).to.equal("first_text");
@@ -422,7 +422,7 @@ describe('RequestService', function () {
             expect(savedRequest.participantsAgents).to.have.lengthOf(0);
             expect(savedRequest.participantsBots).to.have.lengthOf(0);
             expect(savedRequest.hasBot).to.equal(false);
-            console.log("savedRequest.participants[0]", savedRequest.participants[0]);
+            // console.log("savedRequest.participants[0]", savedRequest.participants[0]);
             expect(savedRequest.assigned_at).to.equal(undefined);
 
             expect(savedRequest.snapshot.department.name).to.not.equal(null);
@@ -434,8 +434,8 @@ describe('RequestService', function () {
 
             expect(savedRequest.createdBy).to.equal(savedProjectAndPU.project_user._id.toString());
 
-            // console.log("savedProject._id", savedProject._id, typeof savedProject._id);
-            // console.log("savedRequest.id_project", savedRequest.id_project, typeof savedRequest.id_project);
+            // // console.log("savedProject._id", savedProject._id, typeof savedProject._id);
+            // // console.log("savedRequest.id_project", savedRequest.id_project, typeof savedRequest.id_project);
 
             expect(savedRequest.id_project).to.equal(savedProject._id.toString());
 
@@ -443,7 +443,7 @@ describe('RequestService', function () {
             // expect(savedRequest.department).to.equal("requester_id1");
             done();
           }).catch(function (err) {
-            console.log("test reject", err);
+            // console.log("test reject", err);
             assert.isNotOk(err, 'Promise error');
             done();
           });
@@ -465,7 +465,7 @@ describe('RequestService', function () {
         leadService.createIfNotExists("leadfullname", "email@email.com", savedProject._id).then(function (createdLead) {
           var now = Date.now();
           requestService.createWithIdAndRequester("request_id-createWithIdAndCreateNewLead-" + now, savedProjectAndPU.project_user._id, createdLead._id, savedProject._id, "first_text").then(function (savedRequest) {
-            winston.debug("resolve", savedRequest.toObject());
+            // winston.debug("resolve", savedRequest.toObject());
             expect(savedRequest.request_id).to.equal("request_id-createWithIdAndCreateNewLead-" + now);
             expect(savedRequest.requester.toString()).to.equal(savedProjectAndPU.project_user._id.toString());
             expect(savedRequest.first_text).to.equal("first_text");
@@ -476,7 +476,7 @@ describe('RequestService', function () {
             expect(savedRequest.participantsAgents).to.contains(userid);
             expect(savedRequest.participantsBots).to.have.lengthOf(0);
             expect(savedRequest.hasBot).to.equal(false);
-            console.log("savedRequest.participants[0]", savedRequest.participants[0]);
+            // console.log("savedRequest.participants[0]", savedRequest.participants[0]);
             expect(savedRequest.participants[0].toString()).to.equal(userid);
             expect(savedRequest.participantsAgents[0].toString()).to.equal(userid);
             expect(savedRequest.assigned_at).to.not.equal(null);
@@ -486,8 +486,8 @@ describe('RequestService', function () {
             expect(savedRequest.snapshot.availableAgentsCount).to.equal(1);
             expect(savedRequest.createdBy).to.equal(savedProjectAndPU.project_user._id.toString());
 
-            // console.log("savedProject._id", savedProject._id, typeof savedProject._id);
-            // console.log("savedRequest.id_project", savedRequest.id_project, typeof savedRequest.id_project);
+            // // console.log("savedProject._id", savedProject._id, typeof savedProject._id);
+            // // console.log("savedRequest.id_project", savedRequest.id_project, typeof savedRequest.id_project);
 
             expect(savedRequest.id_project).to.equal(savedProject._id.toString());
 
@@ -495,7 +495,7 @@ describe('RequestService', function () {
             // expect(savedRequest.department).to.equal("requester_id1");
             done();
           }).catch(function (err) {
-            console.log("test reject", err);
+            // console.log("test reject", err);
             assert.isNotOk(err, 'Promise error');
             done();
           });
@@ -527,9 +527,9 @@ describe('RequestService', function () {
             if (savedRequest.request_id === "createWithIdAndCreateNewLeadAndCheckRequestEvent-" + now) {
 
 
-              console.log("savedRequest", savedRequest.toJSON());
+              // console.log("savedRequest", savedRequest.toJSON());
 
-              winston.debug("resolve", savedRequest.toObject());
+              // winston.debug("resolve", savedRequest.toObject());
               expect(savedRequest.request_id).to.equal("createWithIdAndCreateNewLeadAndCheckRequestEvent-" + now);
               expect(savedRequest.requester._id.toString()).to.equal(savedProjectAndPU.project_user._id.toString());
               expect(savedRequest.first_text).to.equal("first_text");
@@ -540,7 +540,7 @@ describe('RequestService', function () {
               expect(savedRequest.participantsAgents).to.contains(userid);
               expect(savedRequest.participantsBots).to.have.lengthOf(0);
               expect(savedRequest.hasBot).to.equal(false);
-              console.log("savedRequest.participants[0]", savedRequest.participants[0]);
+              // console.log("savedRequest.participants[0]", savedRequest.participants[0]);
               expect(savedRequest.participants[0].toString()).to.equal(userid);
 
               expect(savedRequest.createdBy).to.equal(savedProjectAndPU.project_user._id.toString());
@@ -549,8 +549,8 @@ describe('RequestService', function () {
               expect(savedRequest.participatingBots.length).to.equal(0);
               expect(savedRequest.snapshot.availableAgentsCount).to.equal(1);
 
-              // console.log("savedProject._id", savedProject._id, typeof savedProject._id);
-              // console.log("savedRequest.id_project", savedRequest.id_project, typeof savedRequest.id_project);
+              // // console.log("savedProject._id", savedProject._id, typeof savedProject._id);
+              // // console.log("savedRequest.id_project", savedRequest.id_project, typeof savedRequest.id_project);
 
               expect(savedRequest.id_project).to.equal(savedProject._id.toString());
 
@@ -563,7 +563,7 @@ describe('RequestService', function () {
           requestService.createWithIdAndRequester("createWithIdAndCreateNewLeadAndCheckRequestEvent-" + now, savedProjectAndPU.project_user._id, createdLead._id, savedProject._id, "first_text").then(function (savedRequest) {
 
           }).catch(function (err) {
-            console.log("test reject", err);
+            // console.log("test reject", err);
             assert.isNotOk(err, 'Promise error');
             done();
           });
@@ -584,7 +584,7 @@ describe('RequestService', function () {
   //     // createWithId(request_id, requester_id, id_project, first_text, departmentid, sourcePage, language, userAgent, status) {
   //      requestService.createWithId("request_id1", lead._id,  savedProject._id, "first_text").then(function(savedRequest) {
   //        leadService.findByEmail("email@email.com", savedProject._id).then(function(lead) {
-  //         winston.debug("resolve", savedRequest);
+  //         // winston.debug("resolve", savedRequest);
   //         expect(savedRequest.request_id).to.equal("request_id1");
   //         expect(savedRequest.requester_id).to.equal(lead._id.toString());
   //         expect(savedRequest.first_text).to.equal("first_text");
@@ -593,8 +593,8 @@ describe('RequestService', function () {
   //         expect(savedRequest.participants).to.contains(userid);
   //         expect(savedRequest.createdBy).to.equal(lead._id.toString());
 
-  //         // console.log("savedProject._id", savedProject._id, typeof savedProject._id);
-  //         // console.log("savedRequest.id_project", savedRequest.id_project, typeof savedRequest.id_project);
+  //         // // console.log("savedProject._id", savedProject._id, typeof savedProject._id);
+  //         // // console.log("savedRequest.id_project", savedRequest.id_project, typeof savedRequest.id_project);
 
   //         expect(savedRequest.id_project).to.equal(savedProject._id.toString());
 
@@ -602,7 +602,7 @@ describe('RequestService', function () {
   //         // expect(savedRequest.department).to.equal("requester_id1");
   //         done();
   //       }).catch(function(err) {
-  //           console.log("test reject");
+  //           // console.log("test reject");
   //           assert.isNotOk(err,'Promise error');
   //           done();
   //       });
@@ -630,7 +630,7 @@ describe('RequestService', function () {
         var now = Date.now();
         // createWithIdAndRequester(request_id, project_user_id, lead_id, id_project, first_text, departmentid, sourcePage, language, userAgent, status, createdBy, attributes) {
         requestService.createWithIdAndRequester("request_id-createWithIdAndCreatedBy-" + now, savedProjectAndPU.project_user._id, null, savedProject._id, "first_text", null, null, null, null, null, "user1").then(function (savedRequest) {
-          console.log("test resolve");
+          // console.log("test resolve");
           expect(savedRequest.request_id).to.equal("request_id-createWithIdAndCreatedBy-" + now);
           expect(savedRequest.requester.toString()).to.equal(savedProjectAndPU.project_user._id.toString());
           expect(savedRequest.first_text).to.equal("first_text");
@@ -642,8 +642,8 @@ describe('RequestService', function () {
           expect(savedRequest.hasBot).to.equal(false);
           expect(savedRequest.createdBy).to.equal("user1");
 
-          // console.log("savedProject._id", savedProject._id, typeof savedProject._id);
-          // console.log("savedRequest.id_project", savedRequest.id_project, typeof savedRequest.id_project);
+          // // console.log("savedProject._id", savedProject._id, typeof savedProject._id);
+          // // console.log("savedRequest.id_project", savedRequest.id_project, typeof savedRequest.id_project);
 
           expect(savedRequest.id_project).to.equal(savedProject._id.toString());
 
@@ -652,7 +652,7 @@ describe('RequestService', function () {
           done();
         })
           .catch(function (err) {
-            console.log("test reject", err);
+            // console.log("test reject", err);
             assert.isNotOk(err, 'Promise error');
             done();
           });
@@ -680,7 +680,7 @@ describe('RequestService', function () {
 
         })
           .catch(function (err) {
-            console.log("test reject", err);
+            // console.log("test reject", err);
             done();
           });
       });
@@ -703,7 +703,7 @@ describe('RequestService', function () {
         departmentService.create("PooledDepartment-for-createWithIdWith-createWithIdWithPooledDepartment", savedProject._id, 'pooled', userid).then(function (createdDepartment) {
           var now = Date.now();
           requestService.createWithIdAndRequester("request_id-createWithIdWithPooledDepartment-" + now, savedProjectAndPU.project_user._id, null, savedProject._id, "first_text", createdDepartment._id).then(function (savedRequest) {
-            winston.debug("resolve savedRequest");
+            // winston.debug("resolve savedRequest");
             expect(savedRequest.request_id).to.equal("request_id-createWithIdWithPooledDepartment-" + now);
             expect(savedRequest.requester.toString()).to.equal(savedProjectAndPU.project_user._id.toString());
             expect(savedRequest.first_text).to.equal("first_text");
@@ -717,7 +717,7 @@ describe('RequestService', function () {
             expect(savedRequest.department.toString()).to.equal(createdDepartment._id.toString());
             done();
           }).catch(function (err) {
-            console.log("test reject", err);
+            // console.log("test reject", err);
             assert.isNotOk(err, 'Promise error');
             done();
           });
@@ -749,19 +749,19 @@ describe('RequestService', function () {
                 savedProject._id, messageSender)]).then(function (all) {
                   requestService.updateWaitingTimeByRequestId(savedRequest.request_id, savedProject._id, true).then(function (upRequest) {
                     var maxWaitingTime = Date.now() - upRequest.createdAt;
-                    console.log("resolve closedRequest", upRequest.toObject(), maxWaitingTime);
+                    // console.log("resolve closedRequest", upRequest.toObject(), maxWaitingTime);
 
                     expect(upRequest.status).to.equal(200);
-                    // console.log("1")
+                    // // console.log("1")
                     // expect(upRequest.status).to.equal(300);
                     expect(upRequest.waiting_time).to.not.equal(null);
-                    // console.log("2")
+                    // // console.log("2")
                     expect(upRequest.waiting_time).to.gte(300);
-                    // console.log("3")
+                    // // console.log("3")
                     expect(upRequest.waiting_time).to.lte(maxWaitingTime);
-                    // console.log("4")
+                    // // console.log("4")
                     expect(upRequest.first_response_at).to.not.equal(null);
-                    // console.log("5")
+                    // // console.log("5")
                     done();
                   }).catch(function (err) {
                     winston.error("test reject", err);
@@ -802,7 +802,7 @@ describe('RequestService', function () {
               savedProject._id, "5badfe5d553d1844ad654072")]).then(function (all) {
                 // closeRequestByRequestId(request_id, id_project, skipStatsUpdate, notify, closed_by)
                 requestService.closeRequestByRequestId(savedRequest.request_id, savedProject._id, false, true, "user1").then(function (closedRequest) {
-                  winston.debug("resolve closedRequest", closedRequest.toObject());
+                  // winston.debug("resolve closedRequest", closedRequest.toObject());
                   expect(closedRequest.status).to.equal(1000);
                   expect(closedRequest.closed_at).to.not.equal(null);
                   expect(closedRequest.transcript).to.contains("hello1");
@@ -847,7 +847,7 @@ describe('RequestService', function () {
               savedProject._id, "5badfe5d553d1844ad654072")]).then(function (all) {
                 // closeRequestByRequestId(request_id, id_project, skipStatsUpdate, notify, closed_by, force)
                 requestService.closeRequestByRequestId(savedRequest.request_id, savedProject._id, false, true, "user1").then(function (closedRequest) {
-                  winston.debug("resolve closedRequest", closedRequest.toObject());
+                  // winston.debug("resolve closedRequest", closedRequest.toObject());
                   expect(closedRequest.status).to.equal(1000);
                   expect(closedRequest.closed_at).to.not.equal(null);
                   expect(closedRequest.transcript).to.contains("hello1");
@@ -895,7 +895,7 @@ describe('RequestService', function () {
               messageService.create("5badfe5d553d1844ad654072", "test sender", savedRequest.request_id, "hello2",
                 savedProject._id, "5badfe5d553d1844ad654072")]).then(function (all) {
                   requestService.closeRequestByRequestId(savedRequest.request_id, savedProject._id).then(function (closedRequest) {
-                    winston.debug("resolve closedRequest", closedRequest.toObject());
+                    // winston.debug("resolve closedRequest", closedRequest.toObject());
                     expect(closedRequest.status).to.equal(1000);
                     expect(closedRequest.closed_at).to.not.equal(null);
                     expect(closedRequest.transcript).to.contains("hello1");
@@ -934,7 +934,7 @@ describe('RequestService', function () {
           requestService.closeRequestByRequestId(savedRequest.request_id, savedProject._id).then(function (closedRequest) {
             requestService.reopenRequestByRequestId(savedRequest.request_id, savedProject._id).then(function (reopenedRequest) {
 
-              winston.info("resolve reopenedRequest", reopenedRequest.toObject());
+              // winston.info("resolve reopenedRequest", reopenedRequest.toObject());
 
               //check closedRequest
               expect(closedRequest.status).to.equal(1000);
@@ -977,7 +977,7 @@ describe('RequestService', function () {
 
         userService.signup(email2, pwd, "Test Firstname2", "Test lastname2").then(function (savedUser2) {
 
-          // console.log("savedUser2",savedUser2);
+          // // console.log("savedUser2",savedUser2);
 
           var newProject_user = new Project_user({
             // _id: new mongoose.Types.ObjectId(),
@@ -992,7 +992,7 @@ describe('RequestService', function () {
           return newProject_user.save(function (err, savedProject_user) {
 
             if (err) {
-              console.log("err", err)
+              // console.log("err", err)
             }
 
             var now = Date.now();
@@ -1000,13 +1000,13 @@ describe('RequestService', function () {
               //  inserisci id valido
               //  var member = 'agent1';
               var member = savedUser2._id.toString();
-              // console.log("member",member)
+              // // console.log("member",member)
               //  addParticipantByRequestId(request_id, id_project, member) {
               requestService.addParticipantByRequestId(savedRequest.request_id, savedProject._id, member).then(function (savedRequestParticipant) {
-                winston.info("resolve addParticipantByRequestId", savedRequestParticipant.toObject());
+                // winston.info("resolve addParticipantByRequestId", savedRequestParticipant.toObject());
                 expect(savedRequestParticipant.request_id).to.equal("request_id-addparticipant-" + now);
 
-                winston.info("savedProjectAndPU.project_user._id.toString():" + savedProjectAndPU.project_user._id.toString());
+                // winston.info("savedProjectAndPU.project_user._id.toString():" + savedProjectAndPU.project_user._id.toString());
                 expect(savedRequestParticipant.requester._id.toString()).to.equal(savedProjectAndPU.project_user._id.toString());
 
                 expect(savedRequestParticipant.first_text).to.equal("first_text");
@@ -1030,7 +1030,7 @@ describe('RequestService', function () {
 
                 done();
               }).catch(function (err) {
-                console.log("test reject", err);
+                // console.log("test reject", err);
                 assert.isNotOk(err, 'Promise error');
                 done();
               });
@@ -1061,7 +1061,7 @@ describe('RequestService', function () {
 
         userService.signup(email2, pwd, "Test Firstname2", "Test lastname2").then(function (savedUser2) {
 
-          // console.log("savedUser2",savedUser2);
+          // // console.log("savedUser2",savedUser2);
 
           var newProject_user = new Project_user({
             // _id: new mongoose.Types.ObjectId(),
@@ -1076,7 +1076,7 @@ describe('RequestService', function () {
           return newProject_user.save(function (err, savedProject_user) {
 
             if (err) {
-              console.log("err", err)
+              // console.log("err", err)
             }
             var now = Date.now();
 
@@ -1087,13 +1087,13 @@ describe('RequestService', function () {
               //  inserisci id valido
               //  var member = 'agent1';
               var member = savedUser2._id.toString();
-              // console.log("member",member)
+              // // console.log("member",member)
               // setParticipantsByRequestId(request_id, id_project, newparticipants) {
               requestService.setParticipantsByRequestId(savedRequest.request_id, savedProject._id, [member]).then(function (savedRequestParticipant) {
-                winston.info("resolve setParticipantsByRequestId", savedRequestParticipant.toObject());
+                // winston.info("resolve setParticipantsByRequestId", savedRequestParticipant.toObject());
                 expect(savedRequestParticipant.request_id).to.equal("request_id1-setParticipantsByRequestId-" + now);
 
-                winston.info("savedProjectAndPU.project_user._id.toString():" + savedProjectAndPU.project_user._id.toString());
+                // winston.info("savedProjectAndPU.project_user._id.toString():" + savedProjectAndPU.project_user._id.toString());
                 expect(savedRequestParticipant.requester._id.toString()).to.equal(savedProjectAndPU.project_user._id.toString());
 
                 expect(savedRequestParticipant.first_text).to.equal("first_text");
@@ -1114,7 +1114,7 @@ describe('RequestService', function () {
 
                 done();
               }).catch(function (err) {
-                console.log("test reject", err);
+                // console.log("test reject", err);
                 assert.isNotOk(err, 'Promise error');
                 done();
               });
@@ -1141,7 +1141,7 @@ describe('RequestService', function () {
         var now = Date.now();
         requestService.createWithIdAndRequester("request_id-removeparticipant-" + now, savedProjectAndPU.project_user._id, null, savedProject._id, "first_text").then(function (savedRequest) {
           requestService.removeParticipantByRequestId(savedRequest.request_id, savedProject._id, userid).then(function (savedRequestParticipant) {
-            winston.info("resolve", savedRequestParticipant.toObject());
+            // winston.info("resolve", savedRequestParticipant.toObject());
 
             //savedRequest is assigned -> 200
             expect(savedRequest.status).to.equal(200);
@@ -1164,7 +1164,7 @@ describe('RequestService', function () {
 
             done();
           }).catch(function (err) {
-            console.log("test reject");
+            // console.log("test reject");
             assert.isNotOk(err, 'Promise error');
             done();
           });
@@ -1189,7 +1189,7 @@ describe('RequestService', function () {
         var savedProject = savedProjectAndPU.project;
         var now = Date.now();
         requestService.createWithIdAndRequester("routeDepartmentSameAgentSameDepartmentSkipUpdate-" + now, savedProjectAndPU.project_user._id, null, savedProject._id, "first_text").then(function (savedRequest) {
-          winston.debug("resolve savedRequest");
+          // winston.debug("resolve savedRequest");
           expect(savedRequest.request_id).to.equal("routeDepartmentSameAgentSameDepartmentSkipUpdate-" + now);
           expect(savedRequest.requester.toString()).to.equal(savedProjectAndPU.project_user._id.toString());
           expect(savedRequest.first_text).to.equal("first_text");
@@ -1201,7 +1201,7 @@ describe('RequestService', function () {
           expect(savedRequest.hasBot).to.equal(false);
           expect(savedRequest.id_project).to.equal(savedProject._id.toString());
 
-          console.log("savedRequest.department", savedRequest.department);
+          // console.log("savedRequest.department", savedRequest.department);
           // expect(savedRequest.department.name).to.equal("Default");
 
           // departmentService.create("AssignedDepartment-for-routeDepartmentSameAgentSameDepartmentSkipUpdate", savedProject._id, 'assigned', userid).then(function(createdDepartment) {
@@ -1221,7 +1221,7 @@ describe('RequestService', function () {
             expect(routedRequest.hasBot).to.equal(false);
             expect(routedRequest.id_project).to.equal(savedProject._id.toString());
 
-            console.log("routedRequest.department.name", routedRequest.department.name);
+            // console.log("routedRequest.department.name", routedRequest.department.name);
             expect(routedRequest.department._id.toString()).to.equal(dep.toString());
             expect(routedRequest.snapshot.department._id.toString()).to.equal(dep.toString());
 
@@ -1230,7 +1230,7 @@ describe('RequestService', function () {
           });
 
         }).catch(function (err) {
-          console.log("test reject", err);
+          // console.log("test reject", err);
           assert.isNotOk(err, 'Promise error');
           done();
         });
@@ -1255,7 +1255,7 @@ describe('RequestService', function () {
         var now = Date.now();
 
         requestService.createWithIdAndRequester("routeDepartmentSameAgentDifferentDepartment-" + now, savedProjectAndPU.project_user._id, null, savedProject._id, "first_text").then(function (savedRequest) {
-          winston.debug("resolve savedRequest");
+          // winston.debug("resolve savedRequest");
           expect(savedRequest.request_id).to.equal("routeDepartmentSameAgentDifferentDepartment-" + now);
           expect(savedRequest.requester.toString()).to.equal(savedProjectAndPU.project_user._id.toString());
           expect(savedRequest.first_text).to.equal("first_text");
@@ -1267,7 +1267,7 @@ describe('RequestService', function () {
           expect(savedRequest.hasBot).to.equal(false);
           expect(savedRequest.id_project).to.equal(savedProject._id.toString());
 
-          console.log("savedRequest.department", savedRequest.department);
+          // console.log("savedRequest.department", savedRequest.department);
           // expect(savedRequest.department.name).to.equal("Default");
 
           departmentService.create("AssignedDepartment-for-routeDepartmentSameAgentDifferentDepartment", savedProject._id, 'assigned', userid).then(function (createdDepartment) {
@@ -1286,7 +1286,7 @@ describe('RequestService', function () {
               expect(routedRequest.hasBot).to.equal(false);
               expect(routedRequest.id_project).to.equal(savedProject._id.toString());
 
-              console.log("routedRequest.department.name", routedRequest.department.name);
+              // console.log("routedRequest.department.name", routedRequest.department.name);
               expect(routedRequest.department._id.toString()).to.equal(createdDepartment._id.toString());
               expect(routedRequest.snapshot.department._id.toString()).to.equal(createdDepartment._id.toString());
 
@@ -1295,7 +1295,7 @@ describe('RequestService', function () {
             });
 
           }).catch(function (err) {
-            console.log("test reject", err);
+            // console.log("test reject", err);
             assert.isNotOk(err, 'Promise error');
             done();
           });
@@ -1343,12 +1343,12 @@ describe('RequestService', function () {
           newProject_user.save(function (err, savedProject_user) {
 
             if (err) {
-              console.log("err", err)
+              // console.log("err", err)
             }
             var now = Date.now();
 
             requestService.createWithIdAndRequester("routeDepartmentDifferentAgentDifferentDepartment-" + now, savedProjectAndPU.project_user._id, null, savedProject._id, "first_text").then(function (savedRequest) {
-              winston.debug("resolve savedRequest");
+              // winston.debug("resolve savedRequest");
               expect(savedRequest.request_id).to.equal("routeDepartmentDifferentAgentDifferentDepartment-" + now);
               expect(savedRequest.requester.toString()).to.equal(savedProjectAndPU.project_user._id.toString());
               expect(savedRequest.first_text).to.equal("first_text");
@@ -1361,7 +1361,7 @@ describe('RequestService', function () {
               expect(savedRequest.hasBot).to.equal(false);
               expect(savedRequest.id_project).to.equal(savedProject._id.toString());
 
-              console.log("savedRequest.department", savedRequest.department);
+              // console.log("savedRequest.department", savedRequest.department);
               // expect(savedRequest.department.name).to.equal("Default");
 
 
@@ -1374,7 +1374,7 @@ describe('RequestService', function () {
                 updatedBy: userid
               });
               newGroup.save(function (err, savedGroup) {
-                console.log("savedGroup", savedGroup)
+                // console.log("savedGroup", savedGroup)
 
 
 
@@ -1383,7 +1383,7 @@ describe('RequestService', function () {
 
                   createdDepartment.id_group = newGroup._id;
                   createdDepartment.save(function (err, savedGroupDepartment) {
-                    console.log("savedGroupDepartment", savedGroupDepartment)
+                    // console.log("savedGroupDepartment", savedGroupDepartment)
 
 
                     // route(request_id, departmentid, id_project, nobot, no_populate) {
@@ -1401,7 +1401,7 @@ describe('RequestService', function () {
                       expect(routedRequest.hasBot).to.equal(false);
                       expect(routedRequest.id_project).to.equal(savedProject._id.toString());
 
-                      console.log("routedRequest.department.name", routedRequest.department.name);
+                      // console.log("routedRequest.department.name", routedRequest.department.name);
                       expect(routedRequest.department._id.toString()).to.equal(createdDepartment._id.toString());
                       expect(routedRequest.snapshot.department._id.toString()).to.equal(createdDepartment._id.toString());
 
@@ -1442,7 +1442,7 @@ describe('RequestService', function () {
 
           // reroute(request_id, id_project, nobot) {
           requestService.reroute(savedRequest.request_id, savedProject._id, true).then(function (savedRequestParticipant) {
-            winston.info("resolve", savedRequestParticipant.toObject());
+            // winston.info("resolve", savedRequestParticipant.toObject());
 
             //savedRequest is assigned -> 200
             expect(savedRequest.status).to.equal(200);
@@ -1465,7 +1465,7 @@ describe('RequestService', function () {
 
             done();
           }).catch(function (err) {
-            console.log("test reject", err);
+            // console.log("test reject", err);
             assert.isNotOk(err, 'Promise error');
             done();
           });
@@ -1503,7 +1503,7 @@ describe('RequestService', function () {
                   expect(closedRequest.transcript).to.contains("hello2");
 
                   requestService.removeParticipantByRequestId(savedRequest.request_id, savedProject._id, userid).then(function (savedRequestParticipant) {
-                    winston.debug("resolve closeRequestAndRemoveParticipant", closedRequest.toObject());
+                    // winston.debug("resolve closeRequestAndRemoveParticipant", closedRequest.toObject());
                     expect(savedRequestParticipant.status).to.equal(1000);
 
                     done();
@@ -1535,7 +1535,7 @@ describe('RequestService', function () {
         leadService.createIfNotExists("leadfullname", "email@email.com", savedProject._id).then(function (createdLead) {
           var now = Date.now();
           requestService.createWithIdAndRequester("request_id1-addTag-" + now, savedProjectAndPU.project_user._id, createdLead._id, savedProject._id, "first_text").then(function (savedRequest) {
-            winston.debug("resolve", savedRequest.toObject());
+            // winston.debug("resolve", savedRequest.toObject());
             expect(savedRequest.request_id).to.equal("request_id1-addTag-" + now);
             expect(savedRequest.tags.length).to.equal(0);
 
@@ -1549,7 +1549,7 @@ describe('RequestService', function () {
 
 
           }).catch(function (err) {
-            console.log("test reject", err);
+            // console.log("test reject", err);
             assert.isNotOk(err, 'Promise error');
             done();
           });
@@ -1573,7 +1573,7 @@ describe('RequestService', function () {
         leadService.createIfNotExists("leadfullname", "email@email.com", savedProject._id).then(function (createdLead) {
           var now = Date.now();
           requestService.createWithIdAndRequester("request_id1-addTag-" + now, savedProjectAndPU.project_user._id, createdLead._id, savedProject._id, "first_text").then(function (savedRequest) {
-            winston.debug("resolve", savedRequest.toObject());
+            // winston.debug("resolve", savedRequest.toObject());
             expect(savedRequest.request_id).to.equal("request_id1-addTag-" + now);
             expect(savedRequest.tags.length).to.equal(0);
 
@@ -1593,7 +1593,7 @@ describe('RequestService', function () {
 
 
           }).catch(function (err) {
-            console.log("test reject", err);
+            // console.log("test reject", err);
             assert.isNotOk(err, 'Promise error');
             done();
           });
@@ -1617,7 +1617,7 @@ describe('RequestService', function () {
 
     var microLanguageTransformerInterceptor = require('../pubmodules/messageTransformer/microLanguageAttributesTransformerInterceptor');
     // var microLanguageTransformerInterceptor = require('../pubmodules/messageTransformer/microLanguageTransformerInterceptor');
-    console.log("microLanguageTransformerInterceptor", microLanguageTransformerInterceptor);
+    // console.log("microLanguageTransformerInterceptor", microLanguageTransformerInterceptor);
     microLanguageTransformerInterceptor.listen();
 
 
@@ -1641,12 +1641,12 @@ describe('RequestService', function () {
           };
 
           requestService.create(request).then(function (savedRequest) {
-            winston.info("resolve", savedRequest.toObject());
+            // winston.info("resolve", savedRequest.toObject());
 
             // create(sender, senderFullname, recipient, text, id_project, createdBy, status, attributes, type, metadata) {
             messageService.create(userid, "test sender", "testrecipient-createMessageMicroLanguageFromBot", "ciao\n* Button1",
               savedProject._id, userid, undefined, { microlanguage: true }).then(function (savedMessage) {
-                winston.debug("resolve savedMessage", savedMessage.toObject());
+                // winston.debug("resolve savedMessage", savedMessage.toObject());
 
                 expect(savedMessage.text).to.equal("ciao");
                 expect(savedMessage.type).to.equal("text");
@@ -1684,7 +1684,7 @@ describe('RequestService', function () {
 
     // var microLanguageTransformerInterceptor = require('../pubmodules/messageTransformer/microLanguageAttributesTransformerInterceptor');
     var microLanguageTransformerInterceptor = require('../pubmodules/messageTransformer/microLanguageTransformerInterceptor');
-    console.log("microLanguageTransformerInterceptor", microLanguageTransformerInterceptor);
+    // console.log("microLanguageTransformerInterceptor", microLanguageTransformerInterceptor);
     microLanguageTransformerInterceptor.listen();
 
 
@@ -1712,12 +1712,12 @@ describe('RequestService', function () {
 
 
           requestService.create(request).then(function (savedRequest) {
-            winston.info("resolve", savedRequest.toObject());
+            // winston.info("resolve", savedRequest.toObject());
 
             // create(sender, senderFullname, recipient, text, id_project, createdBy, status, attributes, type, metadata) {
             messageService.create(userid, "test sender", "testrecipient-createMessageMicroLanguageFromBot", "ciao\n* Button1",
               savedProject._id, userid, undefined, { microlanguage: true }).then(function (savedMessage) {
-                winston.debug("resolve savedMessage", savedMessage.toObject());
+                // winston.debug("resolve savedMessage", savedMessage.toObject());
 
                 expect(savedMessage.text).to.equal("ciao");
                 expect(savedMessage.type).to.equal("text");
@@ -1765,11 +1765,11 @@ describe('RequestService', function () {
           };
 
           requestService.create(request).then(async function (savedRequest) {
-            winston.info("resolve", savedRequest.toObject());
+            // winston.info("resolve", savedRequest.toObject());
 
             var snapshotAgents = await Request.findById(savedRequest.id).select({ "snapshot": 1 }).exec();
 
-            console.log("snapshotAgents", snapshotAgents);
+            // console.log("snapshotAgents", snapshotAgents);
 
             expect(snapshotAgents.snapshot.agents.length).to.equal(1);
             // return;

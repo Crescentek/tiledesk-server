@@ -9,7 +9,7 @@ async function up () {
   await new Promise((resolve, reject) => {
     // setTimeout(()=> { resolve('ok'); }, 3000);
     return Message.updateMany({}, {"$set": {channel: {name: "chat21"}, channel_type: "group"}}, function (err, updates) {
-        winston.info("Schema updated for " + updates.nModified + " messages")
+        // winston.info("Schema updated for " + updates.nModified + " messages")
        return resolve('ok'); 
     });  
   });

@@ -15,7 +15,7 @@ var winston = require('../config/winston');
 
 // var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 // if (!databaseUri) {
-//   console.log('DATABASE_URI not specified, falling back to localhost.');
+//   // console.log('DATABASE_URI not specified, falling back to localhost.');
 // }
 
 // mongoose.connect(databaseUri || config.database);
@@ -53,7 +53,7 @@ describe('messageService', function () {
 
       messageService.create(userid, "test sender", "testrecipient-createMessage", "hello",
         savedProject._id, userid, undefined, { a1: "a1" }, undefined, undefined, "it").then(function (savedMessage) {
-          winston.debug("resolve savedMessage", savedMessage.toObject());
+          // winston.debug("resolve savedMessage", savedMessage.toObject());
 
           expect(savedMessage.text).to.equal("hello");
           expect(savedMessage.sender).to.equal(userid);
@@ -69,7 +69,7 @@ describe('messageService', function () {
             let obj = { createdAt: new Date() }
 
             let quotes = await qm.getAllQuotes(savedProject, obj);
-            console.log("quotes: ", quotes);
+            // console.log("quotes: ", quotes);
             quotes.messages.quote.should.be.a('string');
             expect(quotes.messages.quote).to.equal('1');
             
@@ -97,7 +97,7 @@ describe('messageService', function () {
 
       messageService.create(userid, "test sender", "testrecipient-createMessage", "hello",
         savedProject._id, userid, undefined, { a1: "a1" }, undefined, undefined, "it").then(function (savedMessage) {
-          winston.debug("resolve savedMessage", savedMessage.toObject());
+          // winston.debug("resolve savedMessage", savedMessage.toObject());
 
           expect(savedMessage.text).to.equal("hello");
           expect(savedMessage.sender).to.equal(userid);
@@ -137,7 +137,7 @@ describe('messageService', function () {
             //   requestService.incrementMessagesCountByRequestId(savedRequest.request_id, savedProject._id)]).then(function(savedMessage) {
 
             Request.findOne({ "request_id": "request_id-createTwoMessage", "id_project": savedProject._id }).exec().then(function (req) {
-              console.log("test resolve", req);
+              // console.log("test resolve", req);
 
               // expect(req.messages_count).to.equal(2);
 
@@ -168,7 +168,7 @@ describe('messageService', function () {
 
 
     var messageTransformerInterceptor = require('../pubmodules/messageTransformer/messageTransformerInterceptor');
-    console.log("messageTransformerInterceptor", messageTransformerInterceptor);
+    // console.log("messageTransformerInterceptor", messageTransformerInterceptor);
     messageTransformerInterceptor.listen();
 
 
@@ -177,7 +177,7 @@ describe('messageService', function () {
       // create(sender, senderFullname, recipient, text, id_project, createdBy, status, attributes, type, metadata) {
       messageService.create(userid, "test sender", "testrecipient-createMessage", "${LABEL_PLACEHOLDER}",
         savedProject._id, userid).then(function (savedMessage) {
-          winston.debug("resolve savedMessage", savedMessage.toObject());
+          // winston.debug("resolve savedMessage", savedMessage.toObject());
 
           expect(savedMessage.text).to.equal("type your message..");
           expect(savedMessage.sender).to.equal(userid);
@@ -200,7 +200,7 @@ describe('messageService', function () {
 
 
     var messageTransformerInterceptor = require('../pubmodules/messageTransformer/messageTransformerInterceptor');
-    console.log("messageTransformerInterceptor", messageTransformerInterceptor);
+    // console.log("messageTransformerInterceptor", messageTransformerInterceptor);
     messageTransformerInterceptor.listen();
 
 
@@ -209,7 +209,7 @@ describe('messageService', function () {
       // create(sender, senderFullname, recipient, text, id_project, createdBy) {
       messageService.create(userid, "test sender", "testrecipient-createMessage", "${NOTFOUND_LABEL}",
         savedProject._id, userid).then(function (savedMessage) {
-          winston.debug("resolve savedMessage", savedMessage.toObject());
+          // winston.debug("resolve savedMessage", savedMessage.toObject());
 
           expect(savedMessage.text).to.equal("${NOTFOUND_LABEL}");
           expect(savedMessage.sender).to.equal(userid);
@@ -234,7 +234,7 @@ describe('messageService', function () {
 
 
     var messageTransformerInterceptor = require('../pubmodules/messageTransformer/messageTransformerInterceptor');
-    console.log("messageTransformerInterceptor", messageTransformerInterceptor);
+    // console.log("messageTransformerInterceptor", messageTransformerInterceptor);
     messageTransformerInterceptor.listen();
 
 
@@ -243,7 +243,7 @@ describe('messageService', function () {
       // create(sender, senderFullname, recipient, text, id_project, createdBy, status, attributes, type, metadata, language) {
       messageService.create(userid, "test sender", "testrecipient-createMessage", "${LABEL_PLACEHOLDER}",
         savedProject._id, userid, undefined, undefined, undefined, undefined, "XXXX").then(function (savedMessage) {
-          winston.debug("resolve savedMessage", savedMessage.toObject());
+          // winston.debug("resolve savedMessage", savedMessage.toObject());
 
           expect(savedMessage.text).to.equal("type your message.."); //EN default
           expect(savedMessage.sender).to.equal(userid);
@@ -272,7 +272,7 @@ describe('messageService', function () {
 
 
     var microLanguageTransformerInterceptor = require('../pubmodules/messageTransformer/microLanguageTransformerInterceptor');
-    console.log("microLanguageTransformerInterceptor", microLanguageTransformerInterceptor);
+    // console.log("microLanguageTransformerInterceptor", microLanguageTransformerInterceptor);
     microLanguageTransformerInterceptor.listen();
 
 
@@ -281,7 +281,7 @@ describe('messageService', function () {
       // create(sender, senderFullname, recipient, text, id_project, createdBy, status, attributes, type, metadata) {
       messageService.create("bot_" + userid, "test sender", "testrecipient-createMessageMicroLanguageWithAttribute", "ciao\n* Button1",
         savedProject._id, userid, undefined, { microlanguage: true }).then(function (savedMessage) {
-          winston.debug("resolve savedMessage", savedMessage.toObject());
+          // winston.debug("resolve savedMessage", savedMessage.toObject());
 
           expect(savedMessage.text).to.equal("ciao");
           expect(savedMessage.type).to.equal("text");

@@ -3,7 +3,7 @@ var winston = require('winston');
 var config = require('./database');
 
 var level = process.env.LOG_LEVEL || 'info'
-// console.log("level",level);
+// // console.log("level",level);
 
 var options = {
     file: {
@@ -67,7 +67,7 @@ var options = {
       var logsDb = process.env.DATABASE_LOG_URI ||  process.env.DATABASE_URI || process.env.MONGODB_URI || config.database;
     }
 
-    console.log("Added winston MongoDB transport");
+    // console.log("Added winston MongoDB transport");
     logger.add(new winston.transports.MongoDB({db: logsDb, level: process.env.LOG_MONGODB_LEVEL || 'info', collection: "logs"}));
   }
     
@@ -81,7 +81,7 @@ var options = {
       var logsDb = process.env.DATABASE_LOG_MT_URI || process.env.DATABASE_LOG_URI ||  process.env.DATABASE_URI || process.env.MONGODB_URI || config.database;
     }
 
-    console.log("Added winston MongoDB MT transport");
+    // console.log("Added winston MongoDB MT transport");
     logger.add(new winston.transports.MongoDB({db: logsDb, labelRequired:true,  level: process.env.LOG_MT_MONGODB_LEVEL || 'verbose', collection: "logsmt"}));
   } 
 

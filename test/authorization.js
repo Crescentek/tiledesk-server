@@ -48,8 +48,8 @@ describe('Authorization', () => {
                         .get('/'+ savedProject._id + '/requests/' + savedRequest.request_id )
                         .auth(email, pwd)
                         .end((err, res) => {
-                            //console.log("res",  res);
-                            console.log("res.body",  res.body);
+                            //// console.log("res",  res);
+                            // console.log("res.body",  res.body);
                             res.should.have.status(200);
                             res.body.should.be.a('object');
                            
@@ -89,8 +89,8 @@ describe('Authorization', () => {
                             .get('/'+ savedProject._id + '/requests/' + savedRequest._id )
                             .auth(email, pwd)
                             .end((err, res) => {
-                                //console.log("res",  res);
-                                console.log("res.body",  res.body);
+                                //// console.log("res",  res);
+                                // console.log("res.body",  res.body);
                                 res.should.have.status(403);
                                 
                                 done();
@@ -127,8 +127,8 @@ describe('Authorization', () => {
         //                         .get('/'+ savedProject._id + '/requests/' + savedRequest._id )
         //                         .auth(email, pwd)
         //                         .end((err, res) => {
-        //                             //console.log("res",  res);
-        //                             console.log("res.body",  res.body);
+        //                             //// console.log("res",  res);
+        //                             // console.log("res.body",  res.body);
         //                             res.should.have.status(403);
                                     
         //                             done();

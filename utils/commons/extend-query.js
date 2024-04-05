@@ -6,7 +6,7 @@ module.exports = function (mongoose, cache) {
   const exec = mongoose.Query.prototype.exec;
 
   mongoose.Query.prototype.exec = function (op, callback = function () {}) {
-    console.log("quiiiiiiiiiiiiiii exec")
+    // console.log("quiiiiiiiiiiiiiii exec")
     if (!this.hasOwnProperty('_ttl')) return exec.apply(this, arguments);
 
     if (typeof op === 'function') {
@@ -26,7 +26,7 @@ module.exports = function (mongoose, cache) {
       cache.get(key, (err, cachedResults) => {
         //eslint-disable-line handle-callback-err
         if (cachedResults != null) {
-          console.log("quiiiiiiiiiiiiiii  cache")
+          // console.log("quiiiiiiiiiiiiiii  cache")
 
           if (isCount) {
             callback(null, cachedResults);
@@ -41,7 +41,7 @@ module.exports = function (mongoose, cache) {
           callback(null, cachedResults);
           return resolve(cachedResults);
         }
-        console.log("quiiiiiiiiiiiiiii not cache")
+        // console.log("quiiiiiiiiiiiiiii not cache")
 
         exec.call(this).then(results => {
           cache.set(key, results, ttl, () => {

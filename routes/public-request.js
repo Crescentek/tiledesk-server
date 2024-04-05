@@ -25,8 +25,8 @@ var printer = new PdfPrinter(fonts);
 
   router.get('/:requestid/messages', function(req, res) {
   
-    winston.debug(req.params);
-    winston.debug("here");    
+    // winston.debug(req.params);
+    // winston.debug("here");    
     return Message.find({"recipient": req.params.requestid}).sort({createdAt: 'asc'}).exec(function(err, messages) { 
       if (err) {
         return res.status(500).send({success: false, msg: 'Error getting object.'});
@@ -44,8 +44,8 @@ var printer = new PdfPrinter(fonts);
 
   router.get('/:requestid/messages.html', function(req, res) {
   
-    winston.debug(req.params);
-    winston.debug("here");    
+    // winston.debug(req.params);
+    // winston.debug("here");    
     return Message.find({"recipient": req.params.requestid}).sort({createdAt: 'asc'}).exec(function(err, messages) { 
       if (err) {
         return res.status(500).send({success: false, msg: 'Error getting object.'});
@@ -63,8 +63,8 @@ var printer = new PdfPrinter(fonts);
 
   router.get('/:requestid/messages.csv', function(req, res) {
   
-    winston.debug(req.params);
-    winston.debug("here");    
+    // winston.debug(req.params);
+    // winston.debug("here");    
     return Message.find({"recipient": req.params.requestid}).sort({createdAt: 'asc'}).lean().exec(function(err, messages) { 
       if (err) {
         return res.status(500).send({success: false, msg: 'Error getting object.'});
@@ -97,8 +97,8 @@ var printer = new PdfPrinter(fonts);
 
   router.get('/:requestid/messages.txt', function(req, res) {
   
-    winston.debug(req.params);
-    winston.debug("here");    
+    // winston.debug(req.params);
+    // winston.debug("here");    
     return Message.find({"recipient": req.params.requestid}).sort({createdAt: 'asc'}).exec(function(err, messages) { 
       if (err) {
         return res.status(500).send({success: false, msg: 'Error getting object.'});
@@ -127,8 +127,8 @@ var printer = new PdfPrinter(fonts);
   router.get('/:requestid/messages.pdf', function(req, res) {
 
 
-    winston.debug(req.params);
-    winston.debug("here");    
+    // winston.debug(req.params);
+    // winston.debug("here");    
     return Message.find({"recipient": req.params.requestid}).sort({createdAt: 'asc'}).exec(function(err, messages) { 
       if (err) {
         return res.status(500).send({success: false, msg: 'Error getting object.'});
@@ -169,7 +169,7 @@ var printer = new PdfPrinter(fonts);
         docDefinition.content[1].ul.push("[ " + element.createdAt.toLocaleString('en', { timeZone: 'UTC' })+ "] " + element.senderFullname + ": " + element.text );
       });
 
-      console.log(docDefinition);
+      // console.log(docDefinition);
    
     var pdfDoc = printer.createPdfKitDocument(docDefinition);
     // pdfDoc.pipe(fs.createWriteStream('lists.pdf'));
@@ -191,8 +191,8 @@ var printer = new PdfPrinter(fonts);
 
   router.get('/:requestid/messages-user.html', function(req, res) {
   
-    winston.debug(req.params);
-    winston.debug("here");    
+    // winston.debug(req.params);
+    // winston.debug("here");    
     return Message.find({"recipient": req.params.requestid}).sort({createdAt: 'asc'}).exec(function(err, messages) { 
       if (err) {
         return res.status(500).send({success: false, msg: 'Error getting object.'});
@@ -215,8 +215,8 @@ var printer = new PdfPrinter(fonts);
 
   router.get('/:requestid/messages-user.txt', function(req, res) {
   
-    winston.debug(req.params);
-    winston.debug("here");    
+    // winston.debug(req.params);
+    // winston.debug("here");    
     return Message.find({"recipient": req.params.requestid}).sort({createdAt: 'asc'}).exec(function(err, messages) { 
       if (err) {
         return res.status(500).send({success: false, msg: 'Error getting object.'});
@@ -246,8 +246,8 @@ var printer = new PdfPrinter(fonts);
   router.get('/:requestid/messages-user.pdf', function(req, res) {
 
 
-    winston.debug(req.params);
-    winston.debug("here");    
+    // winston.debug(req.params);
+    // winston.debug("here");    
     return Message.find({"recipient": req.params.requestid}).sort({createdAt: 'asc'}).exec(function(err, messages) { 
       if (err) {
         return res.status(500).send({success: false, msg: 'Error getting object.'});
@@ -291,7 +291,7 @@ var printer = new PdfPrinter(fonts);
         docDefinition.content[1].ul.push("[ " + element.createdAt.toLocaleString('en', { timeZone: 'UTC' })+ "] " + element.senderFullname + ": " + element.text );
       });
 
-      console.log(docDefinition);
+      // console.log(docDefinition);
    
     var pdfDoc = printer.createPdfKitDocument(docDefinition);
     // pdfDoc.pipe(fs.createWriteStream('lists.pdf'));
@@ -311,8 +311,8 @@ var printer = new PdfPrinter(fonts);
 
   router.get('/:requestid/messages-user.csv', function(req, res) {
   
-    winston.debug(req.params);
-    winston.debug("here");    
+    // winston.debug(req.params);
+    // winston.debug("here");    
     return Message.find({"recipient": req.params.requestid}).sort({createdAt: 'asc'}).lean().exec(function(err, messages) { 
       if (err) {
         return res.status(500).send({success: false, msg: 'Error getting object.'});

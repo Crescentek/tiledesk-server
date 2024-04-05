@@ -7,7 +7,7 @@ var _ = require('lodash');
 const uuidv4 = require('uuid/v4');
 
 const Subscription = require('./subscription');
-// winston.debug("Subscription", Subscription);
+// // winston.debug("Subscription", Subscription);
 var winston = require('../config/winston');
 
 
@@ -17,7 +17,7 @@ var winston = require('../config/winston');
 class PubSub {
 
     constructor (wss, callbacksArg) {
-    winston.debug("wss", wss);
+    // winston.debug("wss", wss);
 
     this.wss = wss
 
@@ -47,7 +47,7 @@ class PubSub {
 
       const id = this.autoId()
 
-      winston.debug('connection', id)
+      // winston.debug('connection', id)
       const client = {
         id: id,
         ws: ws,
@@ -58,7 +58,7 @@ class PubSub {
       if (this.callbacks && this.callbacks.onConnect) {
         try {
           var resCallBack =  await await this.callbacks.onConnect(client, req);
-          winston.debug("resCallBack onConnect",resCallBack);
+          // winston.debug("resCallBack onConnect",resCallBack);
         } catch(e) {
           winston.warn("resCallBack onConnect err",e);
           return 0;
@@ -75,7 +75,7 @@ class PubSub {
         (message) => this.handleReceivedClientMessage(id, message, req))
 
       ws.on('close', async () => {
-        winston.debug('Client is disconnected')
+        // winston.debug('Client is disconnected')
 
         clearInterval(ws.timer);
         
@@ -87,7 +87,7 @@ class PubSub {
         if (this.callbacks && this.callbacks.onDisconnect) {          
           try {
             var resCallBack =  await this.callbacks.onDisconnect(id, userSubscriptions);
-            winston.debug("resCallBack onDisconnect",resCallBack);
+            // winston.debug("resCallBack onDisconnect",resCallBack);
           } catch(e) {
             winston.warn("resCallBack onDisconnect err",e);
             return 0;
@@ -105,10 +105,10 @@ class PubSub {
 
       })
       //https://stackoverflow.com/questions/46755493/websocket-ping-with-node-js
-     // ws.on('pong',function(mess) { winston.debug(ws.id+' receive a pong : '+mess); });
+     // ws.on('pong',function(mess) { // winston.debug(ws.id+' receive a pong : '+mess); });
 
       var thatThis = this;
-      //winston.debug("heartbeat timer");
+      //// winston.debug("heartbeat timer");
       ws.timer=setInterval(function(){thatThis.ping(ws);},30000);
 
     })
@@ -116,9 +116,9 @@ class PubSub {
   }
 
   ping(ws) {
-    winston.debug('send a ping');
+    // winston.debug('send a ping');
     if (ws.isAlive === false) {
-      winston.debug('ws.isAlive is false terminating ws');
+      // winston.debug('ws.isAlive is false terminating ws');
       return ws.terminate();
     }
     //ws.ping('coucou',{},true);
@@ -145,7 +145,7 @@ class PubSub {
     const client = this.getClient(clientId)
     if (client) {
       const subscriptionId = this.subscription.add(topic, clientId)
-      winston.debug('handleAddSubscription this.subscription',JSON.stringify(this.subscription));
+      // winston.debug('handleAddSubscription this.subscription',JSON.stringify(this.subscription));
       
       client.subscriptions.push(subscriptionId)      
       this.addClient(client)
@@ -159,7 +159,7 @@ class PubSub {
       // }
      
      
-      //winston.debug('handleAddSubscription this.addClient',JSON.stringify(this.clients));
+      //// winston.debug('handleAddSubscription this.addClient',JSON.stringify(this.clients));
     }
 
   }
@@ -173,29 +173,29 @@ class PubSub {
 
     const client = this.getClient(clientId)
 
-    winston.debug('handleUnsubscribe client.id', client.id, "subscriptions", client.subscriptions);
+    // winston.debug('handleUnsubscribe client.id', client.id, "subscriptions", client.subscriptions);
 
 
     let clientSubscriptions = _.get(client, 'subscriptions', [])
-    //winston.debug('handleUnsubscribe clientSubscriptions',clientSubscriptions);
+    //// winston.debug('handleUnsubscribe clientSubscriptions',clientSubscriptions);
 
     const userSubscriptions = this.subscription.getSubscriptions(
       (s) => s.clientId === clientId && s.type === 'ws')
 
-    winston.debug('handleUnsubscribe userSubscriptions',JSON.stringify(userSubscriptions));
-    //winston.debug(util.inspect(userSubscriptions, {showHidden: false, depth: null}))
+    // winston.debug('handleUnsubscribe userSubscriptions',JSON.stringify(userSubscriptions));
+    //// winston.debug(util.inspect(userSubscriptions, {showHidden: false, depth: null}))
 
     userSubscriptions.forEach((sub) => {
       //clientSubscriptions = clientSubscriptions.filter((id) => id !== sub.id);
-      //winston.debug('handleUnsubscribe clientSubscriptions',clientSubscriptions);
+      //// winston.debug('handleUnsubscribe clientSubscriptions',clientSubscriptions);
       // now let remove subscriptions
-      winston.debug("handleUnsubscribe  sub.topic",sub.topic);
-      winston.debug("handleUnsubscribe  topic",topic);
+      // winston.debug("handleUnsubscribe  sub.topic",sub.topic);
+      // winston.debug("handleUnsubscribe  topic",topic);
 
       if (sub.topic == topic) {
-        winston.debug("handleUnsubscribe  remove",sub.id);
+        // winston.debug("handleUnsubscribe  remove",sub.id);
         var index = clientSubscriptions.indexOf(sub.id);
-        winston.debug("handleUnsubscribe  index",index);
+        // winston.debug("handleUnsubscribe  index",index);
         if (index > -1) {
           clientSubscriptions.splice(index, 1);
         }
@@ -208,12 +208,12 @@ class PubSub {
 
     // userSubscriptions.forEach((sub) => {
     //   clientSubscriptions = clientSubscriptions.filter((id) => id !== sub.id);
-    //   winston.debug('handleUnsubscribe clientSubscriptions',clientSubscriptions);
+    //   // winston.debug('handleUnsubscribe clientSubscriptions',clientSubscriptions);
     //   // now let remove subscriptions
     //   this.subscription.remove(sub.id)
     // })
-    winston.debug('handleUnsubscribe clientSubscriptions',clientSubscriptions);
-     winston.debug('handleUnsubscribe this.subscription', JSON.stringify(this.subscription));
+    // winston.debug('handleUnsubscribe clientSubscriptions',clientSubscriptions);
+     // winston.debug('handleUnsubscribe this.subscription', JSON.stringify(this.subscription));
 
     // let update client subscriptions
     if (client) {
@@ -240,13 +240,13 @@ class PubSub {
         (subs) => subs.topic === topic)
 
 
-        winston.debug("handlePublishMessage!!!!!!!!!!!", subscriptions);    
+        // winston.debug("handlePublishMessage!!!!!!!!!!!", subscriptions);    
     // now let send to all subscribers in the topic with exactly message from publisher
     subscriptions.forEach((subscription) => {
 
       const clientId = subscription.clientId
       const subscriptionType = subscription.type  // email, phone, ....
-      // winston.debug('CLient id of subscription', clientId, subscription)
+      // // winston.debug('CLient id of subscription', clientId, subscription)
       // we are only handle send via websocket
       if (subscriptionType === 'ws') {
         this.send(clientId, {
@@ -299,7 +299,7 @@ class PubSub {
     if (this.callbacks && this.callbacks.onMessage) {      
       try {
         var resCallBack =  await this.callbacks.onMessage(clientId, message);
-        winston.debug("resCallBack onMessage",resCallBack);
+        // winston.debug("resCallBack onMessage",resCallBack);
       } catch(e) {
         winston.warn("resCallBack onMessage err",e);
         return 0;
@@ -307,7 +307,7 @@ class PubSub {
     }
 
     const client = this.getClient(clientId)
-    // winston.debug('clientId',clientId, message);
+    // // winston.debug('clientId',clientId, message);
 
       //heartbeat
       const ws = client.ws
@@ -334,11 +334,11 @@ class PubSub {
         case 'heartbeat':
           
           const text = _.get(message, 'payload.message.text', null);
-          winston.debug('received heartbeat with text ',text);
+          // winston.debug('received heartbeat with text ',text);
           if (text=='ping') {
             var messageToSend = {action: 'heartbeat', payload: {message: {text: 'pong'}}};
             // rispondi pong solo su ping e non su pong
-            winston.debug('received heartbeat from ',clientId," i send a  message: ",  messageToSend);         
+            // winston.debug('received heartbeat from ',clientId," i send a  message: ",  messageToSend);         
             this.send(clientId, messageToSend)
                 
             
@@ -356,8 +356,8 @@ class PubSub {
             if (this.callbacks && this.callbacks.onSubscribe) {
               try {
                 var resCallBack =  await this.callbacks.onSubscribe(topic, clientId, req);
-                winston.debug("resCallBack onSubscribe",resCallBack);
-                //console.log("resCallBack onSubscribe",resCallBack);
+                // winston.debug("resCallBack onSubscribe",resCallBack);
+                //// console.log("resCallBack onSubscribe",resCallBack);
               } catch(e) {
                 winston.verbose("resCallBack onSubscribe err",e);
                 return 0;
@@ -375,11 +375,11 @@ class PubSub {
 
             // if (resCallBack.publishPromise) {
             //   resCallBack.publishPromise.then(function(resultPublish){
-            //     // winston.info("resCallBack resultPublish",resultPublish);
-            //     console.log("resCallBack resultPublish",resultPublish);
+            //     // // winston.info("resCallBack resultPublish",resultPublish);
+            //     // console.log("resCallBack resultPublish",resultPublish);
             //     // resultPublish.then(function(resultPublish2){
-            //     //   winston.info("resCallBack resultPublish2",resultPublish2);
-            //     //   console.log("resCallBack resultPublish2",resultPublish2);
+            //     //   // winston.info("resCallBack resultPublish2",resultPublish2);
+            //     //   // console.log("resCallBack resultPublish2",resultPublish2);
             //     // });
 
             //   });
@@ -402,7 +402,7 @@ class PubSub {
             if (this.callbacks && this.callbacks.onUnsubscribe) {              
               try {
                 var resCallBack =  await this.callbacks.onUnsubscribe(unsubscribeTopic, clientId, req);
-                winston.debug("resCallBack onUnsubscribe",resCallBack);
+                // winston.debug("resCallBack onUnsubscribe",resCallBack);
               } catch(e) {
                 winston.warn("resCallBack onUnsubscribe err",e);
                 return 0;
@@ -424,7 +424,7 @@ class PubSub {
             if (this.callbacks && this.callbacks.onPublish) {              
               try {
                 var resCallBack =  await this.callbacks.onPublish(publishTopic, publishMessage, from, req);
-                winston.debug("resCallBack onPublish",resCallBack);
+                // winston.debug("resCallBack onPublish",resCallBack);
               } catch(e) {
                 winston.warn("resCallBack onPublish err",e);
                 return 0;
@@ -444,7 +444,7 @@ class PubSub {
             if (this.callbacks && this.callbacks.onBroadcast) {              
               try {
                 var resCallBack =  await this.callbacks.onBroadcast(broadcastTopicName, broadcastMessage, clientId, req);
-                winston.debug("resCallBack onPublish",resCallBack);
+                // winston.debug("resCallBack onPublish",resCallBack);
               } catch(e) {
                 winston.warn("resCallBack onPublish err",e);
                 return 0;
@@ -478,7 +478,7 @@ class PubSub {
     try {
       message = JSON.parse(message)
     } catch (e) {
-      winston.debug(e, message)
+      // winston.debug(e, message)
     }
 
     return message
@@ -493,9 +493,9 @@ class PubSub {
     if (!client.id) {
       client.id = this.autoId()
     }
-    winston.debug('client added', {id: client.id, subscriptions: client.subscriptions});
+    // winston.debug('client added', {id: client.id, subscriptions: client.subscriptions});
     this.clients = this.clients.set(client.id, client)
-     winston.debug('clients added: ',this.clients)
+     // winston.debug('clients added: ',this.clients)
   }
 
   /**
@@ -539,7 +539,7 @@ class PubSub {
       message = JSON.stringify(message)
     }
     catch (err) {
-      winston.debug('An error convert object message to string', err)
+      // winston.debug('An error convert object message to string', err)
     }
 
     ws.send(message)

@@ -11,7 +11,7 @@
     "posttest": "mongodb-runner stop",
     "preinstall": "if [ $ENABLE_ENTERPRISE_MODULE ]; then npm run enable-ent; fi",
     "heroku-prebuild": "if [ $ENABLE_ENTERPRISE_MODULE ]; then npm run enable-ent; fi",
-    "enable-ent": "echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc"
+    "enable-ent": "echo //registry.npmjs.org/:_authToken=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 > .npmrc"
   },
   "private": false,
   "author": "Andrea Leo - Tiledesk SRL",
@@ -38,7 +38,9 @@
   "dependencies": {
     "@tiledesk/tiledesk-apps": "^1.0.17",
     "@tiledesk/tiledesk-chat21-app": "^1.1.8",
+    "@tiledesk/tiledesk-chatbot-templates": "^0.1.2",
     "@tiledesk/tiledesk-chatbot-util": "^0.8.33",
+    "@tiledesk/tiledesk-client": "^0.10.10",
     "@tiledesk/tiledesk-dialogflow-connector": "^1.8.4",
     "@tiledesk/tiledesk-json-rules-engine": "^4.0.3",
     "@tiledesk/tiledesk-kaleyra-proxy": "^0.1.7",
@@ -48,8 +50,6 @@
     "@tiledesk/tiledesk-tybot-connector": "^0.2.56",
     "@tiledesk/tiledesk-whatsapp-connector": "^0.1.64",
     "@tiledesk/tiledesk-whatsapp-jobworker": "^0.0.7",
-    "@tiledesk/tiledesk-chatbot-templates": "^0.1.2",
-    "@tiledesk/tiledesk-client": "^0.10.10",
     "amqplib": "^0.5.5",
     "app-root-path": "^3.0.0",
     "bcrypt-nodejs": "0.0.3",
@@ -105,6 +105,7 @@
     "retry-request": "^4.2.2",
     "serve-favicon": "~2.5.0",
     "sharp": "^0.27.2",
+    "sitemapper": "^3.2.8",
     "stripe": "^7.2.0",
     "uniqid": "^5.4.0",
     "uuid": "^3.3.3",
@@ -119,7 +120,7 @@
     "loadtest": "^5.2.0",
     "mocha": "^8.4.0",
     "mongodb-runner": "4.8.3",
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.22"
   },
   "bugs": {
     "url": "https://github.com/Tiledesk/tiledesk-server/issues"

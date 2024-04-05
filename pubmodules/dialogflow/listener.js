@@ -7,23 +7,23 @@ var configGlobal = require('../../config/global');
 var port = process.env.PORT || '3000';
 
 const BOT_DIALOGFLOW_ENDPOINT = process.env.BOT_DIALOGFLOW_ENDPOINT || "http://localhost:" + port+ "/modules/dialogflow/tdbot/";
-winston.debug("BOT_DIALOGFLOW_ENDPOINT: " + BOT_DIALOGFLOW_ENDPOINT);
+// winston.debug("BOT_DIALOGFLOW_ENDPOINT: " + BOT_DIALOGFLOW_ENDPOINT);
 
 // if (BOT_DIALOGFLOW_ENDPOINT) {
-  winston.info("Dialogflow endpoint: " + BOT_DIALOGFLOW_ENDPOINT);
+  // winston.info("Dialogflow endpoint: " + BOT_DIALOGFLOW_ENDPOINT);
 // } else {
-//    winston.info("Dialogflow endpoint not configured");
+//    // winston.info("Dialogflow endpoint not configured");
 // }
 
 
 const apiUrl = process.env.API_URL || configGlobal.apiUrl;
-winston.info('Dialogflow apiUrl: '+ apiUrl);
+// winston.info('Dialogflow apiUrl: '+ apiUrl);
 
 class Listener {
 
     listen(config) {
 
-        winston.debug('dialogflow Listener listen');   
+        // winston.debug('dialogflow Listener listen');   
 
         var that = this;
 
@@ -34,7 +34,7 @@ class Listener {
               API_ENDPOINT: apiUrl,
               log: process.env.DIALOGFLOW_LOG
             }, () => {
-              winston.info("Dialogflow route successfully started.");                           
+              // winston.info("Dialogflow route successfully started.");                           
             }
           ); 
 

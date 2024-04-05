@@ -16,7 +16,7 @@ var winston = require('../config/winston');
 
 // var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 // if (!databaseUri) {
-//   console.log('DATABASE_URI not specified, falling back to localhost.');
+//   // console.log('DATABASE_URI not specified, falling back to localhost.');
 // }
 
 // mongoose.connect(databaseUri || config.database);
@@ -42,8 +42,8 @@ describe('UserService()', function () {
           .auth(email, pwd)
           .send({ "id_project": "123456789" })
           .end((err, res) => {
-            console.log("res.body: ", res.body);
-            console.log("res.status: ", res.status);
+            // console.log("res.body: ", res.body);
+            // console.log("res.status: ", res.status);
             
             done();
           })

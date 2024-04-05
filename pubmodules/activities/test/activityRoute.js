@@ -50,14 +50,14 @@ describe('ActivityRoute', () => {
                         winston.error('Error saving activity ', err);
                       }
 
-                    winston.info("savedActivity: "  + savedActivity);
+                    // winston.info("savedActivity: "  + savedActivity);
 
                     chai.request(server)
                         .get('/'+ savedProject._id + '/activities')
                         .auth(email, pwd)
                         .end((err, res) => {
-                            //console.log("res",  res);
-                            console.log("res.body",  res.body);
+                            //// console.log("res",  res);
+                            // console.log("res.body",  res.body);
                             res.should.have.status(200);
                             res.body.activities.should.be.a('array');
                             expect(res.body.count).to.equal(1);                                                                              

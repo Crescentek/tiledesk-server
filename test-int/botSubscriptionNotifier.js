@@ -58,8 +58,8 @@ describe('botSubscriptionNotifier', () => {
                                 var serverClient = express();
                                 serverClient.use(bodyParser.json());
                                 serverClient.post('/', function (req, res) {
-                                    console.log('serverClient req', JSON.stringify(req.body));                        
-                                    console.log("serverClient.headers",  JSON.stringify(req.headers));
+                                    // console.log('serverClient req', JSON.stringify(req.body));                        
+                                    // console.log("serverClient.headers",  JSON.stringify(req.headers));
                                   
                                    
                                 
@@ -73,7 +73,7 @@ describe('botSubscriptionNotifier', () => {
                                     
                                                         
                                 });
-                                var listener = serverClient.listen(3036, '0.0.0.0', function(){ console.log('Node js Express started', listener.address());});
+                                var listener = serverClient.listen(3036, '0.0.0.0', function(){ // console.log('Node js Express started', listener.address());});
 
 
                                 leadService.createIfNotExists("leadfullname-subscription-message-sending", "andrea.leo@-subscription-message-sending.it", savedProject._id).then(function(createdLead) {

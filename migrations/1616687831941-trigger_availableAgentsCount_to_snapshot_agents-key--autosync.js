@@ -9,7 +9,7 @@ var winston = require('../config/winston');
  */
 async function up () {
   await new Promise((resolve, reject) => {
-    // winston.info("XXXXXXXXXXXXXXXXXXXXXXXXXX triggers ");
+    // // winston.info("XXXXXXXXXXXXXXXXXXXXXXXXXX triggers ");
  
     
     // db.getCollection('triggers').find({"conditions.all.path":"availableAgentsCount"})
@@ -25,12 +25,12 @@ async function up () {
         if (err) {
           winston.error("Schema migration: triggers err", err);
         }
-        winston.debug("found triggers", triggers);
-        winston.debug("found triggers"+triggers.length);
+        // winston.debug("found triggers", triggers);
+        // winston.debug("found triggers"+triggers.length);
 
         triggers.forEach( 
           function(trigger, i){ 
-            winston.debug("trigger",trigger);
+            // winston.debug("trigger",trigger);
             return mongoose.connection.db.collection('triggers').updateOne({_id:trigger._id, "conditions.all.key":"request.availableAgentsCount"},{ "$set": {"conditions.all.$.key": "request.snapshot.availableAgentsCount" } }
             // {
             //   multi: true,
@@ -42,10 +42,10 @@ async function up () {
             if (err) {
               winston.error("Schema migration: triggers err", err);  
             }
-            // winston.info("Schema updated for " + updates.n Modified + " triggers ");
+            // // winston.info("Schema updated for " + updates.n Modified + " triggers ");
         });
       }); 
-      winston.info("Schema updated key for triggers "+triggers.length);
+      // winston.info("Schema updated key for triggers "+triggers.length);
        return resolve('ok'); 
     });  
     

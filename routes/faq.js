@@ -20,20 +20,20 @@ const apiUrl = process.env.API_URL || configGlobal.apiUrl;
 
 // POST CSV FILE UPLOAD FROM CLIENT
 router.post('/uploadcsv', upload.single('uploadFile'), function (req, res, next) {
-  winston.debug(' -> -> REQ BODY ', req.body);
-  winston.debug(' -> ID FAQ-KB  ', req.body.id_faq_kb);
-  winston.debug(' -> DELIMITER ', req.body.delimiter);
-  winston.debug(' -> FILE ', req.file);
+  // winston.debug(' -> -> REQ BODY ', req.body);
+  // winston.debug(' -> ID FAQ-KB  ', req.body.id_faq_kb);
+  // winston.debug(' -> DELIMITER ', req.body.delimiter);
+  // winston.debug(' -> FILE ', req.file);
 
   var id_faq_kb = req.body.id_faq_kb;
-  winston.debug('id_faq_kb: ' + id_faq_kb);
+  // winston.debug('id_faq_kb: ' + id_faq_kb);
 
   var delimiter = req.body.delimiter || ";";
-  winston.debug('delimiter: ' + delimiter);
+  // winston.debug('delimiter: ' + delimiter);
 
   var csv = req.file.buffer.toString('utf8');
-  winston.debug("--> csv: ", csv)
-  // winston.debug(' -> CSV STRING ', csv);
+  // winston.debug("--> csv: ", csv)
+  // // winston.debug(' -> CSV STRING ', csv);
 
   // res.json({ success: true, msg: 'Importing CSV...' });
 
@@ -48,15 +48,15 @@ router.post('/uploadcsv', upload.single('uploadFile'), function (req, res, next)
     if (!faq_kb) {
       return res.status(404).send({ success: false, msg: 'Object not found.' });
     }
-    winston.debug('faq_kb ', faq_kb.toJSON());
+    // winston.debug('faq_kb ', faq_kb.toJSON());
 
     // getFaqKbKeyById(req.body.id_faq_kb, function (remote_faqkb_key) {
 
     parsecsv.parseString(csv, { headers: false, delimiter: delimiter })
       .on("data", function (data) {
-        winston.debug('PARSED CSV ', data);
+        // winston.debug('PARSED CSV ', data);
 
-        winston.debug('--> PARSED CSV ', data);
+        // winston.debug('--> PARSED CSV ', data);
 
         var question = data[0]
         //var answer = data[1]
@@ -111,7 +111,7 @@ router.post('/uploadcsv', upload.single('uploadFile'), function (req, res, next)
           updatedBy: req.user.id
         });
 
-        winston.debug("--> newFaq: ", JSON.stringify(newFaq, null, 2));
+        // winston.debug("--> newFaq: ", JSON.stringify(newFaq, null, 2));
 
         newFaq.save(function (err, savedFaq) {
           if (err) {
@@ -125,7 +125,7 @@ router.post('/uploadcsv', upload.single('uploadFile'), function (req, res, next)
         });
       })
       .on("end", function () {
-        winston.debug("PARSE DONE");
+        // winston.debug("PARSE DONE");
         //faqBotEvent.emit('faq_train.create', id_faq_kb)
         res.json({ success: true, msg: 'CSV Parsed' });
       })
@@ -139,7 +139,7 @@ router.post('/uploadcsv', upload.single('uploadFile'), function (req, res, next)
 
 router.post('/', function (req, res) {
 
-  winston.debug(req.body);
+  // winston.debug(req.body);
 
   Faq_kb.findById(req.body.id_faq_kb).exec(function (err, faq_kb) {
     if (err) {
@@ -148,7 +148,7 @@ router.post('/', function (req, res) {
     if (!faq_kb) {
       return res.status(404).send({ success: false, msg: 'Object not found.' });
     }
-    winston.debug('faq_kb ', faq_kb.toJSON());
+    // winston.debug('faq_kb ', faq_kb.toJSON());
 
     var newFaq = new Faq({
       _id: req.body._id,
@@ -185,14 +185,14 @@ router.post('/', function (req, res) {
         if (err.code == 11000) {
           return res.status(409).send({ success: false, msg: 'Duplicate  intent_display_name.' });
         } else {
-          winston.debug('--- > ERROR ', err)
+          // winston.debug('--- > ERROR ', err)
           return res.status(500).send({ success: false, msg: 'Error saving object.' });
         }
       }
-      winston.debug('1. ID OF THE NEW FAQ CREATED ', savedFaq._id)
-      winston.debug('1. QUESTION OF THE NEW FAQ CREATED ', savedFaq.question)
-      winston.debug('1. ANSWER OF THE NEW FAQ CREATED ', savedFaq.answer)
-      winston.debug('1. ID FAQKB GET IN THE OBJECT OF NEW FAQ CREATED ', savedFaq.id_faq_kb);
+      // winston.debug('1. ID OF THE NEW FAQ CREATED ', savedFaq._id)
+      // winston.debug('1. QUESTION OF THE NEW FAQ CREATED ', savedFaq.question)
+      // winston.debug('1. ANSWER OF THE NEW FAQ CREATED ', savedFaq.answer)
+      // winston.debug('1. ID FAQKB GET IN THE OBJECT OF NEW FAQ CREATED ', savedFaq.id_faq_kb);
 
       faqBotEvent.emit('faq.create', savedFaq);
       //faqBotEvent.emit('faq_train.create', req.body.id_faq_kb)
@@ -225,13 +225,13 @@ router.post('/ops_update', async (req, res) => {
           json: op.intent,
           method: 'post'
         }
-        winston.debug("operation HTTPREQUEST: ", HTTPREQUEST);
+        // winston.debug("operation HTTPREQUEST: ", HTTPREQUEST);
         myrequest(
           HTTPREQUEST, async (err, resbody) => {
             if (err) {
               winston.error("err performing operation: ", err);
             } else {
-              winston.debug("\n\nresbody operation: ", resbody);
+              // winston.debug("\n\nresbody operation: ", resbody);
             }
           }
         )
@@ -252,13 +252,13 @@ router.post('/ops_update', async (req, res) => {
           json: op.intent,
           method: 'put'
         }
-        winston.debug("operation HTTPREQUEST: ", HTTPREQUEST);
+        // winston.debug("operation HTTPREQUEST: ", HTTPREQUEST);
         myrequest(
           HTTPREQUEST, async (err, resbody) => {
             if (err) {
               winston.error("err performing operation: ", err);
             } else {
-              winston.debug("\n\nresbody operation: ", resbody);
+              // winston.debug("\n\nresbody operation: ", resbody);
             }
           }
         )
@@ -275,13 +275,13 @@ router.post('/ops_update', async (req, res) => {
           json: op.intent.attributes,
           method: 'patch'
         }
-        winston.debug("operation HTTPREQUEST: ", HTTPREQUEST);
+        // winston.debug("operation HTTPREQUEST: ", HTTPREQUEST);
         myrequest(
           HTTPREQUEST, async (err, resbody) => {
             if (err) {
               winston.error("err performing operation: ", err);
             } else {
-              winston.debug("\n\nresbody operation: ", resbody);
+              // winston.debug("\n\nresbody operation: ", resbody);
             }
           }
         )
@@ -301,13 +301,13 @@ router.post('/ops_update', async (req, res) => {
           },
           method: 'delete'
         }
-        winston.debug("operation HTTPREQUEST: ", HTTPREQUEST);
+        // winston.debug("operation HTTPREQUEST: ", HTTPREQUEST);
         myrequest(
           HTTPREQUEST, async (err, resbody) => {
             if (err) {
               winston.error("err performing operation: ", err);
             } else {
-              winston.debug("\n\nresbody operation: ", resbody);
+              // winston.debug("\n\nresbody operation: ", resbody);
             }
           }
         )
@@ -322,7 +322,7 @@ router.post('/ops_update', async (req, res) => {
 
 router.patch('/:faqid/attributes', function (req, res) {
   let data = req.body;
-  winston.debug("data: ", data);
+  // winston.debug("data: ", data);
 
   // aggiugnere controllo su intent_id qui
 
@@ -337,23 +337,23 @@ router.patch('/:faqid/attributes', function (req, res) {
     }
 
     if (!updatedFaq.attributes) {
-      winston.debug("empty attributes");
-      winston.debug("empty attributes");
+      // winston.debug("empty attributes");
+      // winston.debug("empty attributes");
       updatedFaq.attributes = {};
     }
 
-    winston.debug("updatedFaq attributes", updatedFaq.attributes);
+    // winston.debug("updatedFaq attributes", updatedFaq.attributes);
 
     Object.keys(data).forEach(function (key) {
       var val = data[key];
-      winston.debug("data attributes" + key + " " + val);
+      // winston.debug("data attributes" + key + " " + val);
       updatedFaq.attributes[key] = val;
     })
 
-    winston.debug("updatedFaq: ", updatedFaq);
-    winston.debug("updatedFaq attributes: ", updatedFaq.attributes);
+    // winston.debug("updatedFaq: ", updatedFaq);
+    // winston.debug("updatedFaq attributes: ", updatedFaq.attributes);
 
-    winston.debug("updatedBot attributes", updatedFaq.attributes)
+    // winston.debug("updatedBot attributes", updatedFaq.attributes)
 
     updatedFaq.markModified('attributes');
 
@@ -364,7 +364,7 @@ router.patch('/:faqid/attributes', function (req, res) {
         return res.status(500).send({ success: false, msg: 'Error saving object.' });
       }
 
-      winston.debug("saved faq attributes", savedFaq.toObject());
+      // winston.debug("saved faq attributes", savedFaq.toObject());
 
       winston.verbose("saved faq attributes", savedFaq.toObject());
       faqBotEvent.emit('faq.update', savedFaq);
@@ -375,7 +375,7 @@ router.patch('/:faqid/attributes', function (req, res) {
 
 router.put('/:faqid', function (req, res) {
 
-  winston.debug('UPDATE FAQ ', req.body);
+  // winston.debug('UPDATE FAQ ', req.body);
   let faqid = req.params.faqid;
 
   if (!req.body.id_faq_kb) {
@@ -467,7 +467,7 @@ router.put('/:faqid', function (req, res) {
 // DELETE REMOTE AND LOCAL FAQ
 router.delete('/:faqid', function (req, res) {
 
-  winston.debug('DELETE FAQ - FAQ ID ', req.params.faqid);
+  // winston.debug('DELETE FAQ - FAQ ID ', req.params.faqid);
 
   let faqid = req.params.faqid;
   let id_faq_kb;
@@ -490,7 +490,7 @@ router.delete('/:faqid', function (req, res) {
         return res.status(404).send({ success: false, msg: "Error deleting object. The object does not exists." })
       }
 
-      winston.debug('Deleted FAQ ', faq);
+      // winston.debug('Deleted FAQ ', faq);
 
       faqBotEvent.emit('faq.delete', faq);
       //faqBotEvent.emit('faq_train.delete', faq.id_faq_kb);
@@ -504,7 +504,7 @@ router.delete('/:faqid', function (req, res) {
       if (err) {
         return res.status(500).send({ success: false, msg: 'Error deleting object.' });
       }
-      winston.debug('Deleted FAQ ', faq);
+      // winston.debug('Deleted FAQ ', faq);
 
       faqBotEvent.emit('faq.delete', faq);
       //faqBotEvent.emit('faq_train.delete', faq.id_faq_kb);
@@ -519,17 +519,17 @@ router.delete('/:faqid', function (req, res) {
 router.get('/csv', function (req, res) {
   var query = {};
 
-  winston.debug('req.query', req.query);
+  // winston.debug('req.query', req.query);
 
   if (req.query.id_faq_kb) {
     query.id_faq_kb = req.query.id_faq_kb;
   }
 
-  winston.debug('EXPORT FAQS TO CSV QUERY', query);
+  // winston.debug('EXPORT FAQS TO CSV QUERY', query);
 
   Faq.find(query, 'question answer intent_id intent_display_name webhook_enabled -_id').lean().exec(function (err, faqs) {
     if (err) {
-      winston.debug('EXPORT FAQS TO CSV ERR', err)
+      // winston.debug('EXPORT FAQS TO CSV ERR', err)
       return (err)
     };
     var csv = [];
@@ -541,7 +541,7 @@ router.get('/csv', function (req, res) {
       }
       csv.push(row);
     });
-    winston.debug('EXPORT FAQ TO CSV FAQS', csv)
+    // winston.debug('EXPORT FAQ TO CSV FAQS', csv)
     res.csv(csv, true)
     // res.json(faq);
   });
@@ -551,7 +551,7 @@ router.get('/csv', function (req, res) {
 
 router.get('/:faqid', function (req, res) {
 
-  winston.debug(req.body);
+  // winston.debug(req.body);
 
   Faq.findById(req.params.faqid, function (err, faq) {
     if (err) {
@@ -569,7 +569,7 @@ router.get('/:faqid', function (req, res) {
 router.get('/', function (req, res, next) {
   var query = {};
 
-  winston.debug("GET ALL FAQ OF THE BOT ID (req.query): ", req.query);
+  // winston.debug("GET ALL FAQ OF THE BOT ID (req.query): ", req.query);
 
   if (req.query.id_faq_kb) {
     query.id_faq_kb = req.query.id_faq_kb;
@@ -579,7 +579,7 @@ router.get('/', function (req, res, next) {
 
   if (req.query.limit) {
     limit = parseInt(req.query.limit);
-    winston.debug('faq ROUTE - limit: ' + limit);
+    // winston.debug('faq ROUTE - limit: ' + limit);
   }
 
   var page = 0;
@@ -589,12 +589,12 @@ router.get('/', function (req, res, next) {
   }
 
   var skip = page * limit;
-  winston.debug('faq ROUTE - SKIP PAGE ', skip);
+  // winston.debug('faq ROUTE - SKIP PAGE ', skip);
 
 
 
   if (req.query.text) {
-    winston.debug("GET FAQ req.projectid", req.projectid);
+    // winston.debug("GET FAQ req.projectid", req.projectid);
 
     // query.$text = req.query.text;
     query.$text = { "$search": req.query.text };
@@ -606,7 +606,7 @@ router.get('/', function (req, res, next) {
   }
 
 
-  winston.debug("GET FAQ query", query);
+  // winston.debug("GET FAQ query", query);
 
   // query.$text = {"$search": "question"};
 
@@ -616,20 +616,20 @@ router.get('/', function (req, res, next) {
 
   // in testing...
   // return Faq.search('a closer', (err, result) => {
-  //   console.log("result: ", result);
+  //   // console.log("result: ", result);
   // })
 
   return Faq.find(query).
     skip(skip).limit(limit).
     populate({ path: 'faq_kb' })//, match: { trashed: { $in: [null, false] } }}).
     .exec(function (err, faq) {
-      winston.debug("GET FAQ ", faq);
+      // winston.debug("GET FAQ ", faq);
 
       if (err) {
-        winston.debug('GET FAQ err ', err)
+        // winston.debug('GET FAQ err ', err)
         return next(err)
       };
-      winston.debug('GET FAQ  ', faq)
+      // winston.debug('GET FAQ  ', faq)
       res.json(faq);
 
     });
@@ -639,7 +639,7 @@ router.get('/', function (req, res, next) {
 
 async function myrequest(options, callback) {
 
-  winston.debug("myrequest options: ", options)
+  // winston.debug("myrequest options: ", options)
   return await axios({
     url: options.url,
     method: options.method,

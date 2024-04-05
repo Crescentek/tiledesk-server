@@ -37,16 +37,16 @@ describe('OpenaiRoute', () => {
         //                 .auth(email, pwd)
         //                 .send({}) // can be empty
         //                 .end((err, res) => {
-        //                     if (log) { console.log("create kbsettings res.body: ", res.body); }
+        //                     if (log) { // console.log("create kbsettings res.body: ", res.body); }
         //                     res.should.have.status(200);
         //                     res.body.should.be.a('object');
 
         //                     chai.request(server)
         //                         .put('/' + savedProject._id + "/kbsettings/" + res.body._id)
         //                         .auth(email, pwd)
-        //                         .send({ gptkey: "sk-12345678" })
+        //                         .send({ gptkey: "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" })
         //                         .end((err, res) => {
-        //                             if (log) { console.log("add kb to kb settings res.body: ", res.body); }
+        //                             if (log) { // console.log("add kb to kb settings res.body: ", res.body); }
         //                             res.should.have.status(200);
         //                             res.body.should.be.a('object');
 
@@ -55,8 +55,8 @@ describe('OpenaiRoute', () => {
         //                                 .auth(email, pwd)
         //                                 .send({ question: "Provide 3 names for a dog", context: "you are an awesome assistant", max_tokens: 100, temperature: 0, model: "gpt-3.5-turbo" })
         //                                 .end((err, res) => {
-        //                                     console.log("res.body (1): ", res.body);
-        //                                     console.log("res.status: ", res.status);
+        //                                     // console.log("res.body (1): ", res.body);
+        //                                     // console.log("res.status: ", res.status);
 
         //                                     done();
         //                                 })
@@ -80,7 +80,7 @@ describe('OpenaiRoute', () => {
                         .auth(email, pwd)
                         .send({}) // can be empty
                         .end((err, res) => {
-                            if (log) { console.log("create kbsettings res.body: ", res.body); }
+                            if (log) { // console.log("create kbsettings res.body: ", res.body); }
                             res.should.have.status(200);
                             res.body.should.be.a('object');
 
@@ -89,7 +89,7 @@ describe('OpenaiRoute', () => {
                                 .auth(email, pwd)
                                 .send({ question: "Provide 3 names for a dog", context: "you are an awesome assistant", max_tokens: 100, temperature: 0, model: "gpt-3.5-turbo" })
                                 .end((err, res) => {
-                                    if (log) {console.log("res.body: ", res.body);}
+                                    if (log) {// console.log("res.body: ", res.body);}
                                     res.should.have.status(400);
                                     res.body.should.be.a('object');
                                     expect(res.body.success).to.equal(false);

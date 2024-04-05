@@ -40,8 +40,8 @@ describe('EventRoute', () => {
                         .auth(email, pwd)
                         .send({"name":"event1", attributes: {"attr1":"val1"}})
                         .end((err, res) => {
-                            //console.log("res",  res);
-                            console.log("res.body",  res.body);
+                            //// console.log("res",  res);
+                            // console.log("res.body",  res.body);
                             res.should.have.status(200);
                             res.body.should.be.a('object');
                             expect(res.body.name).to.equal("event1");                                                                              
@@ -50,7 +50,7 @@ describe('EventRoute', () => {
                             Project_user.findOne({ id_user:  savedUser.id, status: "active"} )
                             .populate('events')
                             .exec(function (err, project_user) {
-                                console.log("project_user",  project_user.toJSON());
+                                // console.log("project_user",  project_user.toJSON());
                                 expect(project_user.events.length).to.equal(1);  
                                 done();
                             });

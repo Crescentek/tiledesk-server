@@ -73,165 +73,165 @@ class PubModulesManager {
         
         if (this.rasaRoute) {
             app.use('/modules/rasa', this.rasaRoute);
-            winston.info("PubModulesManager rasaRoute controller loaded");       
+            // winston.info("PubModulesManager rasaRoute controller loaded");       
         }
         if (this.appsRoute) {
             app.use('/modules/apps', this.appsRoute);
-            winston.info("PubModulesManager appsRoute controller loaded");       
+            // winston.info("PubModulesManager appsRoute controller loaded");       
         }
         if (this.whatsappRoute) {
             app.use('/modules/whatsapp', this.whatsappRoute);
-            winston.info("PubModulesManager whatsappRoute controller loaded");
+            // winston.info("PubModulesManager whatsappRoute controller loaded");
         }
         if (this.messengerRoute) {
             app.use('/modules/messenger', this.messengerRoute);
-            winston.info("PubModulesManager messengerRoute controller loaded");
+            // winston.info("PubModulesManager messengerRoute controller loaded");
         }
         if (this.telegramRoute) {
             app.use('/modules/telegram', this.telegramRoute);
-            winston.info("PubModulesManager telegramRoute controller loaded");
+            // winston.info("PubModulesManager telegramRoute controller loaded");
         }
         if (this.mqttTestRoute) {
             app.use('/modules/mqttTest', this.mqttTestRoute);
-            winston.info("PubModulesManager mqttTestRoute controller loaded");
+            // winston.info("PubModulesManager mqttTestRoute controller loaded");
         }
         if (this.templatesRoute) {
             app.use('/modules/templates', this.templatesRoute);
-            winston.info("PubModulesManager templatesRoute controller loaded");
+            // winston.info("PubModulesManager templatesRoute controller loaded");
         }
         if (this.kaleyraRoute) {
             app.use('/modules/kaleyra', this.kaleyraRoute);
-            winston.info("PubModulesManager kaleyraRoute controller loaded");
+            // winston.info("PubModulesManager kaleyraRoute controller loaded");
         }
         if (this.tilebotRoute) {
             app.use('/modules/tilebot', this.tilebotRoute);
-            winston.info("PubModulesManager tilebot controller loaded");       
+            // winston.info("PubModulesManager tilebot controller loaded");       
         }
 
         if (this.dialogFlow) {
             app.use("/modules/dialogFlow", this.dialogFlow.dialogflowRoute);
-            winston.info("PubModulesManager dialogFlow controller loaded");       
+            // winston.info("PubModulesManager dialogFlow controller loaded");       
         }
 
     }
     useUnderProjects(app) {
         var that = this;
-        winston.debug("PubModulesManager using controllers");     
+        // winston.debug("PubModulesManager using controllers");     
 
 
         //  dario riesce con jwt custom di progettto a a scrivere events di progetto b
         if (this.eventsRoute) {
             app.use('/:projectid/events', this.eventsRoute);
             // app.use('/:projectid/events', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('guest')], this.eventsRoute);
-            winston.info("ModulesManager eventsRoute controller loaded");       
+            // winston.info("ModulesManager eventsRoute controller loaded");       
         }
         
 
         if (this.activityRoute) {
             app.use('/:projectid/activities', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('admin')], this.activityRoute);
-             winston.info("ModulesManager activities controller loaded");       
+             // winston.info("ModulesManager activities controller loaded");       
         }
 
         if (this.analyticsRoute) {
             app.use('/:projectid/analytics', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('agent')], this.analyticsRoute);
-             winston.info("ModulesManager analytics controller loaded");       
+             // winston.info("ModulesManager analytics controller loaded");       
          }
 
          if (this.cannedResponseRoute) {            
             app.use('/:projectid/canned', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('agent')], this.cannedResponseRoute);
-            winston.info("ModulesManager canned controller loaded");       
+            // winston.info("ModulesManager canned controller loaded");       
         }
 
         if (this.triggerRoute) {
             app.use('/:projectid/modules/triggers', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('admin')], this.triggerRoute);
-            winston.info("ModulesManager trigger controller loaded");       
+            // winston.info("ModulesManager trigger controller loaded");       
         }
 
     }
 
    
     init(config) {
-        winston.debug("PubModulesManager init");
+        // winston.debug("PubModulesManager init");
 
         this.jobsManager = config.jobsManager;
 
         try {
             this.appRules = require('./rules/appRules');
             // this.appRules.start();
-            winston.info("PubModulesManager initialized rules.");
+            // winston.info("PubModulesManager initialized rules.");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
-                winston.info("PubModulesManager init rules module not found");
+                // winston.info("PubModulesManager init rules module not found");
             }else {
-                winston.info("PubModulesManager error initializing init rules module", err);
+                // winston.info("PubModulesManager error initializing init rules module", err);
             }
         }
 
         try {
             this.messageActions = require('./messageActions');
-            winston.debug("this.messageActions:"+ this.messageActions);
+            // winston.debug("this.messageActions:"+ this.messageActions);
             // this.messageActions.messageActionsInterceptor.listen();
-            winston.info("PubModulesManager initialized messageActions.");
+            // winston.info("PubModulesManager initialized messageActions.");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
-                winston.info("PubModulesManager init messageActions module not found");
+                // winston.info("PubModulesManager init messageActions module not found");
             }else {
-                winston.info("PubModulesManager error initializing init messageActions module", err);
+                // winston.info("PubModulesManager error initializing init messageActions module", err);
             }
         }
 
         try {
             this.messageTransformer = require('./messageTransformer');
-            winston.debug("this.messageTransformer:"+ this.messageTransformer);
+            // winston.debug("this.messageTransformer:"+ this.messageTransformer);
             // this.messageTransformer.messageTransformerInterceptor.listen();
             // this.messageTransformer.microLanguageTransformerInterceptor.listen();
-            winston.info("PubModulesManager initialized messageTransformer.");
+            // winston.info("PubModulesManager initialized messageTransformer.");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
-                winston.info("PubModulesManager init messageTransformer module not found");
+                // winston.info("PubModulesManager init messageTransformer module not found");
             }else {
-                winston.info("PubModulesManager error initializing init messageTransformer module", err);
+                // winston.info("PubModulesManager error initializing init messageTransformer module", err);
             }
         }
         
         
          try {
             this.emailNotification = require('./emailNotification');
-            winston.debug("this.emailNotification:"+ this.emailNotification);
+            // winston.debug("this.emailNotification:"+ this.emailNotification);
             // this.emailNotification.requestNotification.listen();
-            winston.info("PubModulesManager initialized requestNotification loaded.");
+            // winston.info("PubModulesManager initialized requestNotification loaded.");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
-                winston.info("PubModulesManager init emailNotification module not found");
+                // winston.info("PubModulesManager init emailNotification module not found");
             }else {
-                winston.info("PubModulesManager error initializing init emailNotification module", err);
+                // winston.info("PubModulesManager error initializing init emailNotification module", err);
             }
         }
         
 
         try {           
             this.eventsRoute = require('./events/eventRoute');
-            winston.debug("this.eventRoute:"+ this.eventsRoute);          
-            winston.info("PubModulesManager initialized eventsRoute.");
+            // winston.debug("this.eventRoute:"+ this.eventsRoute);          
+            // winston.info("PubModulesManager initialized eventsRoute.");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
-                winston.info("PubModulesManager init eventsRoute module not found");
+                // winston.info("PubModulesManager init eventsRoute module not found");
             }else {
-                winston.info("PubModulesManager error initializing init eventsRoute module", err);
+                // winston.info("PubModulesManager error initializing init eventsRoute module", err);
             }
         }
 
         
         try {
             this.entityEraser = require('./entityEraser');
-            winston.debug("this.entityEraser:"+ this.entityEraser);
+            // winston.debug("this.entityEraser:"+ this.entityEraser);
             // this.entityEraser.eraserInterceptor.listen();
-            winston.info("PubModulesManager initialized entityEraser.");
+            // winston.info("PubModulesManager initialized entityEraser.");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
-                winston.info("PubModulesManager init entityEraser module not found");
+                // winston.info("PubModulesManager init entityEraser module not found");
             }else {
-                winston.info("PubModulesManager error initializing init entityEraser module", err);
+                // winston.info("PubModulesManager error initializing init entityEraser module", err);
             }
         }
 
@@ -239,158 +239,158 @@ class PubModulesManager {
 
         try {
             this.scheduler = require('./scheduler');
-            winston.debug("this.scheduler:"+ this.scheduler);    
+            // winston.debug("this.scheduler:"+ this.scheduler);    
             // this.scheduler.taskRunner.start();        
-            winston.info("PubModulesManager initialized scheduler.");
+            // winston.info("PubModulesManager initialized scheduler.");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') { 
-                winston.info("PubModulesManager init scheduler module not found");
+                // winston.info("PubModulesManager init scheduler module not found");
             }else {
-                winston.info("PubModulesManager error initializing init scheduler module", err);
+                // winston.info("PubModulesManager error initializing init scheduler module", err);
             }
         }
 
 
         try {
             this.rasa = require('./rasa');
-            winston.debug("this.rasa:"+ this.rasa);    
+            // winston.debug("this.rasa:"+ this.rasa);    
             this.rasa.listener.listen(config);      
 
             this.rasaRoute = this.rasa.rasaRoute;
 
-            winston.info("PubModulesManager initialized rasa.");
+            // winston.info("PubModulesManager initialized rasa.");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') { 
-                winston.info("PubModulesManager init rasa module not found");
+                // winston.info("PubModulesManager init rasa module not found");
             }else {
-                winston.info("PubModulesManager error initializing init rasa module", err);
+                // winston.info("PubModulesManager error initializing init rasa module", err);
             }
         }
 
         try {
             this.apps = require('./apps');
-            winston.debug("this.apps: " + this.apps);
+            // winston.debug("this.apps: " + this.apps);
             this.apps.listener.listen(config);
 
             this.appsRoute = this.apps.appsRoute;
 
-            winston.info("PubModulesManager initialized apps.");
+            // winston.info("PubModulesManager initialized apps.");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') { 
-                winston.info("PubModulesManager init apps module not found");
+                // winston.info("PubModulesManager init apps module not found");
             }else {
-                winston.info("PubModulesManager error initializing init apps module", err);
+                // winston.info("PubModulesManager error initializing init apps module", err);
             }
         }
 
         try {
             this.whatsapp = require('./whatsapp');
-            winston.debug("this.whatsapp: " + this.whatsapp);
+            // winston.debug("this.whatsapp: " + this.whatsapp);
             this.whatsapp.listener.listen(config);
 
             this.whatsappRoute = this.whatsapp.whatsappRoute;
 
-            winston.info("PubModulesManager initialized apps.");
+            // winston.info("PubModulesManager initialized apps.");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') { 
-                winston.info("PubModulesManager init apps module not found");
+                // winston.info("PubModulesManager init apps module not found");
             }else {
-                winston.info("PubModulesManager error initializing init apps module", err);
+                // winston.info("PubModulesManager error initializing init apps module", err);
             }
         }
 
         try {
             this.messenger = require('./messenger');
-            winston.debug("this.messenger: " + this.messenger);
+            // winston.debug("this.messenger: " + this.messenger);
             this.messenger.listener.listen(config);
 
             this.messengerRoute = this.messenger.messengerRoute;
 
-            winston.info("PubModulesManager initialized apps.");
+            // winston.info("PubModulesManager initialized apps.");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') { 
-                winston.info("PubModulesManager init apps module not found ");
+                // winston.info("PubModulesManager init apps module not found ");
             }else {
-                winston.info("PubModulesManager error initializing init apps module", err);
+                // winston.info("PubModulesManager error initializing init apps module", err);
             }
         }
 
         try {
             this.telegram = require('./telegram');
-            winston.info("this.telegram: " + this.telegram);
+            // winston.info("this.telegram: " + this.telegram);
             this.telegram.listener.listen(config);
 
             this.telegramRoute = this.telegram.telegramRoute;
 
-            winston.info("PubModulesManager initialized apps (telegram).")
+            // winston.info("PubModulesManager initialized apps (telegram).")
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
-                winston.info("PubModulesManager init apps module not found ");
+                // winston.info("PubModulesManager init apps module not found ");
             } else {
-                winston.info("PubModulesManager error initializing init apps module", err);
+                // winston.info("PubModulesManager error initializing init apps module", err);
             }
         }
 
         try {
             this.mqttTest = require('./mqttTest');
-            winston.info("this.mqttTest: " + this.mqttTest);
+            // winston.info("this.mqttTest: " + this.mqttTest);
             this.mqttTest.listener.listen(config);
 
             this.mqttTestRoute = this.mqttTest.mqttTestRoute;
 
-            winston.info("PubModulesManager initialized apps (mqttTest).")
+            // winston.info("PubModulesManager initialized apps (mqttTest).")
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
-                winston.info("PubModulesManager init apps module not found ", err);
+                // winston.info("PubModulesManager init apps module not found ", err);
             } else {
-                winston.info("PubModulesManager error initializing init apps module", err);
+                // winston.info("PubModulesManager error initializing init apps module", err);
             }
         }
 
         try {
             this.templates = require('./chatbotTemplates');
-            winston.info("this.templates: " + this.templates);
+            // winston.info("this.templates: " + this.templates);
             this.templates.listener.listen(config);
 
             this.templatesRoute = this.templates.templatesRoute;
 
-            winston.info("PubModulesManager initialized apps (templates).")
+            // winston.info("PubModulesManager initialized apps (templates).")
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
-                winston.info("PubModulesManager init apps module not found ");
+                // winston.info("PubModulesManager init apps module not found ");
             } else {
-                winston.info("PubModulesManager error initializing init apps module", err);
+                // winston.info("PubModulesManager error initializing init apps module", err);
             }
         }
         
         try {
             this.kaleyra = require('./kaleyra');
-            winston.debug("this.kaleyra: " + this.kaleyra);
+            // winston.debug("this.kaleyra: " + this.kaleyra);
             this.kaleyra.listener.listen(config);
 
             this.kaleyraRoute = this.kaleyra.kaleyraRoute;
 
-            winston.info("PubModulesManager initialized apps.");
+            // winston.info("PubModulesManager initialized apps.");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') { 
-                winston.info("PubModulesManager init apps module not found");
+                // winston.info("PubModulesManager init apps module not found");
             }else {
-                winston.info("PubModulesManager error initializing init apps module", err);
+                // winston.info("PubModulesManager error initializing init apps module", err);
             }
         }
 
         try {
             this.activityArchiver = require('./activities').activityArchiver;
             // this.activityArchiver.listen();
-            winston.debug("this.activityArchiver:"+ this.activityArchiver);   
+            // winston.debug("this.activityArchiver:"+ this.activityArchiver);   
             
             this.activityRoute = require('./activities').activityRoute;
-            winston.debug("this.activityRoute:"+ this.activityRoute);
+            // winston.debug("this.activityRoute:"+ this.activityRoute);
 
-            winston.info("ModulesManager activities initialized");
+            // winston.info("ModulesManager activities initialized");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
-                winston.info("ModulesManager init activities module not found");
+                // winston.info("ModulesManager init activities module not found");
             }else {
                 winston.error("ModulesManager error initializing init activities module", err);
             }
@@ -399,11 +399,11 @@ class PubModulesManager {
 
         try {
             this.analyticsRoute = require('./analytics').analyticsRoute;
-            winston.debug("this.analyticsRoute:"+ this.analyticsRoute);        
-            winston.info("ModulesManager analyticsRoute initialized");
+            // winston.debug("this.analyticsRoute:"+ this.analyticsRoute);        
+            // winston.info("ModulesManager analyticsRoute initialized");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
-                winston.info("ModulesManager init analytics module not found");
+                // winston.info("ModulesManager init analytics module not found");
             }else {
                 winston.error("ModulesManager error initializing init analytics module", err);
             }
@@ -413,11 +413,11 @@ class PubModulesManager {
 
         try {
             this.cannedResponseRoute = require('./canned').cannedResponseRoute;
-            winston.debug("this.cannedResponseRoute:"+ this.cannedResponseRoute);        
-            winston.info("ModulesManager cannedResponseRoute initialized");
+            // winston.debug("this.cannedResponseRoute:"+ this.cannedResponseRoute);        
+            // winston.info("ModulesManager cannedResponseRoute initialized");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
-                winston.info("ModulesManager init canned module not found");
+                // winston.info("ModulesManager init canned module not found");
             }else {
                 winston.error("ModulesManager error initializing init canned module", err);
             }
@@ -426,13 +426,13 @@ class PubModulesManager {
       
         try {
             this.trigger = require('./trigger').start;
-            winston.debug("this.trigger:"+ this.trigger);
+            // winston.debug("this.trigger:"+ this.trigger);
             this.triggerRoute = require('./trigger').triggerRoute;
-            winston.debug("this.triggerRoute:"+ this.triggerRoute);       
-            winston.info("ModulesManager trigger initialized");
+            // winston.debug("this.triggerRoute:"+ this.triggerRoute);       
+            // winston.info("ModulesManager trigger initialized");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
-                winston.info("ModulesManager init trigger module not found");
+                // winston.info("ModulesManager init trigger module not found");
             }else {
                 winston.error("ModulesManager error initializing init trigger module", err);
             }
@@ -443,16 +443,16 @@ class PubModulesManager {
 
         try {
             this.tilebot = require('./tilebot');
-            winston.debug("this.tilebot:"+ this.tilebot);    
+            // winston.debug("this.tilebot:"+ this.tilebot);    
             this.tilebot.listener.listen(config);      
             this.tilebotRoute = this.tilebot.tilebotRoute;
 
-            winston.info("PubModulesManager initialized tilebot.");
+            // winston.info("PubModulesManager initialized tilebot.");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') { 
-                winston.info("PubModulesManager init tilebot module not found");
+                // winston.info("PubModulesManager init tilebot module not found");
             }else {
-                winston.info("PubModulesManager error initializing init tilebot module", err);
+                // winston.info("PubModulesManager error initializing init tilebot module", err);
             }
         }
 
@@ -461,14 +461,14 @@ class PubModulesManager {
 
         try {
             this.queue = require('./queue');
-            winston.debug("this.queue:"+ this.queue);                
+            // winston.debug("this.queue:"+ this.queue);                
 
-            winston.info("PubModulesManager initialized queue.");
+            // winston.info("PubModulesManager initialized queue.");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') { 
-                winston.info("PubModulesManager init queue module not found");
+                // winston.info("PubModulesManager init queue module not found");
             }else {
-                winston.info("PubModulesManager error initializing init queue module", err);
+                // winston.info("PubModulesManager error initializing init queue module", err);
             }
         }
 
@@ -480,13 +480,13 @@ class PubModulesManager {
             this.routingQueueQueued = require('./routing-queue').listenerQueued;
 
             // this.routingQueue.listen();
-            winston.debug("this.routingQueue:"+ this.routingQueue);           
-            winston.debug("this.routingQueueQueued:"+ this.routingQueueQueued);           
+            // winston.debug("this.routingQueue:"+ this.routingQueue);           
+            // winston.debug("this.routingQueueQueued:"+ this.routingQueueQueued);           
 
-            winston.info("PubModulesManager routing queue initialized");
+            // winston.info("PubModulesManager routing queue initialized");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
-                winston.info("PubModulesManager init routing queue module not found");
+                // winston.info("PubModulesManager init routing queue module not found");
             }else {
                 winston.error("PubModulesManager error initializing init routing queue module", err);
             }
@@ -495,11 +495,11 @@ class PubModulesManager {
 
         try {            
             this.cache = require('./cache').cachegoose(config.mongoose);            
-            winston.debug("this.cache:"+ this.cache);           
-            winston.info("PubModulesManager cache initialized");
+            // winston.debug("this.cache:"+ this.cache);           
+            // winston.info("PubModulesManager cache initialized");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
-                winston.info("PubModulesManager init cache module not found");
+                // winston.info("PubModulesManager init cache module not found");
             }else {
                 winston.error("PubModulesManager error initializing init cache module", err);
             } 
@@ -509,12 +509,12 @@ class PubModulesManager {
 
         try {
             this.dialogFlow = require('./dialogflow');
-            winston.debug("this.dialogFlow:"+ this.dialogFlow);           
+            // winston.debug("this.dialogFlow:"+ this.dialogFlow);           
             this.dialogFlow.listener.listen(config);
-            winston.info("PubModulesManager dialogFlow  initialized");
+            // winston.info("PubModulesManager dialogFlow  initialized");
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
-                winston.info("PubModulesManager init dialogFlow module not found");
+                // winston.info("PubModulesManager init dialogFlow module not found");
             }else {
                 winston.error("PubModulesManager error initializing init dialogFlow module", err);
             }
@@ -525,18 +525,18 @@ class PubModulesManager {
         if (this.appRules) {
             try {
                 this.appRules.start();
-                winston.info("PubModulesManager appRules started.");   
+                // winston.info("PubModulesManager appRules started.");   
             } catch(err) {        
-                winston.info("PubModulesManager error starting appRules module", err);            
+                // winston.info("PubModulesManager error starting appRules module", err);            
             }
         }
         
         if (this.messageActions) {
             try {
                 this.messageActions.messageActionsInterceptor.listen();
-                winston.info("PubModulesManager messageActions started.");   
+                // winston.info("PubModulesManager messageActions started.");   
             } catch(err) {        
-                winston.info("PubModulesManager error starting messageActions module", err);            
+                // winston.info("PubModulesManager error starting messageActions module", err);            
             }
         }
         
@@ -546,9 +546,9 @@ class PubModulesManager {
                 this.messageTransformer.messageTransformerInterceptor.listen();
                 this.messageTransformer.microLanguageTransformerInterceptor.listen();    
                 this.messageTransformer.messageHandlebarsTransformerInterceptor.listen();
-                winston.info("PubModulesManager messageTransformer started.");   
+                // winston.info("PubModulesManager messageTransformer started.");   
             } catch(err) {        
-                winston.info("PubModulesManager error starting messageTransformer module", err);            
+                // winston.info("PubModulesManager error starting messageTransformer module", err);            
             }
             
         }
@@ -558,9 +558,9 @@ class PubModulesManager {
             try {
                 // this.emailNotification.requestNotification.listen();
                 this.jobsManager.listenEmailNotification(this.emailNotification);
-                winston.info("PubModulesManager emailNotification started.");   
+                // winston.info("PubModulesManager emailNotification started.");   
             } catch(err) {        
-                winston.info("PubModulesManager error starting requestNotification module", err);            
+                // winston.info("PubModulesManager error starting requestNotification module", err);            
             }
         }
         
@@ -568,9 +568,9 @@ class PubModulesManager {
             try {
                 // this.scheduler.taskRunner.start();     
                 this.jobsManager.listenScheduler(this.scheduler);
-                winston.info("PubModulesManager scheduler started.");   
+                // winston.info("PubModulesManager scheduler started.");   
             } catch(err) {        
-                winston.info("PubModulesManager error starting scheduler module", err);            
+                // winston.info("PubModulesManager error starting scheduler module", err);            
             }
         } 
 
@@ -579,9 +579,9 @@ class PubModulesManager {
             try {
                 // this.activityArchiver.listen();
                 this.jobsManager.listenActivityArchiver(this.activityArchiver);
-                winston.info("PubModulesManager activityArchiver started");
+                // winston.info("PubModulesManager activityArchiver started");
             } catch(err) {        
-                winston.info("PubModulesManager error starting activityArchiver module", err);            
+                // winston.info("PubModulesManager error starting activityArchiver module", err);            
             }
         }
 
@@ -589,27 +589,27 @@ class PubModulesManager {
         if (this.routingQueue) {
             try {
                 this.routingQueue.listen();  
-                winston.info("PubModulesManager routingQueue started");
+                // winston.info("PubModulesManager routingQueue started");
             } catch(err) {        
-                winston.info("PubModulesManager error starting routingQueue module", err);            
+                // winston.info("PubModulesManager error starting routingQueue module", err);            
             }
         }
         if (this.routingQueueQueued) {
             try {
                 // this.routingQueueQueued.listen();  
                 this.jobsManager.listenRoutingQueue(this.routingQueueQueued);
-                winston.info("PubModulesManager routingQueue queued started");
+                // winston.info("PubModulesManager routingQueue queued started");
             } catch(err) {        
-                winston.info("PubModulesManager error starting routingQueue queued module", err);            
+                // winston.info("PubModulesManager error starting routingQueue queued module", err);            
             }
         }
 
         // if (this.dialogFlow) {
         //     try {
         //         this.dialogFlow.listen();
-        //         winston.info("PubModulesManager dialogFlow started");
+        //         // winston.info("PubModulesManager dialogFlow started");
         //     } catch(err) {        
-        //         winston.info("PubModulesManager error starting dialogFlow module", err);            
+        //         // winston.info("PubModulesManager error starting dialogFlow module", err);            
         //     }
         // }
 

@@ -33,8 +33,8 @@ const fileFilter = (req, file, cb) => {
 }
 
 // const bodymiddleware = function(req, res, next) {
-//   winston.info("YYYYYY req.body.folder:"+req.body.folder);
-//   winston.info("YYYYYY req.body:",req.body);
+//   // winston.info("YYYYYY req.body.folder:"+req.body.folder);
+//   // winston.info("YYYYYY req.body:",req.body);
 //   next();
 // }
 
@@ -57,13 +57,13 @@ router.post('/users', [passport.authenticate(['basic', 'jwt'], { session: false 
 // bodymiddleware, 
 upload.single('file'), (req, res, next) => {
   try {
-    // winston.info("req.query.folder1:"+req.body.folder);
+    // // winston.info("req.query.folder1:"+req.body.folder);
 
     var folder = req.folder || "error";
-    winston.debug("folder:"+folder);
+    // winston.debug("folder:"+folder);
 
      var destinationFolder = 'uploads/users/' + req.user.id + "/images/" + folder +"/";
-     winston.debug("destinationFolder",destinationFolder);
+     // winston.debug("destinationFolder",destinationFolder);
 
      var thumFilename = destinationFolder+'thumbnails_200_200-' + req.file.originalname;
 
@@ -110,11 +110,11 @@ router.put('/users', [passport.authenticate(['basic', 'jwt'], { session: false }
 // bodymiddleware, 
 uploadFixedFolder.single('file'), (req, res, next) => {
   try {
-    winston.debug("/users/folder");
-    // winston.info("req.query.folder1:"+req.body.folder);
+    // winston.debug("/users/folder");
+    // // winston.info("req.query.folder1:"+req.body.folder);
 
     // var folder = req.folder || "error";
-    // winston.info("folder:"+folder);
+    // // winston.info("folder:"+folder);
 
     if (req.upload_file_already_exists) {
       winston.warn('Error uploading photo image, file already exists',req.file.filename );
@@ -122,7 +122,7 @@ uploadFixedFolder.single('file'), (req, res, next) => {
     }
 
      var destinationFolder = 'uploads/users/' + req.user.id + "/images/";
-     winston.debug("destinationFolder",destinationFolder);
+     // winston.debug("destinationFolder",destinationFolder);
 
      var thumFilename = destinationFolder+'thumbnails_200_200-' + req.file.originalname;
 
@@ -175,11 +175,11 @@ router.put('/users/photo', [passport.authenticate(['basic', 'jwt'], { session: f
 // bodymiddleware, 
 uploadAvatar.single('file'), (req, res, next) => {
   try {
-    winston.debug("/users/photo");
-    // winston.info("req.query.folder1:"+req.body.folder);
+    // winston.debug("/users/photo");
+    // // winston.info("req.query.folder1:"+req.body.folder);
 
     // var folder = req.folder || "error";
-    // winston.info("folder:"+folder);
+    // // winston.info("folder:"+folder);
 
     if (req.upload_file_already_exists) {
       winston.warn('Error uploading photo image, file already exists',req.file.filename );
@@ -194,11 +194,11 @@ uploadAvatar.single('file'), (req, res, next) => {
     
 
      var destinationFolder = 'uploads/users/' + userid + "/images/";
-     winston.debug("destinationFolder:"+destinationFolder);
+     // winston.debug("destinationFolder:"+destinationFolder);
 
      var thumFilename = destinationFolder+'thumbnails_200_200-photo.jpg';
 
-     winston.debug("req.file.filename:"+req.file.filename);
+     // winston.debug("req.file.filename:"+req.file.filename);
      fileService.getFileDataAsBuffer(req.file.filename).then(function(buffer) {
 
       sharp(buffer).resize(200, 200).toBuffer((err, resizeImage, info) => {
@@ -235,10 +235,10 @@ curl -v -X DELETE  -u andrea.leo@frontiere21.it:123 \
 
 router.delete('/users', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken], (req, res, next) => {
   try {
-    winston.debug("delete /users");
+    // winston.debug("delete /users");
 
     let path = req.query.path;
-    winston.debug("path:"+path);
+    // winston.debug("path:"+path);
 
     // TODO later if enabled there is problem when admin delete a bot image
     // if (path.indexOf("/"+req.user.id+"/")==-1) {
@@ -247,7 +247,7 @@ router.delete('/users', [passport.authenticate(['basic', 'jwt'], { session: fals
     // }
 
     let filename = pathlib.basename(path);
-    winston.debug("filename:"+filename);
+    // winston.debug("filename:"+filename);
 
     if (!filename) {
       winston.warn('Error delete image. No filename specified:'+path);
@@ -259,13 +259,13 @@ router.delete('/users', [passport.authenticate(['basic', 'jwt'], { session: fals
     fileService.deleteFile(path).then(function(data) {
 
       let thumbFilename = 'thumbnails_200_200-'+filename;
-      winston.debug("thumbFilename:"+thumbFilename);
+      // winston.debug("thumbFilename:"+thumbFilename);
 
       let thumbPath = path.replace(filename,thumbFilename);
-      winston.debug("thumbPath:"+thumbPath);
+      // winston.debug("thumbPath:"+thumbPath);
 
       fileService.deleteFile(thumbPath).then(function(data) {
-        winston.debug("thumbFilename deleted:"+thumbPath);
+        // winston.debug("thumbFilename deleted:"+thumbPath);
       }).catch(function(error) {
         winston.error('Error deleting thumbnail image.',error);
       });
@@ -356,14 +356,14 @@ curl -v -X POST -H 'Content-Type: multipart/form-data' -F "file=@/Users/andreale
 
 router.post('/public', upload.single('file'), (req, res, next) => {
   try {
-     winston.debug("req",req);
+     // winston.debug("req",req);
      var folder = req.folder || "error";
-     winston.debug("folder",folder);
+     // winston.debug("folder",folder);
 
      var destinationFolder = "uploads/public/images/" + folder +"/";
-     winston.debug("destinationFolder",destinationFolder);
+     // winston.debug("destinationFolder",destinationFolder);
 
-     winston.debug("req.file.filename",req.file.filename);
+     // winston.debug("req.file.filename",req.file.filename);
 
      var thumFilename = destinationFolder+'thumbnails_200_200-' + req.file.originalname;          
 
@@ -394,9 +394,9 @@ router.post('/public', upload.single('file'), (req, res, next) => {
 
 // router.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 // router.use('/uploads', function timeLog(req, res, next) {
-//   winston.debug('Time: ', Date.now());
+//   // winston.debug('Time: ', Date.now());
 //   var a = express.static(path.join(__dirname, '/uploads'))
-//   winston.debug('Time2: ', a);
+//   // winston.debug('Time2: ', a);
 //   return a;
 // }, express.static(path.join(__dirname, '/uploads')));
 
@@ -426,7 +426,7 @@ router.get('/thumbnails', (req, res) => {
 
 // curl -X GET 'http://localhost:3000/images?path=123'
 router.get("/", async (req, res) => {
-  winston.debug('path', req.query.path);
+  // winston.debug('path', req.query.path);
 
   if (req.query.as_attachment) {
     res.set({ "Content-Disposition": "attachment; filename=\""+req.query.path+"\"" });
@@ -436,14 +436,14 @@ router.get("/", async (req, res) => {
 
   try {
     let file = await fileService.find(req.query.path);
-    // console.log("file", file);
+    // // console.log("file", file);
 
     res.set({ "Content-Length": file.length});
     res.set({ "Content-Type": file.contentType});
 
   } catch (e) {
     if (e.code == "ENOENT") {
-      winston.debug('Image not found: '+req.query.path);
+      // winston.debug('Image not found: '+req.query.path);
       return res.status(404).send({success: false, msg: 'Image not found.'});
     }else {
       winston.error('Error getting the image', e);
@@ -453,7 +453,7 @@ router.get("/", async (req, res) => {
 
   fileService.getFileDataAsStream(req.query.path).on('error', (e)=> {
       if (e.code == "ENOENT") {
-        winston.debug('Image not found: '+req.query.path);
+        // winston.debug('Image not found: '+req.query.path);
         return res.status(404).send({success: false, msg: 'Image not found.'});
       }else {
         winston.error('Error getting the image', e);

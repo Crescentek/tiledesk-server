@@ -20,7 +20,7 @@ async function up () {
         }                
         });   
       });
-      winston.info("Schema updated for " + faqs.length + " faq intent_id intent_display_name field")
+      // winston.info("Schema updated for " + faqs.length + " faq intent_id intent_display_name field")
       return resolve('ok'); 
     });
   

@@ -140,7 +140,7 @@ let MongoDB = exports.MongoDB = function(options) {
     }, err=>{
       console.error('winston-mongodb: error initialising logger', err);
       if (options.tryReconnect) {
-        console.log('winston-mongodb: will try reconnecting in 10 seconds');
+        // console.log('winston-mongodb: will try reconnecting in 10 seconds');
         return new Promise(resolve=>setTimeout(resolve, 10000)
         ).then(()=>connectToDatabase(logger));
       }
@@ -216,8 +216,8 @@ MongoDB.prototype.log = function(info, cb) {
     const decolorizeRegex = new RegExp(/\u001b\[[0-9]{1,2}m/g);
     let entry = { timestamp: new Date(), level: (this.decolorize) ? info.level.replace(decolorizeRegex, '') : info.level };
 
-    // console.log("info",info)
-    // console.log("info.label",info.label)
+    // // console.log("info",info)
+    // // console.log("info.label",info.label)
     let message = util.format(info.message, ...(info.splat || []));
     entry.message = (this.decolorize) ? message.replace(decolorizeRegex, '') : message;
     entry.meta = helpers.prepareMetaData(info[this.metaKey]);
@@ -227,7 +227,7 @@ MongoDB.prototype.log = function(info, cb) {
     if (this.label) {
       entry.label = this.label;
     }
-    // console.log("info.labelRequired",info.labelRequired)
+    // // console.log("info.labelRequired",info.labelRequired)
     if (this.labelRequired && !info.label) {
       return cb(null, true); 
     }

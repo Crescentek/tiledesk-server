@@ -8,8 +8,8 @@ var winston = require('../config/winston');
 
   router.get('/waiting/current', function(req, res) {
   
-    //winston.debug(req.params);
-    //winston.debug("req.projectid",  req.projectid);    
+    //// winston.debug(req.params);
+    //// winston.debug("req.projectid",  req.projectid);    
    
     // res.json([]);
 
@@ -28,10 +28,10 @@ var winston = require('../config/winston');
       .exec(function(err, result) {
 
           if (err) {
-            winston.debug(err);
+            // winston.debug(err);
             return res.status(500).send({success: false, msg: 'Error getting analytics.'});
           }
-          //winston.debug(result);
+          //// winston.debug(result);
 
           res.json(result);
     });

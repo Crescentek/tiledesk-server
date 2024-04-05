@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
 
     let new_settings = new KBSettings({
         id_project: req.projectid,
-        // gptkey: body.gptkey
+        gptkey: body.gptkey
         // others params are set with default values
     })
 
@@ -72,7 +72,7 @@ router.put('/:settings_id', async (req, res) => {
     //     update.maxPagesNumber = req.body.maxPagesNumber
     // }
 
-    winston.debug("update: ", update);
+    // winston.debug("update: ", update);
     KBSettings.findByIdAndUpdate(settings_id, update, { new: true }, (err, settings) => {
         if (err) {
             winston.error("findByIdAndUpdate error: ", err);
@@ -103,10 +103,10 @@ router.delete('/:settings_id/:kb_id', async (req, res) => {
 // PROXY PUGLIA AI - START
 router.post('/qa', async (req, res) => {
     let data = req.body;
-    winston.debug("/qa data: ", data);
+    // winston.debug("/qa data: ", data);
 
     openaiService.ask(data).then((resp) => {
-        winston.debug("qa resp: ", resp.data);
+        // winston.debug("qa resp: ", resp.data);
         res.status(200).send(resp.data);
     }).catch((err) => {
         winston.error("qa err: ", err);
@@ -118,10 +118,10 @@ router.post('/qa', async (req, res) => {
 router.post('/startscrape', async (req, res) => {
     
     let data = req.body;
-    winston.debug("/startscrape data: ", data);
+    // winston.debug("/startscrape data: ", data);
 
     openaiService.startScrape(data).then((resp) => {
-        winston.debug("startScrape resp: ", resp.data);
+        // winston.debug("startScrape resp: ", resp.data);
         res.status(200).send(resp.data);
     }).catch((err) => {
         winston.error("startScrape err: ", err);
@@ -134,7 +134,7 @@ router.post('/startscrape', async (req, res) => {
 router.post('/checkstatus', async (req, res) => {
 
     //let data = req.body;
-    winston.debug("/checkstatus req.body: ", req.body);
+    // winston.debug("/checkstatus req.body: ", req.body);
 
     let full_url = req.body.full_url;
     let data = {
@@ -142,9 +142,9 @@ router.post('/checkstatus', async (req, res) => {
     }
 
     openaiService.checkStatus(data).then((resp) => {
-        winston.debug("checkStatus resp: ", resp);
-        winston.debug("checkStatus resp: ", resp.data);
-        winston.debug("checkStatus resp: ", resp.data[full_url]);
+        // winston.debug("checkStatus resp: ", resp);
+        // winston.debug("checkStatus resp: ", resp.data);
+        // winston.debug("checkStatus resp: ", resp.data[full_url]);
 
         let response = resp.data[full_url];
 

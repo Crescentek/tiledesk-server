@@ -7,11 +7,11 @@ class SendEmailUtil {
     async sendEmailDirect(to, text, id_project, recipient, subject, message) {
 
         let project = await Project.findById(id_project);
-        winston.debug("project", project);
+        // winston.debug("project", project);
 
-        winston.debug("text: " + text);
-        winston.debug("recipient:"+ recipient);
-        winston.debug("to:" + to);
+        // winston.debug("text: " + text);
+        // winston.debug("recipient:"+ recipient);
+        // winston.debug("to:" + to);
 
         var template = handlebars.compile(text);
 
@@ -20,7 +20,7 @@ class SendEmailUtil {
           };
         
         var finaltext = template(replacements);
-        winston.debug("finaltext:" + finaltext);
+        // winston.debug("finaltext:" + finaltext);
 
 
         // sendEmailDirect(to, text, project, request_id, subject, tokenQueryString, sourcePage, payload) {

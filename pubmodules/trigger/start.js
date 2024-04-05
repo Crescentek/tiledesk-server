@@ -12,7 +12,7 @@ function saveTrigger(trigger) {
         if (err) {
            return winston.error("Error saving trigger for project with id "+trigger.id_project , err);
         }
-        return winston.debug("Trigger saved for project with id "+trigger.id_project, saveTrigger);
+        return // winston.debug("Trigger saved for project with id "+trigger.id_project, saveTrigger);
     }); 
 }
 projectEvent.on('project.create', async (project) => {
@@ -22,14 +22,14 @@ projectEvent.on('project.create', async (project) => {
         
         var botIdentity = await faqService.create("Bot", undefined, project._id, "system", "identity", "An identity bot");
         var botIdentityId = "bot_"+botIdentity.id;
-        winston.debug("botIdentityId:"+botIdentityId);
+        // winston.debug("botIdentityId:"+botIdentityId);
 
 
-        winston.debug("DefaultTrigger.defTriggerObj.s_new_conversation_01",DefaultTrigger.defTriggerObj.s_new_conversation_01._id);
+        // winston.debug("DefaultTrigger.defTriggerObj.s_new_conversation_01",DefaultTrigger.defTriggerObj.s_new_conversation_01._id);
 
         let s_new_conversation_01 = Object.assign({}, DefaultTrigger.defTriggerObj.s_new_conversation_01);
         s_new_conversation_01.id_project = project._id;
-        winston.debug("s_new_conversation_01",s_new_conversation_01);
+        // winston.debug("s_new_conversation_01",s_new_conversation_01);
         let s_new_conversation_01Trigger = new Trigger(s_new_conversation_01);
         saveTrigger(s_new_conversation_01Trigger);
 
@@ -102,7 +102,7 @@ projectEvent.on('project.create', async (project) => {
 */
 
         
-        winston.debug("triggers created for new project");
+        // winston.debug("triggers created for new project");
 
 
 

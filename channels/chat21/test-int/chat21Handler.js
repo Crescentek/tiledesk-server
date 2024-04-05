@@ -16,7 +16,7 @@ require('../../../services/mongoose-cache-fn')(mongoose);
 
 // var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 // if (!databaseUri) {
-//   console.log('DATABASE_URI not specified, falling back to localhost.');
+//   // console.log('DATABASE_URI not specified, falling back to localhost.');
 // }
 
 // mongoose.connect(databaseUri || config.database);
@@ -34,7 +34,7 @@ const messageEvent = require('../../../event/messageEvent');
 var chat21Config = require('../chat21Config');
 
 var adminToken = process.env.CHAT21_ADMIN_TOKEN || chat21Config.adminToken 
-winston.info('Test Chat21Handler adminToken: ' + adminToken);
+// winston.info('Test Chat21Handler adminToken: ' + adminToken);
 
 var chat21 = require('../chat21Client');
 
@@ -60,9 +60,9 @@ describe('Chat21Handler', function () {
 
 
     chat21.auth.setAdminToken(adminToken);
-    winston.info("create group");
+    // winston.info("create group");
     chat21.groups.create('test1', ['12345'], {attr:'a1'}).then(function(data){
-            winston.info("group created: " + data);
+            // winston.info("group created: " + data);
                          done();              
 
         }).catch(function(err) {
@@ -88,7 +88,7 @@ describe('Chat21Handler', function () {
         var counter = 0;
         chat21Event.on('group.create', function(data){
           counter++;
-          winston.info("group created", data);
+          // winston.info("group created", data);
 
           // if (data){
             if (counter==1) {
@@ -101,7 +101,7 @@ describe('Chat21Handler', function () {
 
       // createWithId(request_id, requester_id, id_project, first_text, departmentid, sourcePage, language, userAgent, status) {
        requestService.createWithId("request_id-chat21-createRequest", createdLead._id, savedProject._id, "first_text").then(function(savedRequest) {
-          winston.debug("resolve", savedRequest.toObject());
+          // winston.debug("resolve", savedRequest.toObject());
           expect(savedRequest.request_id).to.equal("request_id-chat21-createRequest");                       
 
              messageService.create(savedUser._id, "test sender", savedRequest.request_id, "hello",
@@ -136,7 +136,7 @@ describe('Chat21Handler', function () {
             
   //     // createWithId(request_id, requester_id, id_project, first_text, departmentid, sourcePage, language, userAgent, status) {
   //      requestService.createWithId("request_id1", createdLead._id, savedProject._id, "first_text").then(function(savedRequest) {
-  //         winston.debug("resolve", savedRequest.toObject());
+  //         // winston.debug("resolve", savedRequest.toObject());
   //         expect(savedRequest.request_id).to.equal("request_id1");                       
 
 
@@ -145,8 +145,8 @@ describe('Chat21Handler', function () {
   //         //     done();
   //         // });
   //         chat21Event.on('firestore.first_message', function(firestoreUpdate){
-  //                   winston.info("firestore.first_message created", firestoreUpdate);
-  //                   winston.info("savedUser._id", savedUser._id);
+  //                   // winston.info("firestore.first_message created", firestoreUpdate);
+  //                   // winston.info("savedUser._id", savedUser._id);
   //                 if (firestoreUpdate.first_message.sender === savedUser._id.toString()) {
   //                   expect(firestoreUpdate.first_message.attributes).to.not.equal(null);                                               
   //                   done();

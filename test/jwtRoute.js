@@ -40,8 +40,8 @@ describe('JWTRoute', () => {
                         .auth(email, pwd)
                         .send()
                         .end((err, res) => {
-                            //console.log("res",  res);
-                            console.log("res.body",  res.body);
+                            //// console.log("res",  res);
+                            // console.log("res.body",  res.body);
                             res.should.have.status(200);
                             res.body.should.be.a('object');
                             expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -56,7 +56,7 @@ describe('JWTRoute', () => {
                                 expect(res.body.token).to.not.equal(null);    
                                 
                                   var jwtToken  = res.body.token;
-                                  console.log("jwtToken", jwtToken);
+                                  // console.log("jwtToken", jwtToken);
                                     chai.request(server)
                                     .post('/'+ savedProject._id + '/jwt/decode')
                                     .set('Authorization', jwtToken)
@@ -101,8 +101,8 @@ describe('JWTRoute', () => {
                           .auth(email, pwd)
                           .send()
                           .end((err, res) => {
-                              //console.log("res",  res);
-                              console.log("res.body",  res.body);
+                              //// console.log("res",  res);
+                              // console.log("res.body",  res.body);
                               res.should.have.status(200);
                               res.body.should.be.a('object');
                               expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -112,7 +112,7 @@ describe('JWTRoute', () => {
 
                                 
                                     
-                                    console.log("jwtToken", jwtToken);
+                                    // console.log("jwtToken", jwtToken);
                                       chai.request(server)
                                       .post('/'+ savedProject._id + '/jwt/decode')
                                       .set('Authorization', 'JWT '+jwtToken)
@@ -154,8 +154,8 @@ describe('JWTRoute', () => {
                             .auth(email, pwd)
                             .send()
                             .end((err, res) => {
-                                //console.log("res",  res);
-                                console.log("res.body",  res.body);
+                                //// console.log("res",  res);
+                                // console.log("res.body",  res.body);
                                 res.should.have.status(200);
                                 res.body.should.be.a('object');
                                 expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -165,7 +165,7 @@ describe('JWTRoute', () => {
   
                                   
                                       
-                                      console.log("jwtToken", jwtToken);
+                                      // console.log("jwtToken", jwtToken);
                                         chai.request(server)
                                         .post('/'+ savedProject._id + '/jwt/decode')
                                         .set('Authorization', 'JWT '+jwtToken)

@@ -60,18 +60,18 @@ const dateList = [
 // connectRedis();
 
 // function connectRedis() {
-//     console.log(">>> connectRedis")
+//     // console.log(">>> connectRedis")
 //     redis_client = redis.createClient({
 //         host: "127.0.0.1",
 //         port: 6379,
 //     });
 
 //     redis_client.on('error', err => {
-//         console.log('(quoteManager TEST) Connect Redis Error ' + err);
+//         // console.log('(quoteManager TEST) Connect Redis Error ' + err);
 //     })
 
 //     redis_client.on('ready', () => {
-//         console.log("(quoteManager TEST) Redis ready!")
+//         // console.log("(quoteManager TEST) Redis ready!")
 //     })
 // }
 
@@ -85,13 +85,13 @@ const dateList = [
 // let tdCache = undefined;
 // if (cacheClient) {
 //     tdCache = cacheClient;
-//     console.log("using 'cacheClient' for the test")
+//     // console.log("using 'cacheClient' for the test")
 // } else if (redis_client) {
 //     tdCache = redis_client
-//     console.log("using 'redis_client' for the test")
+//     // console.log("using 'redis_client' for the test")
 // } else {
 //     tdCache = mockTdCache;
-//     console.log("using 'mockTdCache' for the test")
+//     // console.log("using 'mockTdCache' for the test")
 // }
 
 let quoteManager = new QuoteManager({ tdCache: tdCache });
@@ -110,13 +110,13 @@ describe('QuoteManager', function () {
         mockRequest.createdAt = new Date(dateList[0]);
 
         let initial_quote = await quoteManager.getCurrentQuote(mockProject, mockRequest, 'requests');
-        if (log) { console.log("[Quote Test] initial_quote: ", initial_quote); }
+        if (log) { // console.log("[Quote Test] initial_quote: ", initial_quote); }
 
         let key_incremented = await quoteManager.incrementRequestsCount(mockProject, mockRequest);
-        if (log) { console.log("[Quote Test] key_incremented: ", key_incremented); }
+        if (log) { // console.log("[Quote Test] key_incremented: ", key_incremented); }
 
         let final_quote = await quoteManager.getCurrentQuote(mockProject, mockRequest, 'requests');
-        if (log) { console.log("[Quote Test] final_quote: ", final_quote); }
+        if (log) { // console.log("[Quote Test] final_quote: ", final_quote); }
 
         expect(key_incremented).to.equal("quotes:requests:64e36f5dbf72263f7c059999:20/10/2023");
         expect(final_quote).to.equal(initial_quote + 1);
@@ -129,13 +129,13 @@ describe('QuoteManager', function () {
         mockMessage.createdAt = new Date();
 
         let initial_quote = await quoteManager.getCurrentQuote(mockProject, mockMessage, 'messages');
-        if (log) { console.log("[Quote Test] initial_quote: ", initial_quote); }
+        if (log) { // console.log("[Quote Test] initial_quote: ", initial_quote); }
 
         let key_incremented = await quoteManager.incrementMessagesCount(mockProject, mockMessage);
-        if (log) { console.log("[Quote Test] key_incremented: ", key_incremented); }
+        if (log) { // console.log("[Quote Test] key_incremented: ", key_incremented); }
 
         let final_quote = await quoteManager.getCurrentQuote(mockProject, mockMessage, 'messages');
-        if (log) { console.log("[Quote Test] current quote: ", final_quote); }
+        if (log) { // console.log("[Quote Test] current quote: ", final_quote); }
 
         //expect(key_incremented).to.equal("quotes:messages:64e36f5dbf72263f7c059999:20/10/2023");
         expect(final_quote).to.equal(initial_quote + 1);
@@ -147,16 +147,16 @@ describe('QuoteManager', function () {
         let mockEmail = emailMock.emailMock;
 
         let result = await quoteManager.checkQuote(mockProject, mockEmail, 'email');
-        console.log("checkQuote result: ", result)
+        // console.log("checkQuote result: ", result)
 
         let initial_quote = await quoteManager.getCurrentQuote(mockProject, mockEmail, 'email');
-        if (log) { console.log("[Quote Test] initial_quote: ", initial_quote); }
+        if (log) { // console.log("[Quote Test] initial_quote: ", initial_quote); }
 
         let key_incremented = await quoteManager.incrementEmailCount(mockProject, mockEmail);
-        if (log) { console.log("[Quote Test] key_incremented: ", key_incremented); }
+        if (log) { // console.log("[Quote Test] key_incremented: ", key_incremented); }
 
         let final_quote = await quoteManager.getCurrentQuote(mockProject, mockEmail, 'email');
-        if (log) { console.log("[Quote Test] current quote: ", final_quote); }
+        if (log) { // console.log("[Quote Test] current quote: ", final_quote); }
 
         expect(key_incremented).to.equal("quotes:email:64e36f5dbf72263f7c059999:20/10/2023");
         expect(final_quote).to.equal(initial_quote + 1);
@@ -175,8 +175,8 @@ describe('QuoteManager', function () {
                     .auth(email, pwd)
                     .send({ to: "giovanni.troisiub@gmail.com", text: "Hello", subject: "HelloSub", replyto: "giovanni.troisiub@gmail.com" })
                     .end((err, res) => {
-                        console.log("email internal send err", err);
-                        console.log("email internal send res.body", res.body);
+                        // console.log("email internal send err", err);
+                        // console.log("email internal send res.body", res.body);
                         done();
                     });
             });
@@ -200,7 +200,7 @@ describe('QuoteManager', function () {
                     .auth(email, pwd)
                     .send({ createdAt: createdAt , tokens: 128 })
                     .end((err, res) => {
-                        if (log) { console.log("res.body", res.body )};
+                        if (log) { // console.log("res.body", res.body )};
                         res.should.have.status(200);
                         res.body.should.be.a('object');
 
@@ -233,8 +233,8 @@ describe('QuoteManager', function () {
     //     for (let date of dateList) {
     //         mockRequest.createdAt = new Date(date);
     //         let result = await quoteManager.incrementRequestsCount(mockRequest);
-    //         console.log("result: ", result);
-    //         console.log("\n\n");
+    //         // console.log("result: ", result);
+    //         // console.log("\n\n");
     //     }
 
     // })
@@ -256,7 +256,7 @@ describe('QuoteManager', function () {
 
     //     mockRequest.createdAt = new Date(dateList[i]);
     //     let result = await quoteManager.incrementRequestsCount(mockRequest);
-    //     console.log("result: ", result);
+    //     // console.log("result: ", result);
 
 
     // })
@@ -270,12 +270,12 @@ describe('QuoteManager', function () {
     //     for (let date of dateList) {
     //         mockRequest.createdAt = new Date(date);
     //         let result = await quoteManager.incrementRequestCount(mockRequest);
-    //         console.log("result: ", result);
+    //         // console.log("result: ", result);
     //     }
 
     //     let today = new Date('2023-12-22T08:45:54.058Z');
     //     let quote = await quoteManager.getCurrentQuote(today, 'requests');
-    //     console.log("request quote: ", quote)
+    //     // console.log("request quote: ", quote)
 
 
     // })

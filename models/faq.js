@@ -171,12 +171,12 @@ var faq = mongoose.model('faq', FaqSchema);
 
 faq.on('index', function (error) {
   // "_id index cannot be sparse"
-  winston.debug('index', error);
+  // winston.debug('index', error);
 });
 
 if (process.env.MONGOOSE_SYNCINDEX) {
   faq.syncIndexes();
-  winston.info("faq syncIndexes")
+  // winston.info("faq syncIndexes")
 }
 
 

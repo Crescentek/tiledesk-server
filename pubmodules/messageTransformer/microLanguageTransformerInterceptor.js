@@ -13,10 +13,10 @@ class MicroLanguageTransformerInterceptor {
     listen() {
 
         var that = this;
-        winston.info("MicroLanguageTransformerInterceptor listener start ");
+        // winston.info("MicroLanguageTransformerInterceptor listener start ");
         
         messagePromiseEvent.on('message.create.simple.before', async (data) => {
-            winston.info('MicroLanguageTransformerInterceptor message.create.simple.before', data); 
+            // winston.info('MicroLanguageTransformerInterceptor message.create.simple.before', data); 
 
             var message = data.beforeMessage;
             
@@ -26,7 +26,7 @@ class MicroLanguageTransformerInterceptor {
 
             if (message.attributes && message.attributes.microlanguage == true) { 
                 var reply = TiledeskChatbotUtil.parseReply(message.text);
-                winston.info('parseReply: ' + JSON.stringify(reply) );
+                // winston.info('parseReply: ' + JSON.stringify(reply) );
                 var messageReply = reply.message;
 
                  
@@ -52,7 +52,7 @@ class MicroLanguageTransformerInterceptor {
                 //data.beforeMessage = messageReply;
                
              }
-             winston.debug('data: ' + JSON.stringify(data) );
+             // winston.debug('data: ' + JSON.stringify(data) );
              return data;
             
         });

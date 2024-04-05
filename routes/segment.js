@@ -6,8 +6,8 @@ var Segment = require("../models/segment");
 
 router.post('/', function (req, res) {
 
-  winston.debug(req.body);
-  winston.debug("req.user", req.user);
+  // winston.debug(req.body);
+  // winston.debug("req.user", req.user);
 
   var newSegment = new Segment({
     name: req.body.name,
@@ -32,7 +32,7 @@ router.post('/', function (req, res) {
 });
 
 router.put('/:segmentid', function (req, res) {
-  winston.debug(req.body);
+  // winston.debug(req.body);
   var update = {};
   
     if (req.body.name!=undefined) {
@@ -61,7 +61,7 @@ router.put('/:segmentid', function (req, res) {
 
 
 router.delete('/:segmentid', function (req, res) {
-  winston.debug(req.body);
+  // winston.debug(req.body);
 
   Segment.findByIdAndUpdate(req.params.segmentid, {status:0}, { new: true, upsert: true }, function (err, updatedSegment) {
     if (err) {
@@ -75,7 +75,7 @@ router.delete('/:segmentid', function (req, res) {
 
 
 router.get('/:segmentid', function (req, res) {
-  winston.debug(req.body);
+  // winston.debug(req.body);
 
   Segment.findById(req.params.segmentid, function (err, segment) {
     if (err) {
@@ -95,7 +95,7 @@ router.get('/', function (req, res) {
 
   if (req.query.limit) {    
     limit = parseInt(req.query.limit);
-    winston.debug('LEAD ROUTE - limit: '+limit);
+    // winston.debug('LEAD ROUTE - limit: '+limit);
   }
 
   var page = 0;
@@ -105,7 +105,7 @@ router.get('/', function (req, res) {
   }
 
   var skip = page * limit;
-  winston.debug('LEAD ROUTE - SKIP PAGE ', skip);
+  // winston.debug('LEAD ROUTE - SKIP PAGE ', skip);
 
 
   var query = { "id_project": req.projectid, "status": 100};
@@ -123,7 +123,7 @@ router.get('/', function (req, res) {
   var sortQuery = {};
   sortQuery[sortField] = direction;
 
-  winston.debug("sort query", sortQuery);
+  // winston.debug("sort query", sortQuery);
 
   
 

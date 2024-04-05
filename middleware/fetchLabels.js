@@ -5,7 +5,7 @@ var winston = require('../config/winston');
 
 
 var labelsDir = __dirname+"/../config/labels/";
-winston.debug('labelsDir: ' + labelsDir);
+// winston.debug('labelsDir: ' + labelsDir);
 
 
 module.exports = function(req, res, next) {
@@ -16,7 +16,7 @@ module.exports = function(req, res, next) {
               winston.error('Error getting labels', err);
               return res.status(500).send({ success: false, msg: 'Error reading object.' });
           }
-          winston.debug('label fetched', data);
+          // winston.debug('label fetched', data);
           req.labels = JSON.parse(data);
           next();
         });
