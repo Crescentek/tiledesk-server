@@ -61,7 +61,7 @@ module.exports = sendMessageUtil;
 
 
 // var mongoose = require('mongoose');
-// mongoose.connect("mongodb://localhost:27017/tiledesk", { "useNewUrlParser": true, "autoIndex": false }, function(err) {
+// mongoose.connect("mongodb://127.0.0.1:27017/tiledesk", { "useNewUrlParser": true, "autoIndex": false }, function(err) {
 //   if (err) { return winston.error('Failed to connect to MongoDB on '+databaseUri);}
 // });
 // sendMessageUtil.send("5e79e711ecb9230ac1f5b49f","123","ciao","5ebac3685704c9377c359675");
