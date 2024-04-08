@@ -24,17 +24,17 @@ constructor() {
 run() {
     // var that = this;
     // findUnresponsiveRequests();
-    winston.info("RequestTaskScheduler listen started" );
+    // winston.info("RequestTaskScheduler listen started" );
     this.scheduleUnresponsiveRequests();
 }
 
 scheduleUnresponsiveRequests() {
   var that = this;
-  winston.info("RequestTaskScheduler task scheduleUnresponsiveRequests launched with closeAfter : " + this.closeUnresponsiveRequestsAfterTimeout + " cron expression: " + this.closeUnresponsiveRequestsCronExp);
+  // winston.info("RequestTaskScheduler task scheduleUnresponsiveRequests launched with closeAfter : " + this.closeUnresponsiveRequestsAfterTimeout + " cron expression: " + this.closeUnresponsiveRequestsCronExp);
 
  //https://crontab.guru/examples.html
 //  var s= schedule.scheduleJob(this.closeUnresponsiveRequestsCronExp, function(fireDate){
-//     winston.info('This job was supposed to run at ' + fireDate + ', but actually ran at ' + new Date());
+//     // winston.info('This job was supposed to run at ' + fireDate + ', but actually ran at ' + new Date());
 //     that.findUnresponsiveRequests(); 
 //   });
 
@@ -64,7 +64,7 @@ findUnresponsiveRequests() {
     // togli
     query.id_project = "5fc224ce05416200342af18a";
     
-    winston.info("**********query",query);
+    // winston.info("**********query",query);
 
     Request.find(query).limit(1).exec(function(err, requests) {
       //it is limited to 1000 results but after same days it all ok
@@ -73,18 +73,18 @@ findUnresponsiveRequests() {
           return 0;
       }
       if (!requests || (requests && requests.length==0)) {
-          winston.info("RequestTaskScheduler no unresponsive requests found ");
+          // winston.info("RequestTaskScheduler no unresponsive requests found ");
           return 0;
       }
 
-      winston.info("********unresponsive requests ", requests);
+      // winston.info("********unresponsive requests ", requests);
       
       requests.forEach(request => {
-        winston.info("********unresponsive request ", request);
+        // winston.info("********unresponsive request ", request);
 
         return requestService.closeRequestByRequestId(request.request_id, request.id_project, false, false).then(function(updatedStatusRequest) {
-          winston.info("Request closed");
-          // winston.info("Request closed",updatedStatusRequest);
+          // winston.info("Request closed");
+          // // winston.info("Request closed",updatedStatusRequest);
         }).catch(function(err) {
           winston.error("Error closing the request",err);
         })

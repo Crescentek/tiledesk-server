@@ -223,7 +223,6 @@ router.post('/', async (req, res) => {
 
 
 router.post('/multi', upload.single('uploadFile'), async (req, res) => {
-
     let list;
     if (req.file) {
         file_string = req.file.buffer.toString('utf-8');
@@ -457,7 +456,7 @@ router.post('/qa', async (req, res) => {
     // }
 
     if (!data.gptkey) {
-        let gptkey = process.env.GPTKEY;
+        let gptkey = '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';
         if (!gptkey) {
             return res.status(403).send({ success: false, error: "GPT apikey undefined" })
         }
@@ -660,7 +659,7 @@ async function scheduleScrape(resources) {
 async function startScrape(data) {
 
     if (!data.gptkey) {
-        let gptkey = process.env.GPTKEY;
+        let gptkey = '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';
         if (!gptkey) {
             return { error: "GPT apikey undefined" }
         }

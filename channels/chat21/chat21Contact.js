@@ -16,13 +16,13 @@ const { Query } = require('mongoose');
 
 
 router.get('/:contact_id', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken], async (req, res) => {
-  winston.debug('REQ USER ID ', req.user._id);
+  // winston.debug('REQ USER ID ', req.user._id);
   
   var isObjectId = mongoose.Types.ObjectId.isValid(req.user._id);
-  winston.debug("isObjectId:"+ isObjectId);     
+  // winston.debug("isObjectId:"+ isObjectId);     
 
   var query = { role: { $in : [RoleConstants.OWNER, RoleConstants.ADMIN, RoleConstants.SUPERVISOR, RoleConstants.AGENT]}, status: "active" };
-  winston.debug(' query: ',query);
+  // winston.debug(' query: ',query);
 
 
   if (isObjectId) {
@@ -43,13 +43,13 @@ router.get('/:contact_id', [passport.authenticate(['basic', 'jwt'], { session: f
     
 
   var contact_id = req.params.contact_id;
-  winston.debug('contact_id: '+ contact_id);
+  // winston.debug('contact_id: '+ contact_id);
 
   isObjectId = mongoose.Types.ObjectId.isValid(contact_id);
-  winston.debug("isObjectId:"+ isObjectId);                             
+  // winston.debug("isObjectId:"+ isObjectId);                             
 
   query = { id_project: { $in : projectsArray }, role: { $in : [RoleConstants.OWNER, RoleConstants.ADMIN, RoleConstants.SUPERVISOR, RoleConstants.AGENT]}, status: "active" };
-  winston.debug(' query: ',query);
+  // winston.debug(' query: ',query);
 
   if (isObjectId) {
     query.id_user = contact_id;
@@ -58,7 +58,7 @@ router.get('/:contact_id', [passport.authenticate(['basic', 'jwt'], { session: f
     query.uuid_user = contact_id;
   }
 
-  winston.debug("query: ", query);
+  // winston.debug("query: ", query);
 
   var teammates = await Project_user.find(query).
   populate('id_project').
@@ -84,21 +84,21 @@ router.get('/:contact_id', [passport.authenticate(['basic', 'jwt'], { session: f
         //   contact.timestamp = teammate.id_user.createdAt.getTime();
         // }
         
-        // winston.info("teammate: "+ JSON.stringify(teammate));
+        // // winston.info("teammate: "+ JSON.stringify(teammate));
 
         var contactFound = result.filter(c => c.uid === contact.uid );
-        winston.debug("contactFound: "+ JSON.stringify(contactFound));
+        // winston.debug("contactFound: "+ JSON.stringify(contactFound));
 
         // var index = result.indexOf(contactFound);
         let index = result.findIndex(c => c.uid === contact.uid );
 
-        winston.debug("index: "+ index);
+        // winston.debug("index: "+ index);
 
         if (contactFound.length==0) {
-          winston.debug("not found");
+          // winston.debug("not found");
           result.push(contact);
         }else {
-          winston.debug("found",contactFound);
+          // winston.debug("found",contactFound);
           // contactFound[0].description = "sssss";
           contactFound[0].description= contactFound[0].description + ", "+teammate.id_project.name;
           result[index] = contactFound[0];
@@ -110,7 +110,7 @@ router.get('/:contact_id', [passport.authenticate(['basic', 'jwt'], { session: f
     });
   }
 
-  winston.debug("send");
+  // winston.debug("send");
 
   if (result && result.length>0) {
     res.json(result[0]);
@@ -126,19 +126,19 @@ router.get('/:contact_id', [passport.authenticate(['basic', 'jwt'], { session: f
 
 
 router.get('/', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken], async (req, res) => {
-  winston.debug('REQ USER ID ', req.user._id);
+  // winston.debug('REQ USER ID ', req.user._id);
 
   var direction = -1; //-1 descending , 1 ascending
   if (req.query.direction) {
     direction = req.query.direction;
   } 
-  winston.debug("direction",direction);
+  // winston.debug("direction",direction);
 
   var sortField = "updatedAt";
   if (req.query.sort) {
     sortField = req.query.sort;
   } 
-  winston.debug("sortField",sortField);
+  // winston.debug("sortField",sortField);
 
   var sortQuery={};
   sortQuery[sortField] = direction;
@@ -146,7 +146,7 @@ router.get('/', [passport.authenticate(['basic', 'jwt'], { session: false }), va
   var query = { role: { $in : [RoleConstants.OWNER, RoleConstants.ADMIN, RoleConstants.SUPERVISOR, RoleConstants.AGENT]}, status: "active" };
 
   var isObjectId = mongoose.Types.ObjectId.isValid(req.user._id);
-  winston.debug("isObjectId:"+ isObjectId);                             
+  // winston.debug("isObjectId:"+ isObjectId);                             
 
   if (isObjectId) {
     query.id_user = req.user._id;
@@ -166,7 +166,7 @@ router.get('/', [passport.authenticate(['basic', 'jwt'], { session: false }), va
     });
     
     var query = { id_project: { $in : projectsArray }, role: { $in : [RoleConstants.OWNER, RoleConstants.ADMIN, RoleConstants.SUPERVISOR, RoleConstants.AGENT]}, status: "active" };
-    winston.debug("query: ", query);
+    // winston.debug("query: ", query);
 
     var teammates = await Project_user.find(query).
     populate('id_project').
@@ -194,21 +194,21 @@ router.get('/', [passport.authenticate(['basic', 'jwt'], { session: false }), va
           //   contact.timestamp = teammate.id_user.createdAt.getTime();
           // }
           
-          // winston.info("teammate: "+ JSON.stringify(teammate));
+          // // winston.info("teammate: "+ JSON.stringify(teammate));
 
           var contactFound = result.filter(c => c.uid === contact.uid );
-          winston.debug("contactFound: "+ JSON.stringify(contactFound));
+          // winston.debug("contactFound: "+ JSON.stringify(contactFound));
 
           // var index = result.indexOf(contactFound);
           let index = result.findIndex(c => c.uid === contact.uid );
 
-          winston.debug("index: "+ index);
+          // winston.debug("index: "+ index);
 
           if (contactFound.length==0) {
-            winston.debug("not found");
+            // winston.debug("not found");
             result.push(contact);
           }else {
-            winston.debug("found",contactFound);
+            // winston.debug("found",contactFound);
             // contactFound[0].description = "sssss";
             contactFound[0].description= contactFound[0].description + ", "+teammate.id_project.name;
             result[index] = contactFound[0];
@@ -219,7 +219,7 @@ router.get('/', [passport.authenticate(['basic', 'jwt'], { session: false }), va
 
       });
     }
-    winston.debug("send");
+    // winston.debug("send");
     res.json(result);
     
   

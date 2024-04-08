@@ -1,5 +1,5 @@
 npm version prerelease --preid=beta
-version=`node -e 'console.log(require("./package.json").version)'`
+version=`node -e '// console.log(require("./package.json").version)'`
 echo "version $version"
 
 if [ "$version" != "" ]; then

@@ -16,7 +16,7 @@ function getLogger(moduleName) {
 
 
 var level = process.env.LOG_LEVEL || 'info'
-// console.log("level",level);
+// // console.log("level",level);
 
 
 
@@ -61,7 +61,7 @@ var level = process.env.LOG_LEVEL || 'info'
   //   }
  
 
-  //   console.log("Added winston MongoDB transport");
+  //   // console.log("Added winston MongoDB transport");
   //   logger.add(new winston.transports.MongoDB({db: logsDb, collection: "logsmt"}));
   // }
     

@@ -9,7 +9,7 @@ var roleChecker = require('../middleware/has-role');
 
 
 router.get('/test', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRoleOrTypes('agent', ['subscription'])], function (req, res) {
-      // console.log("req.projectuser",req.projectuser);      
+      // // console.log("req.projectuser",req.projectuser);      
       res.json(req.projectuser);
 
 });

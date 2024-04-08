@@ -93,7 +93,7 @@ class Project {
 
   static findOne(q,c) {
     var data  = JSON.parse(fs.readFileSync(FILE, 'utf8'));
-    // console.log("data", data);
+    // // console.log("data", data);
 
     // if (data.name) {
       this.name = data.name;
@@ -115,15 +115,15 @@ class Project {
 
 
 // var project = new Project();
-// // console.log("project",project);
+// // // console.log("project",project);
 
 // project.save({"name": "name1"},function(err, data) {
-//   console.log("saved data",data, err);
+//   // console.log("saved data",data, err);
 
 //   var a = project.findOne({},function(err, data) {
-//     console.log("read data",data, err);
+//     // console.log("read data",data, err);
 //   });
-  // console.log("a",a);
+  // // console.log("a",a);
 
 // });
 
@@ -131,12 +131,12 @@ class Project {
 
 
 // var MongooseModel = require('../utils/mongooseModel');
-// console.log("MongooseModel",MongooseModel);
+// // console.log("MongooseModel",MongooseModel);
 
 // var a = MongooseModel.findOne({ name: 'whiskers' }, (err, doc) => {
-//   console.log("doc",doc);
+//   // console.log("doc",doc);
 // });
-// console.log("a",a);
+// // console.log("a",a);
 
 
 // var mM=mongooseModel(project);

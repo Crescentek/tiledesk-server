@@ -3,10 +3,10 @@ var winston = require('../config/winston');
 
 
 var chat21Enabled = process.env.CHAT21_ENABLED;
-winston.debug("chat21Enabled: "+chat21Enabled);
+// winston.debug("chat21Enabled: "+chat21Enabled);
 
 var engine = process.env.CHAT21_ENGINE;
-winston.debug("chat21 engine: "+engine);
+// winston.debug("chat21 engine: "+engine);
 
 
 var validtoken = require('../middleware/valid-token');
@@ -15,7 +15,7 @@ require('../middleware/passport')(passport);
 
 
 if (chat21Enabled && chat21Enabled == "true") {
-    winston.info("ChannelManager - Chat21 channel is enabled");
+    // winston.info("ChannelManager - Chat21 channel is enabled");
 }else {
     winston.warn("ChannelManager Chat21 channel is disabled. Attention!!");
 }
@@ -24,7 +24,7 @@ class ChannelManager {
 
     use(app) {
         var that = this;
-        winston.debug("ChannelManager using controllers");
+        // winston.debug("ChannelManager using controllers");
 
         if (chat21Enabled && chat21Enabled == "true") {
 
@@ -39,17 +39,17 @@ class ChannelManager {
 
             
             if (engine && engine=="firebase") {
-                winston.info("ChannelManager - Chat21 channel engine is firebase");
+                // winston.info("ChannelManager - Chat21 channel engine is firebase");
                 var firebaseAuth = require('../channels/chat21/firebaseauth');
                 app.use('/chat21/firebase/auth', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken], firebaseAuth);
             } else { //if (engine && engine=="native") {
-                winston.info("ChannelManager - Chat21 channel engine is native mqtt");
+                // winston.info("ChannelManager - Chat21 channel engine is native mqtt");
                 var nativeAuth = require('../channels/chat21/nativeauth');
                 app.use('/chat21/native/auth', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken], nativeAuth);
             }
-            winston.info("ChannelManager - Chat21 channel routes initialized");
+            // winston.info("ChannelManager - Chat21 channel routes initialized");
         } else {
-            winston.info("ChannelManager - Chat21 channel routes not initialized.");
+            // winston.info("ChannelManager - Chat21 channel routes not initialized.");
         }            
 
         
@@ -63,15 +63,15 @@ class ChannelManager {
         var that = this;
 
         if (process.env.NODE_ENV == 'test')  {	
-            return winston.info("ChannelManager listener disabled for testing");
+            return // winston.info("ChannelManager listener disabled for testing");
         }
         
         if (chat21Enabled && chat21Enabled == "true") {   
             var chat21Handler = require('../channels/chat21/chat21Handler');         
             chat21Handler.listen();
-            winston.info("ChannelManager listener started");
+            // winston.info("ChannelManager listener started");
         }else {
-            winston.info("ChannelManager listener NOT started ");
+            // winston.info("ChannelManager listener NOT started ");
         }
     }
 

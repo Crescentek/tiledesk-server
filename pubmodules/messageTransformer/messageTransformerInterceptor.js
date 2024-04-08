@@ -16,11 +16,11 @@ class MessageTransformerInterceptor {
     listen() {
 
         var that = this;
-        winston.info("MessageTransformerInterceptor listener start ");
+        // winston.info("MessageTransformerInterceptor listener start ");
  
 
         messagePromiseEvent.on('message.create.simple.before', async (data) => {
-            winston.debug('MessageTransformerInterceptor message.create.simple.before', data); 
+            // winston.debug('MessageTransformerInterceptor message.create.simple.before', data); 
 
             var message = data.beforeMessage;
             
@@ -33,7 +33,7 @@ class MessageTransformerInterceptor {
             var m = message.text.match(re);
             if (m != null) {
                 var messageExtracted = m[0].replace(re, '$1');
-                winston.debug('messageExtracted: '+messageExtracted);
+                // winston.debug('messageExtracted: '+messageExtracted);
 
                 var language = "EN";
 
@@ -46,13 +46,13 @@ class MessageTransformerInterceptor {
                     
                 if (cacheEnabler.request) {
                     q.cache(cacheUtil.defaultTTL, message.id_project+":requests:request_id:"+message.recipient+":simple") //request_cache nocachepopulatereqired
-                    winston.debug('request cache enabled');
+                    // winston.debug('request cache enabled');
                 }
 
 
                 var request = await q.exec();
               
-                winston.debug('request mti: ', request);
+                // winston.debug('request mti: ', request);
 
                 if (request && request.language) {
                     language  = request.language.toUpperCase();
@@ -69,13 +69,13 @@ class MessageTransformerInterceptor {
                 //     language  = message.attributes.language.toUpperCase();
                 // }
 
-                winston.debug('language: '+language);
+                // winston.debug('language: '+language);
 
             // if (message.text.indexOf("${")>-1) {
             
                 // get a specific key of a project language merged with default (widget.json) but if not found return Pivot
                 var label = await labelService.get(message.id_project,language, messageExtracted);
-                winston.debug('MessageTransformerInterceptor label: ' + label);
+                // winston.debug('MessageTransformerInterceptor label: ' + label);
 
                 if (label) {
                     message.text=label;  //ATTENTION Changes is made by reference
@@ -84,12 +84,12 @@ class MessageTransformerInterceptor {
                 return data;
                 // labelService.getByLanguageAndKey(message.id_project, "EN", "LABEL_PLACEHOLDER").then(function(label) {
                 //     message.text=label;   
-                //     winston.info('MessageTransformerInterceptor return enter: '+ label);
+                //     // winston.info('MessageTransformerInterceptor return enter: '+ label);
                 //     return data;
                 // })
-                // winston.info('MessageTransformerInterceptor enter here???');
+                // // winston.info('MessageTransformerInterceptor enter here???');
             } else {
-                winston.debug('MessageTransformerInterceptor return');
+                // winston.debug('MessageTransformerInterceptor return');
                 return data;
             }
            

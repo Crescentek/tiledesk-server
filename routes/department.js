@@ -16,7 +16,7 @@ var departmentEvent = require("../event/departmentEvent");
 
 router.post('/', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('admin')], function (req, res) {
 
-  winston.debug("DEPT REQ BODY ", req.body);
+  // winston.debug("DEPT REQ BODY ", req.body);
   var newDepartment = new Department({
       routing: req.body.routing,
       name: req.body.name,
@@ -40,7 +40,7 @@ router.post('/', [passport.authenticate(['basic', 'jwt'], { session: false }), v
       winston.error('Error creating the department ', err);
       return res.status(500).send({ success: false, msg: 'Error saving object.' });
       }
-      winston.debug('NEW DEPT SAVED ', savedDepartment);
+      // winston.debug('NEW DEPT SAVED ', savedDepartment);
       departmentEvent.emit('department.create', savedDepartment);
       res.json(savedDepartment);
   });
@@ -50,7 +50,7 @@ router.post('/', [passport.authenticate(['basic', 'jwt'], { session: false }), v
 
 router.put('/:departmentid', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('admin')], function (req, res) {
 
-  winston.debug(req.body);
+  // winston.debug(req.body);
 
   var update = {};
 
@@ -95,7 +95,7 @@ router.put('/:departmentid', [passport.authenticate(['basic', 'jwt'], { session:
 
   router.patch('/:departmentid', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('admin')], function (req, res) {
 
-    winston.debug(req.body);
+    // winston.debug(req.body);
   
     var update = {};
   
@@ -138,21 +138,21 @@ router.put('/:departmentid', [passport.authenticate(['basic', 'jwt'], { session:
 
 
 router.get('/:departmentid/operators', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRoleOrTypes('agent', ['bot','subscription'])], async (req, res) => {
-  winston.debug("Getting department operators req.projectid: "+req.projectid);
+  // winston.debug("Getting department operators req.projectid: "+req.projectid);
   
   var disableWebHookCall = undefined;
   if (req.query.disableWebHookCall) {
     disableWebHookCall = (req.query.disableWebHookCall == 'true') ;
   }
 
-  winston.debug("disableWebHookCall: "+ disableWebHookCall);
+  // winston.debug("disableWebHookCall: "+ disableWebHookCall);
 
   // getOperators(departmentid, projectid, nobot) {
 
 
     var context = {req:req};
   var operatorsResult = await departmentService.getOperators(req.params.departmentid, req.projectid, req.query.nobot, disableWebHookCall, context);
-  winston.debug("Getting department operators operatorsResult", operatorsResult);
+  // winston.debug("Getting department operators operatorsResult", operatorsResult);
 
 
   
@@ -166,14 +166,14 @@ router.get('/:departmentid/operators', [passport.authenticate(['basic', 'jwt'], 
 // GET ALL DEPTS (i.e. NOT FILTERED FOR STATUS and WITH AUTHENTICATION (USED BY THE DASHBOARD)
 router.get('/allstatus', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRoleOrTypes('agent', ['bot','subscription'])], function (req, res) {
 
-  // winston.debug("## GET ALL DEPTS req.project.isActiveSubscription ", req.project.isActiveSubscription)
-  // winston.debug("## GET ALL DEPTS req.project.trialExpired ", req.project.trialExpired)
+  // // winston.debug("## GET ALL DEPTS req.project.isActiveSubscription ", req.project.isActiveSubscription)
+  // // winston.debug("## GET ALL DEPTS req.project.trialExpired ", req.project.trialExpired)
 
   // if (req.project.profile) {
-  //   winston.debug("## GET ALL DEPTS eq.project.profile.type ", req.project.profile.type);
+  //   // winston.debug("## GET ALL DEPTS eq.project.profile.type ", req.project.profile.type);
   // }
 
-  winston.debug("## GET ALL DEPTS req.project ", req.project)
+  // winston.debug("## GET ALL DEPTS req.project ", req.project)
 
   var query = { "id_project": req.projectid, status: { $gte:  0 } }; // nascondi quelli con status = hidden (-1) for dashboard
                                             //secondo me qui manca un parentesi tonda per gli or
@@ -186,19 +186,19 @@ router.get('/allstatus', [passport.authenticate(['basic', 'jwt'], { session: fal
   if (req.query.sort) {
     // return Department.find({ "id_project": req.projectid }).sort({ updatedAt: 'desc' }).exec(function (err, departments) {
     // QUESTO LO COMMENTO 11.09.19 return Department.find({ "id_project": req.projectid }).sort({ name: 'asc' }).exec(function (err, departments) { 
-      winston.debug("## GET ALL DEPTS QUERY (1)", query)
+      // winston.debug("## GET ALL DEPTS QUERY (1)", query)
     return Department.find(query).sort({ name: 'asc' }).exec(function (err, departments) {
 
       if (err) {
         winston.error('Error getting the departments.', err);
-        winston.debug('Error getting the departments.', err);
+        // winston.debug('Error getting the departments.', err);
         return res.status(500).send({ success: false, msg: 'Error getting the departments.', err: err });
       }
 
       return res.json(departments);
     });
   } else {
-    winston.debug("## GET ALL DEPTS QUERY (1)", query)
+    // winston.debug("## GET ALL DEPTS QUERY (1)", query)
     // return Department.find({ "id_project": req.projectid }, function (err, departments) {
     return Department.find(query)
     //@DISABLED_CACHE .cache(cacheUtil.defaultTTL, req.projectid+":departments:query:allstatus")
@@ -215,23 +215,23 @@ router.get('/allstatus', [passport.authenticate(['basic', 'jwt'], { session: fal
 
 
 router.get('/:departmentid', function (req, res) {
-  winston.debug(req.body);
+  // winston.debug(req.body);
 
   let departmentid = req.params.departmentid;
 
 
   if (departmentid == "default") {
-    winston.debug("departmentid", departmentid);
+    // winston.debug("departmentid", departmentid);
 
     var query = {};
-    // winston.debug("req.query", req.query);
+    // // winston.debug("req.query", req.query);
 
     // if (req.appid) {
     query.id_project = req.projectid;
     query.default = true;
     // }
 
-    winston.debug("query", query);
+    // winston.debug("query", query);
 
     Department.findOne(query, function (err, department) {
       if (err) return (err);
@@ -259,17 +259,17 @@ router.get('/:departmentid', function (req, res) {
 // note:THE STATUS EQUAL TO 1 CORRESPONDS TO THE DEPARTMENTS VISIBLE THE STATUS EQUAL TO 0 CORRESPONDS TO THE HIDDEN DEPARTMENTS
 router.get('/', function (req, res) {
 
-  winston.debug("req projectid", req.projectid);
-  winston.debug("req.query.sort", req.query.sort);
+  // winston.debug("req projectid", req.projectid);
+  // winston.debug("req.query.sort", req.query.sort);
 
 
   var query = { "id_project": req.projectid, "status": 1 };
-  winston.debug('GET DEPTS FILTERED FOR STATUS === 1 req.projectid ', req.projectid);
+  // winston.debug('GET DEPTS FILTERED FOR STATUS === 1 req.projectid ', req.projectid);
   if (req.project && req.project.profile) {
-    winston.debug('GET DEPTS FILTERED FOR STATUS === 1 req.project.profile.type ', req.project.profile.type);
+    // winston.debug('GET DEPTS FILTERED FOR STATUS === 1 req.project.profile.type ', req.project.profile.type);
   }
-  winston.debug('GET DEPTS FILTERED FOR STATUS === 1 req.project.profile.type ',  req.project.trialExpired);
-  winston.debug('GET DEPTS FILTERED FOR STATUS === 1 req.project.isActiveSubscription ',  req.project.isActiveSubscription);
+  // winston.debug('GET DEPTS FILTERED FOR STATUS === 1 req.project.profile.type ',  req.project.trialExpired);
+  // winston.debug('GET DEPTS FILTERED FOR STATUS === 1 req.project.isActiveSubscription ',  req.project.isActiveSubscription);
   
                                             //secondo me qui manca un parentesi tonda per gli or
   if (req.project && req.project.profile && (req.project.profile.type === 'free' && req.project.trialExpired === true) || (req.project.profile.type === 'payment' && req.project.isActiveSubscription === false)) {
@@ -302,8 +302,8 @@ router.get('/', function (req, res) {
 
 router.delete('/:departmentid', [passport.authenticate(['basic', 'jwt'], { session: false }), validtoken, roleChecker.hasRole('admin')], function (req, res) {
 
-  winston.debug(req.body);
-  winston.debug("req.params.departmentid: "+req.params.departmentid);
+  // winston.debug(req.body);
+  // winston.debug("req.params.departmentid: "+req.params.departmentid);
 
   Department.findOneAndRemove({_id: req.params.departmentid}, function (err, department) {
   // Department.remove({ _id: req.params.departmentid }, function (err, department) {

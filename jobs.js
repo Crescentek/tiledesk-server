@@ -3,11 +3,11 @@ var dotenvPath = undefined;
 
 if (process.env.DOTENV_PATH) {
   dotenvPath = process.env.DOTENV_PATH;
-  console.log("load dotenv form DOTENV_PATH", dotenvPath);
+  // console.log("load dotenv form DOTENV_PATH", dotenvPath);
 }
 
 if (process.env.LOAD_DOTENV_SUBFOLDER ) {
-  console.log("load dotenv form LOAD_DOTENV_SUBFOLDER");
+  // console.log("load dotenv form LOAD_DOTENV_SUBFOLDER");
   dotenvPath = __dirname+'/confenv/.env';
 }
 
@@ -47,14 +47,14 @@ if (!databaseUri) { //TODO??
   winston.warn('DATABASE_URI not specified, falling back to localhost.');
 }
 
-var connection = mongoose.connect(databaseUri, { "useNewUrlParser": true, "autoIndex": autoIndex }, function(err) {
+var connection = mongoose.connect(databaseUri, { "useNewUrlParser": true, "autoIndex": autoIndex,  useUnifiedTopology: true }, function(err) {
   if (err) { 
     winston.error('Failed to connect to MongoDB on ' + databaseUri + " ", err);
     process.exit(1);
   }
-winston.info("Mongoose connection done on host: "+mongoose.connection.host + " on port: " + mongoose.connection.port + " with name: "+ mongoose.connection.name)// , mongoose.connection.db);
+// winston.info("Mongoose connection done on host: "+mongoose.connection.host + " on port: " + mongoose.connection.port + " with name: "+ mongoose.connection.name)// , mongoose.connection.db);
 });
-// winston.info("mongoose.connection",mongoose.connection);
+// // winston.info("mongoose.connection",mongoose.connection);
 // module.exports = jobsManager;
 
 
@@ -97,11 +97,11 @@ async function main()
 
 
     let routingQueueQueued = require('./pubmodules/routing-queue').listenerQueued;
-    winston.debug("routingQueueQueued"); 
+    // winston.debug("routingQueueQueued"); 
     jobsManager.listenRoutingQueue(routingQueueQueued);
 
     let whatsappQueue = require('@tiledesk/tiledesk-whatsapp-jobworker');
-    winston.info("whatsappQueue");
+    // winston.info("whatsappQueue");
     jobsManager.listenWhatsappQueue(whatsappQueue);
 
     let trainingQueue = require('@tiledesk/tiledesk-train-jobworker');
@@ -113,10 +113,10 @@ async function main()
     jobsManager.listenScheduler(scheduler);
 
 
-    winston.info("Jobs started"); 
+    // winston.info("Jobs started"); 
 
     await new Promise(function () {});
-    console.log('This text will never be printed');
+    // console.log('This text will never be printed');
 }
 
 function panic(error)

@@ -47,7 +47,7 @@ describe('FaqKBRoute', () => {
                         .send({ "name": "testbot", type: "external", language: 'fr' })
                         .end((err, res) => {
                             if (log) {
-                                console.log("res.body", res.body);
+                                // console.log("res.body", res.body);
                             }
                             res.should.have.status(200);
                             res.body.should.be.a('object');
@@ -59,7 +59,7 @@ describe('FaqKBRoute', () => {
                                 .auth(email, pwd)
                                 .end((err, res) => {
                                     if (log) {
-                                        console.log("res.body", res.body);
+                                        // console.log("res.body", res.body);
                                     }
                                     res.should.have.status(200);
 
@@ -154,7 +154,7 @@ describe('FaqKBRoute', () => {
         //                 .send({ "name": "testbot", type: "internal", template: "example", intentsEngine: "tiledesk-ai" })
         //                 .end((err, res) => {
         //                     if (log) {
-        //                         console.log("res.body", res.body);
+        //                         // console.log("res.body", res.body);
         //                     }
         //                     res.should.have.status(200);
         //                     res.body.should.be.a('object');
@@ -165,7 +165,7 @@ describe('FaqKBRoute', () => {
         //                         .get('/' + savedProject._id + '/faq?id_faq_kb=' + id_faq_kb)
         //                         .auth(email, pwd)
         //                         .end((err, res) => {
-        //                             if (log) { console.log("faq_list: ", res.body); }
+        //                             if (log) { // console.log("faq_list: ", res.body); }
         //                             res.should.have.status(200);
         //                             res.body.should.be.an('array').that.is.not.empty;
 
@@ -174,7 +174,7 @@ describe('FaqKBRoute', () => {
         //                                 .auth(email, pwd)
         //                                 .send({ id_faq_kb: id_faq_kb, webhook_enabled: false })
         //                                 .end((err, res) => {
-        //                                     if (log) { console.log("train res.body: ", res.body); }
+        //                                     if (log) { // console.log("train res.body: ", res.body); }
 
         //                                     done();
         //                                 })
@@ -203,7 +203,7 @@ describe('FaqKBRoute', () => {
                         .send({ "name": "testbot", type: "internal", template: "example" })
                         .end((err, res) => {
                             if (log) {
-                                console.log("res.body", res.body);
+                                // console.log("res.body", res.body);
                             }
                             res.should.have.status(200);
                             res.body.should.be.a('object');
@@ -215,7 +215,7 @@ describe('FaqKBRoute', () => {
                                 .auth(email, pwd)
                                 .end((err, res) => {
                                     if (log) {
-                                        console.log("faq_list: ", res.body);
+                                        // console.log("faq_list: ", res.body);
                                     }
                                     res.should.have.status(200);
                                     res.body.should.be.an('array').that.is.not.empty;
@@ -246,7 +246,7 @@ describe('FaqKBRoute', () => {
                         .end((err, res) => {
                             if (log) {
                             }
-                            console.log("res.body", res.body);
+                            // console.log("res.body", res.body);
                             res.should.have.status(200);
                             res.body.should.be.a('object');
                             expect(res.body.name).to.equal("testbot");
@@ -258,7 +258,7 @@ describe('FaqKBRoute', () => {
                                 .end((err, res) => {
                                     if (log) {
                                     }
-                                    console.log("faq_list: ", JSON.stringify(res.body, null, 2));
+                                    // console.log("faq_list: ", JSON.stringify(res.body, null, 2));
                                     res.should.have.status(200);
                                     res.body.should.be.an('array').that.is.not.empty;
 
@@ -288,7 +288,7 @@ describe('FaqKBRoute', () => {
                         .send({ "name": "testbot", type: "internal", template: "example", language: "en" })
                         .end((err, res) => {
                             if (log) {
-                                console.log("res.body", res.body);
+                                // console.log("res.body", res.body);
                             }
                             res.should.have.status(200);
                             res.body.should.be.a('object');
@@ -300,7 +300,7 @@ describe('FaqKBRoute', () => {
                                 .auth(email, pwd)
                                 .end((err, res) => {
                                     if (log) {
-                                        console.log("faq_list: ", res.body);
+                                        // console.log("faq_list: ", res.body);
                                     }
                                     res.should.have.status(200);
                                     res.body.should.be.an('array').that.is.not.empty;
@@ -311,7 +311,7 @@ describe('FaqKBRoute', () => {
                                         .auth(email, pwd)
                                         .end((err, res) => {
                                             if (log) {
-                                                console.log("res.body: ", res.body);
+                                                // console.log("res.body: ", res.body);
                                             }
                                             res.should.have.status(200);
                                             res.body.should.be.a('object');
@@ -323,7 +323,7 @@ describe('FaqKBRoute', () => {
                                                 .auth(email, pwd)
                                                 .end((err, res) => {
                                                     if (log) {
-                                                        console.log("faq_list: ", res.body);
+                                                        // console.log("faq_list: ", res.body);
                                                     }
                                                     res.should.have.status(200);
                                                     res.body.should.be.an('array').that.is.not.empty;
@@ -375,7 +375,7 @@ describe('FaqKBRoute', () => {
                             .send({ "name": "privateBot", type: "internal", language: 'en', public: "false", template: "blank" })
                             .end((err, res) => {
                                 if (log) {
-                                    console.log("res.body: ", res.body);
+                                    // console.log("res.body: ", res.body);
                                 }
                                 res.should.have.status(200);
                                 res.body.should.be.a('object');
@@ -389,7 +389,7 @@ describe('FaqKBRoute', () => {
                                     .set('Content-Type', 'application/json')
                                     .end((err, res) => {
                                         if (log) {
-                                            console.log("fork private chatbot res.body: ", res.body)
+                                            // console.log("fork private chatbot res.body: ", res.body)
                                         }
                                         res.should.have.status(200);
                                         res.should.have.be.a('object');
@@ -418,7 +418,7 @@ describe('FaqKBRoute', () => {
                         projectService.create("landing-project", user2._id).then(function (landingProject) {
 
                             if (log) {
-                                console.log("mock: ", chatbot_mock.existing_chatbot_mock);
+                                // console.log("mock: ", chatbot_mock.existing_chatbot_mock);
                             }
 
                             class chatbot_service {
@@ -443,7 +443,7 @@ describe('FaqKBRoute', () => {
                                 .send({ "name": "publicBot", type: "internal", language: 'en', public: "true", template: "blank" })
                                 .end((err, res) => {
                                     if (log) {
-                                        console.log("res.body: ", res.body);
+                                        // console.log("res.body: ", res.body);
                                     }
                                     res.should.have.status(200);
                                     res.body.should.be.a('object');
@@ -457,7 +457,7 @@ describe('FaqKBRoute', () => {
                                         .set('Content-Type', 'application/json')
                                         .end((err, res) => {
                                             if (log) {
-                                                console.log("fork public chatbot res.body: ", res.body)
+                                                // console.log("fork public chatbot res.body: ", res.body)
                                             }
                                             res.should.have.status(200);
 
@@ -485,7 +485,7 @@ describe('FaqKBRoute', () => {
                         .attach('uploadFile', fs.readFileSync(path.resolve(__dirname, './example-json-rules.txt')), 'example-json-rules')
                         .end((err, res) => {
                             if (log) {
-                                console.log("import json res: ", JSON.stringify(res.body, null, 2));
+                                // console.log("import json res: ", JSON.stringify(res.body, null, 2));
                             }
                             res.should.have.status(200);
                             res.should.be.a('object');
@@ -499,7 +499,7 @@ describe('FaqKBRoute', () => {
                                 .auth(email, pwd)
                                 .end((err, res) => {
                                     if (log) {
-                                        console.log("faq_list: ", res.body);
+                                        // console.log("faq_list: ", res.body);
                                     }
                                     res.should.have.status(200);
                                     //res.body.should.be.an('array').that.is.not.empty;
@@ -528,7 +528,7 @@ describe('FaqKBRoute', () => {
                         .send({ "name": "testbot", type: "tilebot", language: "en", template: "blank " })
                         .end((err, res) => {
                             if (log) {
-                                console.log("res.body: ", res.body);
+                                // console.log("res.body: ", res.body);
                             }
                             res.should.have.status(200);
                             res.body.should.be.a('object');
@@ -543,7 +543,7 @@ describe('FaqKBRoute', () => {
                                 .attach('uploadFile', fs.readFileSync(path.resolve(__dirname, './example-json-rules.txt')), 'example-json-rules')
                                 .end((err, res) => {
                                     if (log) {
-                                        console.log("import json res: ", JSON.stringify(res.body, null, 2));
+                                        // console.log("import json res: ", JSON.stringify(res.body, null, 2));
                                     }
                                     res.should.have.status(200);
                                     //res.should.be.a('object');
@@ -572,7 +572,7 @@ describe('FaqKBRoute', () => {
                         .send({ "name": "testbot", type: "internal", language: 'fr', template: "blank" })
                         .end((err, res) => {
                             if (log) {
-                                console.log("res.body: ", res.body);
+                                // console.log("res.body: ", res.body);
                             }
                             res.should.have.status(200);
                             res.body.should.be.a('object');
@@ -587,7 +587,7 @@ describe('FaqKBRoute', () => {
                                 .attach('uploadFile', fs.readFileSync(path.resolve(__dirname, './example.json')), 'example.json')
                                 .end((err, res) => {
                                     if (log) {
-                                        console.log("import json res: ", res.body);
+                                        // console.log("import json res: ", res.body);
                                     }
                                     res.should.have.status(200);
                                     res.should.be.a('object');
@@ -599,7 +599,7 @@ describe('FaqKBRoute', () => {
                                         .auth(email, pwd)
                                         .end((err, res) => {
                                             if (log) {
-                                                console.log("faq_list: ", res.body);
+                                                // console.log("faq_list: ", res.body);
                                             }
                                             res.should.have.status(200);
                                             res.body.should.be.an('array').that.is.not.empty;
@@ -628,7 +628,7 @@ describe('FaqKBRoute', () => {
                         .send({ "name": "testbot", type: "internal", language: 'fr', template: "blank" })
                         .end((err, res) => {
                             if (log) {
-                                console.log("res.body: ", res.body);
+                                // console.log("res.body: ", res.body);
                             }
                             res.should.have.status(200);
                             res.body.should.be.a('object');
@@ -643,7 +643,7 @@ describe('FaqKBRoute', () => {
                                 .attach('uploadFile', fs.readFileSync(path.resolve(__dirname, './example-json.txt')), 'example-json.txt')
                                 .end((err, res) => {
                                     if (log) {
-                                        console.log("import json res: ", res.body);
+                                        // console.log("import json res: ", res.body);
                                     }
                                     res.should.have.status(200);
                                     res.should.be.a('object');
@@ -655,7 +655,7 @@ describe('FaqKBRoute', () => {
                                         .auth(email, pwd)
                                         .end((err, res) => {
                                             if (log) {
-                                                console.log("faq_list: ", res.body);
+                                                // console.log("faq_list: ", res.body);
                                             }
                                             res.should.have.status(200);
                                             res.body.should.be.an('array').that.is.not.empty;
@@ -683,7 +683,7 @@ describe('FaqKBRoute', () => {
                         .send({ "name": "testbot", type: "internal", language: 'fr' })
                         .end((err, res) => {
                             if (log) {
-                                console.log("res.body: ", res.body);
+                                // console.log("res.body: ", res.body);
                             }
                             res.should.have.status(200);
                             res.body.should.be.a('object');
@@ -698,7 +698,7 @@ describe('FaqKBRoute', () => {
                                 .attach('uploadFile', fs.readFileSync(path.resolve(__dirname, './example-json-intents.txt')), 'example-json-intents.txt')
                                 .end((err, res) => {
                                     if (log) {
-                                        console.log("import (intents only) json res: ", res.body);
+                                        // console.log("import (intents only) json res: ", res.body);
                                     }
                                     res.should.have.status(200);
                                     //res.should.be.a('object');
@@ -709,7 +709,7 @@ describe('FaqKBRoute', () => {
                                         .auth(email, pwd)
                                         .end((err, res) => {
                                             if (log) {
-                                                console.log("faq_list: ", res.body);
+                                                // console.log("faq_list: ", res.body);
                                             }
                                             res.should.have.status(200);
                                             res.body.should.be.an('array').that.is.not.empty;
@@ -738,7 +738,7 @@ describe('FaqKBRoute', () => {
                         .send({ "name": "testbot", type: "internal", language: 'fr', template: 'blank' })
                         .end((err, res) => {
                             if (log) {
-                                console.log("res.body: ", res.body);
+                                // console.log("res.body: ", res.body);
                             }
                             res.should.have.status(200);
                             res.body.should.be.a('object');
@@ -753,7 +753,7 @@ describe('FaqKBRoute', () => {
                                 .attach('uploadFile', fs.readFileSync(path.resolve(__dirname, './example-json-intents.txt')), 'example-json-intents.txt')
                                 .end((err, res) => {
                                     if (log) {
-                                        console.log("import (intents only) json res: ", res.body);
+                                        // console.log("import (intents only) json res: ", res.body);
                                     }
                                     res.should.have.status(200);
                                     //res.should.be.a('object');
@@ -764,7 +764,7 @@ describe('FaqKBRoute', () => {
                                         .auth(email, pwd)
                                         .end((err, res) => {
                                             if (log) {
-                                                console.log("faq_list: ", res.body);
+                                                // console.log("faq_list: ", res.body);
                                             }
                                             res.should.have.status(200);
                                             res.body.should.be.an('array').that.is.not.empty;
@@ -793,7 +793,7 @@ describe('FaqKBRoute', () => {
                         .send({ "name": "testbot", type: "internal", language: 'fr', template: 'blank' })
                         .end((err, res) => {
                             if (log) {
-                                console.log("res.body: ", res.body);
+                                // console.log("res.body: ", res.body);
                             }
                             res.should.have.status(200);
                             res.body.should.be.a('object');
@@ -808,7 +808,7 @@ describe('FaqKBRoute', () => {
                                 .attach('uploadFile', fs.readFileSync(path.resolve(__dirname, './example-json-intents.txt')), 'example-json-intents.txt')
                                 .end((err, res) => {
                                     if (log) {
-                                        console.log("import (intents only) json res: ", res.body);
+                                        // console.log("import (intents only) json res: ", res.body);
                                     }
                                     res.should.have.status(200);
                                     //res.should.be.a('object');
@@ -819,7 +819,7 @@ describe('FaqKBRoute', () => {
                                         .auth(email, pwd)
                                         .end((err, res) => {
                                             if (log) {
-                                                console.log("faq_list: ", res.body);
+                                                // console.log("faq_list: ", res.body);
                                             }
                                             res.should.have.status(200);
                                             res.body.should.be.an('array').that.is.not.empty;
@@ -851,7 +851,7 @@ describe('FaqKBRoute', () => {
                         .send({ "name": "testbot", type: "internal", template: "example", language: 'fr' })
                         .end((err, res) => {
                             if (log) {
-                                console.log("res.body: ", res.body);
+                                // console.log("res.body: ", res.body);
                             }
                             res.should.have.status(200);
                             res.body.should.be.a('object');
@@ -859,7 +859,7 @@ describe('FaqKBRoute', () => {
                             expect(res.body.language).to.equal("fr");
                             let id_faq_kb = res.body._id;
                             if (log) {
-                                console.log("res.body._id: ", res.body._id)
+                                // console.log("res.body._id: ", res.body._id)
                             }
 
                             chai.request(server)
@@ -867,7 +867,7 @@ describe('FaqKBRoute', () => {
                                     .auth(email, pwd)
                                     .end((err, res) => {
                                         if (log) {
-                                            console.log("faq_list: ", res.body);
+                                            // console.log("faq_list: ", res.body);
                                         }
                                         res.should.have.status(200);
                                         res.body.should.be.an('array').that.is.not.empty;
@@ -877,9 +877,9 @@ describe('FaqKBRoute', () => {
                                             .auth(email, pwd)
                                             .end((err, res) => {
                                                 if (log) {
-                                                    console.log("export json res: ", res.body);
+                                                    // console.log("export json res: ", res.body);
                                                 }
-                                                console.log("export json res: ", res.body);
+                                                // console.log("export json res: ", res.body);
                                                 res.should.have.status(200);
                                                 //res.body.should.be.a('string');
     
@@ -892,7 +892,7 @@ describe('FaqKBRoute', () => {
                             //     .auth(email, pwd)
                             //     .send({ variables: { var1: "var1", var2: "var2" },  globals: [{ key: 'test', value: 'test]'}] })
                             //     .end((err, res) => {
-                            //         console.log("res.body: ", res.body)
+                            //         // console.log("res.body: ", res.body)
 
                                     
                             //     })
@@ -920,9 +920,9 @@ describe('FaqKBRoute', () => {
                         .auth(email, pwd)
                         .send({ "name": "testbot", type: "internal", template: "example", language: 'fr' })
                         .end((err, res) => {
-                            //console.log("res",  res);
+                            //// console.log("res",  res);
                             if (log) {
-                                console.log("res.body: ", res.body);
+                                // console.log("res.body: ", res.body);
                             }
                             res.should.have.status(200);
                             res.body.should.be.a('object');
@@ -930,7 +930,7 @@ describe('FaqKBRoute', () => {
                             expect(res.body.language).to.equal("fr");
                             let id_faq_kb = res.body._id;
                             if (log) {
-                                console.log("res.body._id: ", res.body._id)
+                                // console.log("res.body._id: ", res.body._id)
                             }
 
                             chai.request(server)
@@ -938,7 +938,7 @@ describe('FaqKBRoute', () => {
                                 .auth(email, pwd)
                                 .end((err, res) => {
                                     if (log) {
-                                        console.log("faq_list: ", res.body);
+                                        // console.log("faq_list: ", res.body);
                                     }
                                     res.should.have.status(200);
                                     res.body.should.be.an('array').that.is.not.empty;
@@ -948,7 +948,7 @@ describe('FaqKBRoute', () => {
                                         .auth(email, pwd)
                                         .end((err, res) => {
                                             if (log) {
-                                                console.log("export json res: ", res.body);
+                                                // console.log("export json res: ", res.body);
                                             }
                                             res.should.have.status(200);
                                             //res.body.should.be.a('string');
@@ -995,9 +995,9 @@ describe('FaqKBRoute', () => {
                                 .auth(email, pwd)
                                 .send({ "id_faq_kb": savedBot._id })
                                 .end((err, res) => {
-                                    //console.log("res",  res);
+                                    //// console.log("res",  res);
                                     if (log) {
-                                        console.log("res.body", res.body);
+                                        // console.log("res.body", res.body);
                                     }
                                     res.should.have.status(200);
                                     res.body.should.be.a('object');
@@ -1023,11 +1023,11 @@ describe('FaqKBRoute', () => {
         //     userService.signup(email, pwd, "Test Firstname", "Test Lastname").then(function (savedUser) {
         //         projectService.create("current-project", savedUser._id).then(function (currentProject) {
                     
-        //             console.log("declare chatbot_service functions...")
+        //             // console.log("declare chatbot_service functions...")
 
         //             class chatbot_service {
         //                 async fork(id, api_url, token, project_id) {
-        //                     console.log("chatbot_service test fork called")
+        //                     // console.log("chatbot_service test fork called")
         //                     return { message: "Chatbot forked successfully", bot_id: savedChatbot._id }
         //                     //return chatbot_mock.existing_chatbot_mock;
         //                 }
@@ -1046,14 +1046,14 @@ describe('FaqKBRoute', () => {
         //             }
 
         //             server.set('chatbot_service', new chatbot_service());
-        //             console.log("chatbot_service functions declared")
+        //             // console.log("chatbot_service functions declared")
 
         //             chai.request(server)
         //                     .post('/' + currentProject._id + '/faq_kb')
         //                     .auth(email, pwd)
         //                     .send({ "name": "privateBot", type: "internal", language: 'en', public: "false", template: "blank" })
         //                     .end((err, res) => {
-        //                         console.log("res.body: ", res.body);
+        //                         // console.log("res.body: ", res.body);
         //                         if (log) {
         //                         }
         //                         res.should.have.status(200);
@@ -1067,7 +1067,7 @@ describe('FaqKBRoute', () => {
         //                         .auth(email, pwd)
         //                         .set('Content-Type', 'application/json')
         //                         .end((err, res) => {
-        //                             console.log("publish bot res.body: ", res.body);
+        //                             // console.log("publish bot res.body: ", res.body);
         //                             res.should.have.status(200);
 
         //                             done();

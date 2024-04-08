@@ -14,11 +14,11 @@ class MessageHandlebarsTransformerInterceptor {
     listen() {
 
         var that = this;
-        winston.info("MessageHandlebarsTransformerInterceptor listener start ");
+        // winston.info("MessageHandlebarsTransformerInterceptor listener start ");
  
 
         messagePromiseEvent.on('message.create.simple.before', async (data) => {
-            winston.debug('MessageHandlebarsTransformerInterceptor message.create.simple.before', data); 
+            // winston.debug('MessageHandlebarsTransformerInterceptor message.create.simple.before', data); 
 
             var message = data.beforeMessage;
             
@@ -41,7 +41,7 @@ class MessageHandlebarsTransformerInterceptor {
 
                 if (cacheEnabler.request) {
                     q1.cache(cacheUtil.defaultTTL, message.id_project+":requests:request_id:"+message.recipient) //request_cache
-                    winston.debug('request cache enabled');
+                    // winston.debug('request cache enabled');
                 }
 
                 var request = await q1
@@ -51,14 +51,14 @@ class MessageHandlebarsTransformerInterceptor {
 
                 var requestJSON = request.toJSON();
 
-                winston.debug('request mti: ', requestJSON);
+                // winston.debug('request mti: ', requestJSON);
 
 
                 var template = handlebars.compile(message.text);
-                winston.debug('template: '+ template);
+                // winston.debug('template: '+ template);
 
                 // var templateSpec = handlebars.precompile(message.text);
-                // winston.info('templateSpec: ', templateSpec);
+                // // winston.info('templateSpec: ', templateSpec);
 
 
                 var replacements = {        
@@ -72,11 +72,11 @@ class MessageHandlebarsTransformerInterceptor {
                 
 
                 var text = template(replacements);
-                winston.debug('text: '+ text);
+                // winston.debug('text: '+ text);
                 message.text=text;
 
             }
-            winston.debug('data: ' + JSON.stringify(data) );
+            // winston.debug('data: ' + JSON.stringify(data) );
             return data;
         });
 

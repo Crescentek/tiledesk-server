@@ -18,7 +18,7 @@ constructor() {
   this.queryProject = process.env.CLOSE_AGENT_UNRESPONSIVE_REQUESTS_QUERY_FILTER_ONLY_PROJECT;
 
   if (this.queryProject) {
-    winston.info("CloseAgentUnresponsiveRequestTask filter only by projects enabled: " + this.queryProject );
+    // winston.info("CloseAgentUnresponsiveRequestTask filter only by projects enabled: " + this.queryProject );
   }
   
   // var stringQuery = process.env.CLOSE_UNRESPONSIVE_REQUESTS_QUERY;
@@ -32,23 +32,23 @@ constructor() {
 
 run() {    
     if (this.enabled == "true") {
-      winston.info("CloseAgentUnresponsiveRequestTask started" );
+      // winston.info("CloseAgentUnresponsiveRequestTask started" );
       this.scheduleUnresponsiveRequests();
     } else {
-      winston.info("CloseAgentUnresponsiveRequestTask disabled" );
+      // winston.info("CloseAgentUnresponsiveRequestTask disabled" );
     }
 }
 
 scheduleUnresponsiveRequests() {
   var that = this;
-  winston.info("CloseAgentUnresponsiveRequestTask task scheduleUnresponsiveRequests launched with closeAfter : " + this.queryAfterTimeout + " milliseconds, cron expression: " + this.cronExp + " and query limit: " +this.queryLimit);
+  // winston.info("CloseAgentUnresponsiveRequestTask task scheduleUnresponsiveRequests launched with closeAfter : " + this.queryAfterTimeout + " milliseconds, cron expression: " + this.cronExp + " and query limit: " +this.queryLimit);
   // if (this.queryProject) {
-  //   winston.info("CloseAgentUnresponsiveRequestTask query altered: "+ JSON.stringify(this.query));
+  //   // winston.info("CloseAgentUnresponsiveRequestTask query altered: "+ JSON.stringify(this.query));
   // }
 
  //https://crontab.guru/examples.html
  var s= schedule.scheduleJob(this.cronExp, function(fireDate){
-    winston.debug('CloseAgentUnresponsiveRequestTask ScheduleUnresponsiveRequests job was supposed to run at ' + fireDate + ', but actually ran at ' + new Date());
+    // winston.debug('CloseAgentUnresponsiveRequestTask ScheduleUnresponsiveRequests job was supposed to run at ' + fireDate + ', but actually ran at ' + new Date());
     that.findUnresponsiveRequests(); 
   });
 }
@@ -65,7 +65,7 @@ findUnresponsiveRequests() {
     if (this.queryProject) {
       query.id_project = this.queryProject;
     }
-    winston.debug("CloseAgentUnresponsiveRequestTask query",query);
+    // winston.debug("CloseAgentUnresponsiveRequestTask query",query);
     
     Request.find(query).limit(this.queryLimit).exec(function(err, requests) {
       //it is limited to 1000 results but after same days it all ok
@@ -79,16 +79,16 @@ findUnresponsiveRequests() {
       }
 
       winston.verbose("CloseAgentUnresponsiveRequestTask: found " + requests.length +  " unresponsive requests");
-      winston.debug("CloseAgentUnresponsiveRequestTask: found unresponsive requests ", requests);
+      // winston.debug("CloseAgentUnresponsiveRequestTask: found unresponsive requests ", requests);
 
       requests.forEach(request => {
-        winston.debug("********unresponsive request ", request);
+        // winston.debug("********unresponsive request ", request);
 
         // closeRequestByRequestId(request_id, id_project, skipStatsUpdate, notify, closed_by)
         const closed_by = "_bot_unresponsive";
         return requestService.closeRequestByRequestId(request.request_id, request.id_project, false, false, closed_by).then(function(updatedStatusRequest) {
           winston.verbose("CloseAgentUnresponsiveRequestTask: Request closed with request_id: " + request.request_id);
-          // winston.info("Request closed",updatedStatusRequest);
+          // // winston.info("Request closed",updatedStatusRequest);
         }).catch(function(err) {
           if (process.env.HIDE_CLOSE_REQUEST_ERRORS == true || process.env.HIDE_CLOSE_REQUEST_ERRORS == "true" ) {
 

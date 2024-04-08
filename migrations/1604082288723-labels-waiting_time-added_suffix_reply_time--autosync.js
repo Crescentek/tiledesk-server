@@ -18,12 +18,12 @@ async function up () {
       }
       labels.forEach(
         function(label, i){ 
-          // console.log(label,i); 
+          // // console.log(label,i); 
           label.data.forEach(function(data, i) { 
-            // console.log(data,i); 
+            // // console.log(data,i); 
             data.data.WAITING_TIME_FOUND = data.data.WAITING_TIME_FOUND + " $reply_time";
           });
-          // console.log("after",JSON.stringify(label),i); 
+          // // console.log("after",JSON.stringify(label),i); 
           Label.findOneAndUpdate({_id: label.id}, label, {upsert: true}, function(err, doc) {
             if (err) {
               winston.error("Schema migration: label WAITING_TIME_FOUND update err", err);
@@ -39,7 +39,7 @@ async function up () {
         }
      )
 
-     winston.info("Schema updated label WAITING_TIME_FOUND  update")
+     // winston.info("Schema updated label WAITING_TIME_FOUND  update")
 
     
      return resolve("ok"); 
@@ -51,7 +51,7 @@ async function up () {
     //   if (err) {  
     //     winston.error("Schema migration: label WAITING_TIME_FOUND err", err);
     //   } 
-    //   winston.info("Schema updated for " + updates.nModified + " label WAITING_TIME_FOUND")
+    //   // winston.info("Schema updated for " + updates.nModified + " label WAITING_TIME_FOUND")
     //       return resolve('ok');  
     // });  
     

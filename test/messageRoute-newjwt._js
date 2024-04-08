@@ -43,8 +43,8 @@ describe('MessageRoute', () => {
             .set('content-type', 'application/json')
             .send({"text":"text"})
             .end(function(err, res) {
-                //console.log("res",  res);
-                console.log("res.body",  res.body);
+                //// console.log("res",  res);
+                // console.log("res.body",  res.body);
                 res.should.have.status(200);
                 res.body.should.be.a('object');                          
 
@@ -102,8 +102,8 @@ it('getall', function (done) {
                   .auth(email, pwd)
                   .set('content-type', 'application/json')
                   .end(function(err, res) {
-                      //console.log("res",  res);
-                      console.log("res.body",  res.body);
+                      //// console.log("res",  res);
+                      // console.log("res.body",  res.body);
                       res.should.have.status(200);
                       res.body.should.be.a('array');                          
 
@@ -162,8 +162,8 @@ describe('/SendMessageSigninWithCustomToken', () => {
               .auth(email, pwd)
               .send()
               .end((err, res) => {
-                  //console.log("res",  res);
-                  console.log("res.body",  res.body);
+                  //// console.log("res",  res);
+                  // console.log("res.body",  res.body);
                   res.should.have.status(200);
                   res.body.should.be.a('object');
                   expect(res.body.jwtSecret).to.not.equal(null);                                                                              
@@ -172,7 +172,7 @@ describe('/SendMessageSigninWithCustomToken', () => {
                   var externalUserId = "123";
                   var externalUserObj = {_id: externalUserId, firstname:"andrea", lastname:"leo", email: "email2@email.com"};
                   
-                  console.log("externalUserObj", externalUserObj);
+                  // console.log("externalUserObj", externalUserObj);
 
 // attento qui
                   var signOptions = {                                                            
@@ -184,7 +184,7 @@ describe('/SendMessageSigninWithCustomToken', () => {
 
                   var jwtToken = jwt.sign(externalUserObj, res.body.jwtSecret,signOptions);
               
-                  console.log("jwtToken", jwtToken);
+                  // console.log("jwtToken", jwtToken);
 
 
                   chai.request(server)
@@ -193,8 +193,8 @@ describe('/SendMessageSigninWithCustomToken', () => {
                       //.send({ id_project: savedProject._id})
                       .send()
                       .end((err, res) => {
-                          //console.log("res",  res);
-                          console.log("res.body",  res.body);
+                          //// console.log("res",  res);
+                          // console.log("res.body",  res.body);
                           res.should.have.status(200);
                           res.body.should.be.a('object');
                           expect(res.body.success).to.equal(true);                                                                                                                     
@@ -211,8 +211,8 @@ describe('/SendMessageSigninWithCustomToken', () => {
                               .set('content-type', 'application/json')
                               .send({"text":"text"})
                               .end(function(err, res) {
-                                  //console.log("res",  res);
-                                  console.log("res.body",  res.body);
+                                  //// console.log("res",  res);
+                                  // console.log("res.body",  res.body);
                                   res.should.have.status(200);
                                   res.body.should.be.a('object');                          
 
@@ -242,8 +242,8 @@ describe('/SendMessageSigninWithCustomToken', () => {
                                     .auth(email, pwd)
                                     .set('content-type', 'application/json')                                   
                                     .end(function(err, res) {
-                                        //console.log("res",  res);
-                                        console.log("res.body",  res.body);
+                                        //// console.log("res",  res);
+                                        // console.log("res.body",  res.body);
                                         expect(res.body.lead.lead_id).to.equal(externalUserId);
                                         expect(res.body.lead.email).to.equal("email2@email.com");
                                         expect(res.body.lead.fullname).to.equal("andrea leo");
@@ -289,8 +289,8 @@ describe('/SendMessageSigninAnonym', () => {
                       .post('/auth/signinAnonymously' )
                       .send({ id_project: savedProject._id})
                       .end((err, res) => {
-                          //console.log("res",  res);
-                          console.log("res.body",  res.body);
+                          //// console.log("res",  res);
+                          // console.log("res.body",  res.body);
                           res.should.have.status(200);
                           res.body.should.be.a('object');
                           var userId = res.body.user._id;
@@ -307,8 +307,8 @@ describe('/SendMessageSigninAnonym', () => {
                               .set('content-type', 'application/json')
                               .send({"text":"text"})
                               .end(function(err, res) {
-                                  //console.log("res",  res);
-                                  console.log("res.body",  res.body);
+                                  //// console.log("res",  res);
+                                  // console.log("res.body",  res.body);
                                   res.should.have.status(200);
                                   res.body.should.be.a('object');                          
 
@@ -338,8 +338,8 @@ describe('/SendMessageSigninAnonym', () => {
                                     .auth(email, pwd)
                                     .set('content-type', 'application/json')                                   
                                     .end(function(err, res) {
-                                        //console.log("res",  res);
-                                        console.log("res.body",  res.body);
+                                        //// console.log("res",  res);
+                                        // console.log("res.body",  res.body);
                                         expect(res.body.lead.lead_id).to.equal(userId);
                                         expect(res.body.lead.email).to.equal(undefined);
                                         expect(res.body.lead.fullname).to.equal("Guest ");

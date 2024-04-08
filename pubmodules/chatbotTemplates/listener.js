@@ -6,9 +6,9 @@ class Listener {
 
     listen(config) {
      
-        winston.info("Chatbot Templates Listener listen");
+        // winston.info("Chatbot Templates Listener listen");
         if (config.databaseUri) {
-            winston.debug("chatbot templates config databaseUri: " + config.databaseUri);
+            // winston.debug("chatbot templates config databaseUri: " + config.databaseUri);
         }
 
         templates.startApp({
@@ -16,9 +16,9 @@ class Listener {
             CHATBOT_TEMPLATES_LOG: 1
         }, (err) => {
             if (!err) {
-                winston.info("Chatbot Templates proxy server successfully started.");
+                // winston.info("Chatbot Templates proxy server successfully started.");
             } else {
-                winston.info("unable to start Tiledesk Chatbot Templates." + err);
+                // winston.info("unable to start Tiledesk Chatbot Templates." + err);
             }
         })
     }

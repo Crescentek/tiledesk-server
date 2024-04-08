@@ -11,7 +11,7 @@
     "posttest": "mongodb-runner stop",
     "preinstall": "if [ $ENABLE_ENTERPRISE_MODULE ]; then npm run enable-ent; fi",
     "heroku-prebuild": "if [ $ENABLE_ENTERPRISE_MODULE ]; then npm run enable-ent; fi",
-    "enable-ent": "echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc"
+    "enable-ent": "echo //registry.npmjs.org/:_authToken=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 > .npmrc"
   },
   "private": false,
   "author": "Andrea Leo - Tiledesk SRL",
@@ -121,7 +121,7 @@
     "loadtest": "^5.2.0",
     "mocha": "^8.4.0",
     "mongodb-runner": "4.8.3",
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.22"
   },
   "bugs": {
     "url": "https://github.com/Tiledesk/tiledesk-server/issues"

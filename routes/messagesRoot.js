@@ -18,20 +18,20 @@ router.post('/',
   check('recipient').notEmpty(),  
   check('recipientFullname').notEmpty(),
   check('text').custom((value, { req }) => {
-    winston.debug('validation: '+ value + ' req.body.type ' + req.body.type);
+    // winston.debug('validation: '+ value + ' req.body.type ' + req.body.type);
     if (!value && (!req.body.type || req.body.type === "text") ) {
-      winston.debug('validation1 ');
+      // winston.debug('validation1 ');
       return Promise.reject('Text field is required for messages with type "text"');
     }   
-    winston.debug('validation2 ');
+    // winston.debug('validation2 ');
     return Promise.resolve('validation ok');
   })
 ],
   async (req, res)  => {
 
-  winston.debug('req.body post message', req.body);
-  winston.debug('req.params: ', req.params);
-  winston.debug('req.params.request_id: ' + req.params.request_id);
+  // winston.debug('req.body post message', req.body);
+  // winston.debug('req.params: ', req.params);
+  // winston.debug('req.params.request_id: ' + req.params.request_id);
 
 
    const errors = validationResult(req);
@@ -72,7 +72,7 @@ router.get('/',roleChecker.hasRoleOrTypes('owner'), function(req, res) {
 
   var limit = DEFAULT_LIMIT; // Number of rows per page
 
-  // console.log("req.query.populate_request",req.query.populate_request);
+  // // console.log("req.query.populate_request",req.query.populate_request);
   if (req.query.limit) {
     limit = parseInt(req.query.limit);
   }
@@ -94,7 +94,7 @@ router.get('/',roleChecker.hasRoleOrTypes('owner'), function(req, res) {
       if (err) return next(err);
 
       if (req.query.populate_request) {  
-        // console.log("pupulate")
+        // // console.log("pupulate")
         for (var i = 0; i < messages.length; i++) {
           messages[i].request = await Request.findOne({request_id:messages[i].recipient, id_project: messages[i].id_project }).exec();
         }
@@ -126,7 +126,7 @@ router.get('/csv', roleChecker.hasRoleOrTypes('owner'), function(req, res) {
 
   res.flushHeaders();
 
-  console.log("fastCsv",fastCsv)
+  // console.log("fastCsv",fastCsv)
   var csvStream = fastCsv.format({headers: true})//.transform(transformer)
   // var csvStream = fastCsv.createWriteStream({headers: true}).transform(transformer)
   cursor.stream().pipe(csvStream).pipe(res);

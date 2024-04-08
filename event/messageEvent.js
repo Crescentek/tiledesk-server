@@ -23,12 +23,12 @@ const messageEvent = new MessageEvent();
 
 function emitCompleteMessage(message) {
   if (message.status === MessageConstants.CHAT_MESSAGE_STATUS.RECEIVED) {
-    winston.debug("messageEvent.emit message.received", message);
+    // winston.debug("messageEvent.emit message.received", message);
     messageEvent.emit('message.received', message);
   }
 
   if (message.status === MessageConstants.CHAT_MESSAGE_STATUS.SENDING) {
-    winston.debug("messageEvent.emit message.sending", message);
+    // winston.debug("messageEvent.emit message.sending", message);
     messageEvent.emit('message.sending', message);
   }
 }
@@ -52,8 +52,8 @@ function populateMessageUpdate(message) {
 function populateMessageWithRequest(message, eventPrefix) {
 
   
-  winston.debug("populateMessageWithRequest "+eventPrefix, message.toObject());
-  winston.debug("populateMessageWithRequest "+eventPrefix +" "+ message.text);
+  // winston.debug("populateMessageWithRequest "+eventPrefix, message.toObject());
+  // winston.debug("populateMessageWithRequest "+eventPrefix +" "+ message.text);
   
   var messageJson = message.toJSON();
 
@@ -74,10 +74,10 @@ function populateMessageWithRequest(message, eventPrefix) {
   // request.department._id DA CORREGGERE ANCHE PER REQUEST.CREATE
   // request.department.hasBot 
   // request.isOpen
-  winston.debug('message Event populate');
+  // winston.debug('message Event populate');
   if (cacheEnabler.request) {
     q.cache(cacheUtil.defaultTTL, message.id_project+":requests:request_id:"+message.recipient) //request_cache ma con lean????attento metti a parte
-    winston.debug('request cache enabled');
+    // winston.debug('request cache enabled');
   }
   q.exec(function (err, request) {
 
@@ -86,11 +86,11 @@ function populateMessageWithRequest(message, eventPrefix) {
       return messageEvent.emit(eventPrefix, message);
     }
 
-    winston.debug('message Event populate after query');
+    // winston.debug('message Event populate after query');
 
 
   if (request) {
-      winston.debug("request is defined in messageEvent",request );
+      // winston.debug("request is defined in messageEvent",request );
       
       // var requestJson = request.toJSON();
       var requestJson = request;
@@ -101,16 +101,16 @@ function populateMessageWithRequest(message, eventPrefix) {
 
         if (cacheEnabler.faq_kb) {
           qbot.cache(cacheUtil.defaultTTL, message.id_project+":faq_kbs:id:"+request.department.id_bot)
-          winston.debug('faq_kb cache enabled');
+          // winston.debug('faq_kb cache enabled');
         }
 
         qbot.exec(function(err, bot) {
-          winston.debug('bot', bot);
+          // winston.debug('bot', bot);
           requestJson.department.bot = bot
           
           messageJson.request = requestJson;
-          // winston.debug('messageJson', messageJson);
-          winston.debug("message.emit",messageJson );
+          // // winston.debug('messageJson', messageJson);
+          // winston.debug("message.emit",messageJson );
           messageEvent.emit(eventPrefix,messageJson );
 
           //se a req.first_text toglio ritorni a capo è sempre diverso da msg.txt
@@ -144,7 +144,7 @@ function populateMessageWithRequest(message, eventPrefix) {
         
       }else {
         messageJson.request = requestJson;
-        winston.debug("message.emit",messageJson );
+        // winston.debug("message.emit",messageJson );
         messageEvent.emit(eventPrefix, messageJson );   
         
         if (message.text === request.first_text) {
@@ -155,7 +155,7 @@ function populateMessageWithRequest(message, eventPrefix) {
         // TODO lead_id used. Change it?
         if (request.lead && message.sender === request.lead.lead_id) {
         // if (message.sender === request.lead.lead_id) {
-          winston.debug("message.create.from.requester",messageJson );
+          // winston.debug("message.create.from.requester",messageJson );
           messageEvent.emit(eventPrefix+'.from.requester', messageJson );
         }
 
@@ -166,7 +166,7 @@ function populateMessageWithRequest(message, eventPrefix) {
       }   
           
   } else {
-    winston.debug("request is undefined in messageEvent. Is it a direct or group message ?" );
+    // winston.debug("request is undefined in messageEvent. Is it a direct or group message ?" );
     messageEvent.emit(eventPrefix,messageJson );
     message2Event.emit(eventPrefix+'.channel.' + message.channel.name, messageJson );
   }
@@ -190,13 +190,13 @@ messageEvent.on('message.update.simple', populateMessageUpdate);
 // if (messageEvent.queueEnabled) {
 //   messageCreateKey = 'message.create.queue';
 // }
-// winston.debug("messageEvent.queueEnabled: "+messageEvent.queueEnabled); 
+// // winston.debug("messageEvent.queueEnabled: "+messageEvent.queueEnabled); 
 
-// winston.debug("messageCreateKey: "+messageCreateKey); 
+// // winston.debug("messageCreateKey: "+messageCreateKey); 
 
 // messageEvent.on(messageCreateKey, function(message) {
 //   setImmediate(() => {      
-//     winston.debug("message.create before");
+//     // winston.debug("message.create before");
 //     if (!message.request) {
 //       return;
 //     }
@@ -206,8 +206,8 @@ messageEvent.on('message.update.simple', populateMessageUpdate);
 
 //     //update waiitng time if write an  agent (member of participants)
 //     let visitor_sent_last_message = false;
-//     // winston.info(" message.request.snapshot.lead.lead_id: "+  message.request.snapshot.lead.lead_id);
-//     // winston.info(" message.sender: "+  message.sender);
+//     // // winston.info(" message.request.snapshot.lead.lead_id: "+  message.request.snapshot.lead.lead_id);
+//     // // winston.info(" message.sender: "+  message.sender);
 
 //     if (message.request.snapshot && message.request.snapshot.lead.lead_id == message.sender) { 
 //       visitor_sent_last_message = true;
@@ -217,7 +217,7 @@ messageEvent.on('message.update.simple', populateMessageUpdate);
 
 //     // don't work for recursive call
 //     // requestService.incrementMessagesCountByRequestId(message.request._id, message.request.id_project).then(function (savedRequest) {
-//     //   winston.info("incremented request", savedRequest);
+//     //   // winston.info("incremented request", savedRequest);
 //     // });
 //     let clonedmessage = Object.assign({}, message);
 //     delete clonedmessage.request
@@ -244,7 +244,7 @@ messageEvent.on('message.update.simple', populateMessageUpdate);
 //       data["snapshot.messages.agent_last_message_timestamp"]= message.createdAt;
 //     }
 //     // db.getCollection('requests').updateOne({"request_id":"support-group-630600bfaf7cd942116bc993-3da378ec63924bb9b4934b2835b37a7c"},{"$push":{"snapshot.messages.data":{"$each":["s"],"$slice":-5}}}}})
-//     winston.debug("data", data);
+//     // winston.debug("data", data);
 
 //     return Request       
 //             .findOneAndUpdate({request_id: request_id, id_project: id_project}, data, {new: true, upsert:false}, function(err, updatedRequest) {
@@ -252,7 +252,7 @@ messageEvent.on('message.update.simple', populateMessageUpdate);
 //                   winston.error(err);
 //                   return reject(err);
 //                 }
-//                 winston.info("Message count +1");
+//                 // winston.info("Message count +1");
                 
 //               });
 

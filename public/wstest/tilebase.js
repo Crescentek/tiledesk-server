@@ -12,17 +12,17 @@ class Tilebase {
 /*
     insertOrUpdate(item) {
         let objIndex = this.data.findIndex((obj => obj._id == item._id));
-        // console.log("objIndex", objIndex);
+        // // console.log("objIndex", objIndex);
         if (objIndex==-1) {
             this.data.push(item);
         }else if (objIndex>-1) {
-            //console.log("Before objIndex: ", this.data[objIndex])
+            //// console.log("Before objIndex: ", this.data[objIndex])
             this.data[objIndex] = item;
-            //console.log("After objIndex: ", this.data[objIndex])
+            //// console.log("After objIndex: ", this.data[objIndex])
         } else {
             console.error("error");
         }
-       // console.log("this.data", this.data)
+       // // console.log("this.data", this.data)
         
         return objIndex;
 
@@ -31,7 +31,7 @@ class Tilebase {
 
 */
     send (message) {
-        console.log("send message", message);
+        // console.log("send message", message);
         this.ws.send(message);
     }
     start(initialMessage) {
@@ -44,7 +44,7 @@ class Tilebase {
             //     //     "Authorization" : "JWT " + token
             //     // }
             // };
-            // console.log('options', options);
+            // // console.log('options', options);
 
         // var ws = new WebSocket('ws://localhost:3000');
                     // var ws = new WebSocket('ws://localhost:3000/public/requests');
@@ -55,29 +55,29 @@ class Tilebase {
                     var ws = that.ws;
                     // var ws = new WebSocket(that.url, options);
                     ws.onopen = function () {
-                        console.log('websocket is connected2 ...');
+                        // console.log('websocket is connected2 ...');
                         if (initialMessage) {
                             ws.send(initialMessage);
                         }
                        // ws.send('connected')
                     }
                     ws.onclose = function () {
-                        console.log('websocket is closed ... Try to reconnect in 5 seconds');
+                        // console.log('websocket is closed ... Try to reconnect in 5 seconds');
                         // https://stackoverflow.com/questions/3780511/reconnection-of-client-when-server-reboots-in-websocket
                         // Try to reconnect in 3 seconds
                         setTimeout(function(){that.start()}, 3000);
                     }
                     ws.onerror = function () {
-                        console.log('websocket error ...')
+                        // console.log('websocket error ...')
                     }
                     ws.onmessage = function(message) {   
-                        console.log(message);
+                        // console.log(message);
 
                        
                             try {
                                 var json = JSON.parse(message.data);
                             } catch (e) {
-                                console.log('This doesn\'t look like a valid JSON: ',
+                                // console.log('This doesn\'t look like a valid JSON: ',
                                     message.data);
                                     return;
                                 // return reject('This doesn\'t look like a valid JSON: ',
@@ -86,10 +86,10 @@ class Tilebase {
                             
                             if (json && json.payload  && json.payload.message && that.isArray(json.payload.message)) {
                                 json.payload.message.forEach(element => {
-                                   // console.log("element", element);
+                                   // // console.log("element", element);
                                     //let insUp = that.insertOrUpdate(element);
                             let insUp = json.payload.method;
-                                console.log("insUp",insUp);
+                                // console.log("insUp",insUp);
 
                                     var object = {event: json.payload, data: element};
 
@@ -107,7 +107,7 @@ class Tilebase {
                             }else {
                                 //let insUp = that.insertOrUpdate(json.payload.message);
 				                let insUp = json.payload.method;                                                                                                                                                                                                                         
-                                  console.log("insUp",insUp);     
+                                  // console.log("insUp",insUp);     
 
                                 var object = {event: json.payload, data: json};
 

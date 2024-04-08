@@ -3,28 +3,28 @@ var winston = require('../../config/winston');
 var configGlobal = require('../../config/global');
 
 const apiUrl = process.env.API_URL || configGlobal.apiUrl;
-winston.info("telegram apiUrl: " + apiUrl);
+// winston.info("telegram apiUrl: " + apiUrl);
 
 class Listener {
 
     listen(config) {
-        winston.info("Telegram Listener listen");
+        // winston.info("Telegram Listener listen");
         if (config.databaseUri) {
-            winston.debug("telegram config databaseUri: " + config.databaseUri);
+            // winston.debug("telegram config databaseUri: " + config.databaseUri);
         }
 
         let telegram_api_url = process.env.TELEGRAM_API_URL || config.telegramApiUrl || "https://api.telegram.org/bot"
-        winston.debug("Telegram api url: " + telegram_api_url);
-        winston.info("Telegram api url: " + telegram_api_url);
+        // winston.debug("Telegram api url: " + telegram_api_url);
+        // winston.info("Telegram api url: " + telegram_api_url);
 
 
         let telegram_file_url = process.env.TELEGRAM_FILE_URL || config.telegramFileUrl || "https://api.telegram.org/file/bot"
-        winston.debug("Telegram file url: " + telegram_file_url);
-        winston.info("Telegram file url: " + telegram_file_url);
+        // winston.debug("Telegram file url: " + telegram_file_url);
+        // winston.info("Telegram file url: " + telegram_file_url);
 
         let log = process.env.TELEGRAM_LOG || 'debug'
-        winston.debug("Telegram log: ", log);
-        winston.info("Telegram log: " + log);
+        // winston.debug("Telegram log: ", log);
+        // winston.info("Telegram log: " + log);
 
         telegram.startApp({
             MONGODB_URL: config.databaseUri,
@@ -36,9 +36,9 @@ class Listener {
             log: log
         }, (err) => {
             if (!err) {
-                winston.info("Tiledesk Telegram Connector proxy server successfully started");
+                // winston.info("Tiledesk Telegram Connector proxy server successfully started");
             } else {
-                winston.info("unable to start Tiledesk Telegram Connector. " + err);
+                // winston.info("unable to start Tiledesk Telegram Connector. " + err);
             }
         })
     }

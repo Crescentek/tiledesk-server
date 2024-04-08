@@ -49,8 +49,8 @@ describe('RequestRoute', () => {
             .set('content-type', 'application/json')
             .send({"first_text":"first_text"})
             .end(function(err, res) {
-                //console.log("res",  res);
-                //console.log("res.body",  res.body);
+                //// console.log("res",  res);
+                //// console.log("res.body",  res.body);
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 
@@ -104,8 +104,8 @@ it('createUpperCaseEmail', function (done) {
           .set('content-type', 'application/json')
           .send({"first_text":"first_text"})
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');
               
@@ -157,16 +157,16 @@ it('createUpperCaseEmail', function (done) {
       // createWithId(request_id, requester_id, id_project, first_text, departmentid, sourcePage, language, userAgent, status) {
       //  requestService.createWithId("request_id1", createdLead._id, savedProject._id, "first_text").then(function(savedRequest) {
         requestService.createWithIdAndRequester("request_requestroute-getbyid-"+now, savedProjectAndPU.project_user._id,null, savedProject._id, "first_text").then(function(savedRequest) {
-          winston.debug("resolve", savedRequest.toObject());
+          // winston.debug("resolve", savedRequest.toObject());
          
 
           chai.request(server)
             .get('/'+ savedProject._id + '/requests/'+savedRequest.request_id)
             .auth(email, pwd)
             .end(function(err, res) {
-                //console.log("res",  res);
+                //// console.log("res",  res);
 
-                 console.log("res.body",  res.body);
+                 // console.log("res.body",  res.body);
 
                 res.should.have.status(200);
                 res.body.should.be.a('object');
@@ -194,7 +194,7 @@ it('createUpperCaseEmail', function (done) {
                done();
             });
             // .catch(function(err) {
-            //     console.log("test reject", err);
+            //     // console.log("test reject", err);
             //     assert.isNotOk(err,'Promise error');
             //     done();
             // });
@@ -223,7 +223,7 @@ it('getbyidWithPartecipatingBots', function (done) {
         Department.findOneAndUpdate({id_project: savedProject._id, default:true}, {id_bot:savedBot._id},{ new: true, upsert: false }, function (err, updatedDepartment) {
 
           winston.error("err", err);
-          winston.info("updatedDepartment", updatedDepartment.toObject());
+          // winston.info("updatedDepartment", updatedDepartment.toObject());
           var now = Date.now();
 
 
@@ -231,16 +231,16 @@ it('getbyidWithPartecipatingBots', function (done) {
     // createWithId(request_id, requester_id, id_project, first_text, departmentid, sourcePage, language, userAgent, status) {
     //  requestService.createWithId("request_id1", createdLead._id, savedProject._id, "first_text").then(function(savedRequest) {
       requestService.createWithIdAndRequester("request_requestroute-getbyidWithPartecipatingBots-"+now, savedProjectAndPU.project_user._id,null, savedProject._id, "first_text").then(function(savedRequest) {
-        winston.debug("resolve", savedRequest.toObject());
+        // winston.debug("resolve", savedRequest.toObject());
        
 
         chai.request(server)
           .get('/'+ savedProject._id + '/requests/'+savedRequest.request_id)
           .auth(email, pwd)
           .end(function(err, res) {
-              //console.log("res",  res);
+              //// console.log("res",  res);
 
-               console.log("res.body",  res.body);
+               // console.log("res.body",  res.body);
 
               res.should.have.status(200);
               res.body.should.be.a('object');
@@ -265,7 +265,7 @@ it('getbyidWithPartecipatingBots', function (done) {
              done();
           });
           // .catch(function(err) {
-          //     console.log("test reject", err);
+          //     // console.log("test reject", err);
           //     assert.isNotOk(err,'Promise error');
           //     done();
           // });
@@ -288,17 +288,17 @@ it('getbyidWithPartecipatingBots', function (done) {
 
     userService.signup( email, pwd, "Test Firstname", "Test lastname").then(function(savedUser) {
 
-    console.log("savedUser", savedUser);
+    // console.log("savedUser", savedUser);
 
     projectService.createAndReturnProjectAndProjectUser("createWithId", savedUser._id).then(function(savedProjectAndPU) {
 
     var savedProject = savedProjectAndPU.project;
 
-    console.log("savedProjectAndPU", savedProjectAndPU);
+    // console.log("savedProjectAndPU", savedProjectAndPU);
 
     leadService.createIfNotExists("leadfullname", "email-getallSimple@email.com", savedProject._id).then(function(createdLead) {
 
-    console.log("createdLead", createdLead);
+    // console.log("createdLead", createdLead);
 
     var now = Date.now();
 
@@ -312,27 +312,27 @@ it('getbyidWithPartecipatingBots', function (done) {
         
     requestService.create(new_request).then(function(savedRequest) {
 
-      console.log("savedRequest", savedRequest);
+      // console.log("savedRequest", savedRequest);
 
       // createWithId(request_id, requester_id, id_project, first_text, departmentid, sourcePage, language, userAgent, status) {
       //  requestService.createWithId("request_id1", createdLead._id, savedProject._id, "first_text").then(function(savedRequest) {
         // requestService.createWithIdAndRequester("request_id1", savedProjectAndPU.project_user._id, null,savedProject._id, "first_text").then(function(savedRequest) {
 
-          winston.debug("resolve", savedRequest.toObject());
+          // winston.debug("resolve", savedRequest.toObject());
          
 
           chai.request(server)
             .get('/'+ savedProject._id + '/requests/')
             .auth(email, pwd)
             .end(function(err, res) {
-                //console.log("res",  res);
-                console.log("res.body",  res.body);
+                //// console.log("res",  res);
+                // console.log("res.body",  res.body);
                 res.should.have.status(200);
                 res.body.should.be.a('object');
 
                 expect(res.body.requests[0].department).to.not.equal(null);
                 expect(res.body.requests[0].requester).to.not.equal(null);
-                console.log("res.body.requests[0].requester",  res.body.requests[0].requester);
+                // console.log("res.body.requests[0].requester",  res.body.requests[0].requester);
 
                 expect(res.body.requests[0].requester.id_user.firstname).to.equal("Test Firstname");
 
@@ -352,7 +352,7 @@ it('getbyidWithPartecipatingBots', function (done) {
                done();
             });
             // .catch(function(err) {
-            //     console.log("test reject", err);
+            //     // console.log("test reject", err);
             //     assert.isNotOk(err,'Promise error');
             //     done();
             // });
@@ -393,25 +393,25 @@ it('getallNoPopulate', function (done) {
   
       // requestService.createWithIdAndRequester("request_id1", savedProjectAndPU.project_user._id, null,savedProject._id, "first_text").then(function(savedRequest) {
 
-        winston.debug("resolve", savedRequest.toObject());
+        // winston.debug("resolve", savedRequest.toObject());
        
 
         chai.request(server)
           .get('/'+ savedProject._id + '/requests/?no_populate=true')
           .auth(email, pwd)
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');
               // assert.isString(res.body.requests[0].department, 'order placed');
 
               expect(res.body.requests[0].department).to.be.a('string');
               expect(res.body.requests[0].requester).to.be.a('string');
-              // console.log("res.body.requests[0].requester",  res.body.requests[0].requester);
+              // // console.log("res.body.requests[0].requester",  res.body.requests[0].requester);
               // expect(res.body.requests[0].requester.id_user.firstname).to.equal("Test Firstname");
 
-              console.log("res.body.requests[0].participantsAgents", res.body.requests[0].participantsAgents);
+              // console.log("res.body.requests[0].participantsAgents", res.body.requests[0].participantsAgents);
               expect(res.body.requests[0].participantsAgents).to.have.lengthOf(1);
               expect(res.body.requests[0].participantsAgents[0]).to.equal(savedUser._id.toString());
               expect(res.body.requests[0].participantsBots).to.have.lengthOf(0);
@@ -427,7 +427,7 @@ it('getallNoPopulate', function (done) {
              done();
           });
           // .catch(function(err) {
-          //     console.log("test reject", err);
+          //     // console.log("test reject", err);
           //     assert.isNotOk(err,'Promise error');
           //     done();
           // });
@@ -452,17 +452,17 @@ it('getallFilter-snap_department_routing', function (done) {
 
   userService.signup( email, pwd, "Test Firstname", "Test lastname").then(function(savedUser) {
 
-  console.log("savedUser", savedUser);
+  // console.log("savedUser", savedUser);
 
   projectService.createAndReturnProjectAndProjectUser("createWithId", savedUser._id).then(function(savedProjectAndPU) {
 
   var savedProject = savedProjectAndPU.project;
 
-  console.log("savedProjectAndPU", savedProjectAndPU);
+  // console.log("savedProjectAndPU", savedProjectAndPU);
 
   leadService.createIfNotExists("leadfullname", "email-getallfilter@email.com", savedProject._id).then(function(createdLead) {
 
-  console.log("createdLead", createdLead);
+  // console.log("createdLead", createdLead);
   var now = Date.now();
 
 
@@ -476,27 +476,27 @@ it('getallFilter-snap_department_routing', function (done) {
       
   requestService.create(new_request).then(function(savedRequest) {
 
-    console.log("savedRequest", savedRequest);
+    // console.log("savedRequest", savedRequest);
 
     // createWithId(request_id, requester_id, id_project, first_text, departmentid, sourcePage, language, userAgent, status) {
     //  requestService.createWithId("request_id1", createdLead._id, savedProject._id, "first_text").then(function(savedRequest) {
       // requestService.createWithIdAndRequester("request_id1", savedProjectAndPU.project_user._id, null,savedProject._id, "first_text").then(function(savedRequest) {
 
-        winston.debug("resolve", savedRequest.toObject());
+        // winston.debug("resolve", savedRequest.toObject());
        
 
         chai.request(server)
           .get('/'+ savedProject._id + '/requests/?snap_department_routing=assigned')
           .auth(email, pwd)
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');
 
               expect(res.body.requests[0].department).to.not.equal(null);
               expect(res.body.requests[0].requester).to.not.equal(null);
-              console.log("res.body.requests[0].requester",  res.body.requests[0].requester);
+              // console.log("res.body.requests[0].requester",  res.body.requests[0].requester);
 
               expect(res.body.requests[0].requester.id_user.firstname).to.equal("Test Firstname");
 
@@ -515,7 +515,7 @@ it('getallFilter-snap_department_routing', function (done) {
              done();
           });
           // .catch(function(err) {
-          //     console.log("test reject", err);
+          //     // console.log("test reject", err);
           //     assert.isNotOk(err,'Promise error');
           //     done();
           // });
@@ -538,17 +538,17 @@ it('getallFilter-snap_department_default', function (done) {
 
   userService.signup( email, pwd, "Test Firstname", "Test lastname").then(function(savedUser) {
 
-  console.log("savedUser", savedUser);
+  // console.log("savedUser", savedUser);
 
   projectService.createAndReturnProjectAndProjectUser("createWithId", savedUser._id).then(function(savedProjectAndPU) {
 
   var savedProject = savedProjectAndPU.project;
 
-  console.log("savedProjectAndPU", savedProjectAndPU);
+  // console.log("savedProjectAndPU", savedProjectAndPU);
 
   leadService.createIfNotExists("leadfullname", "email-getallfilter@email.com", savedProject._id).then(function(createdLead) {
 
-  console.log("createdLead", createdLead);
+  // console.log("createdLead", createdLead);
 
   var now = Date.now();
 
@@ -562,27 +562,27 @@ it('getallFilter-snap_department_default', function (done) {
       
   requestService.create(new_request).then(function(savedRequest) {
 
-    console.log("savedRequest", savedRequest);
+    // console.log("savedRequest", savedRequest);
 
     // createWithId(request_id, requester_id, id_project, first_text, departmentid, sourcePage, language, userAgent, status) {
     //  requestService.createWithId("request_id1", createdLead._id, savedProject._id, "first_text").then(function(savedRequest) {
       // requestService.createWithIdAndRequester("request_id1", savedProjectAndPU.project_user._id, null,savedProject._id, "first_text").then(function(savedRequest) {
 
-        winston.debug("resolve", savedRequest.toObject());
+        // winston.debug("resolve", savedRequest.toObject());
        
 
         chai.request(server)
           .get('/'+ savedProject._id + '/requests/?snap_department_default=true')
           .auth(email, pwd)
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');
 
               expect(res.body.requests[0].department).to.not.equal(null);
               expect(res.body.requests[0].requester).to.not.equal(null);
-              console.log("res.body.requests[0].requester",  res.body.requests[0].requester);
+              // console.log("res.body.requests[0].requester",  res.body.requests[0].requester);
 
               expect(res.body.requests[0].requester.id_user.firstname).to.equal("Test Firstname");
 
@@ -601,7 +601,7 @@ it('getallFilter-snap_department_default', function (done) {
              done();
           });
           // .catch(function(err) {
-          //     console.log("test reject", err);
+          //     // console.log("test reject", err);
           //     assert.isNotOk(err,'Promise error');
           //     done();
           // });
@@ -624,17 +624,17 @@ it('getallFilter-snap_department_id_bot_exists', function (done) {
 
   userService.signup( email, pwd, "Test Firstname", "Test lastname").then(function(savedUser) {
 
-  console.log("savedUser", savedUser);
+  // console.log("savedUser", savedUser);
 
   projectService.createAndReturnProjectAndProjectUser("createWithId", savedUser._id).then(function(savedProjectAndPU) {
 
   var savedProject = savedProjectAndPU.project;
 
-  console.log("savedProjectAndPU", savedProjectAndPU);
+  // console.log("savedProjectAndPU", savedProjectAndPU);
 
   leadService.createIfNotExists("leadfullname", "email-getallfilter@email.com", savedProject._id).then(function(createdLead) {
 
-  console.log("createdLead", createdLead);
+  // console.log("createdLead", createdLead);
 
   var now = Date.now();
 
@@ -648,27 +648,27 @@ it('getallFilter-snap_department_id_bot_exists', function (done) {
       
   requestService.create(new_request).then(function(savedRequest) {
 
-    console.log("savedRequest", savedRequest);
+    // console.log("savedRequest", savedRequest);
 
     // createWithId(request_id, requester_id, id_project, first_text, departmentid, sourcePage, language, userAgent, status) {
     //  requestService.createWithId("request_id1", createdLead._id, savedProject._id, "first_text").then(function(savedRequest) {
       // requestService.createWithIdAndRequester("request_id1", savedProjectAndPU.project_user._id, null,savedProject._id, "first_text").then(function(savedRequest) {
 
-        winston.debug("resolve", savedRequest.toObject());
+        // winston.debug("resolve", savedRequest.toObject());
        
 
         chai.request(server)
           .get('/'+ savedProject._id + '/requests/?snap_department_id_bot_exists=false')
           .auth(email, pwd)
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');
 
               expect(res.body.requests[0].department).to.not.equal(null);
               expect(res.body.requests[0].requester).to.not.equal(null);
-              console.log("res.body.requests[0].requester",  res.body.requests[0].requester);
+              // console.log("res.body.requests[0].requester",  res.body.requests[0].requester);
 
               expect(res.body.requests[0].requester.id_user.firstname).to.equal("Test Firstname");
 
@@ -688,7 +688,7 @@ it('getallFilter-snap_department_id_bot_exists', function (done) {
              done();
           });
           // .catch(function(err) {
-          //     console.log("test reject", err);
+          //     // console.log("test reject", err);
           //     assert.isNotOk(err,'Promise error');
           //     done();
           // });
@@ -712,22 +712,22 @@ it('getallcsv', function (done) {
     var savedProject = savedProjectAndPU.project;
     leadService.createIfNotExists("leadfullname", "email@email.com", savedProject._id).then(function(createdLead) {
 
-    winston.info("createdLead", createdLead.toObject());
+    // winston.info("createdLead", createdLead.toObject());
       // createWithIdAndRequester(request_id, project_user_id, lead_id, id_project, first_text, departmentid, sourcePage, language, userAgent, status, createdBy, attributes, subject, preflight, channel, location) {
         var now = Date.now();
 
      requestService.create({request_id: "request_id-getallcsv-"+now, project_user_id: savedProjectAndPU.project_user._id, lead_id: createdLead._id, id_project: savedProject._id, 
      first_text: "first_text", tags: [{tag: "tag1"},{tag: "tag2"}]}).then(function(savedRequest) {
-        winston.info("resolve", savedRequest.toObject());
+        // winston.info("resolve", savedRequest.toObject());
        
 
         chai.request(server)
           .get('/'+ savedProject._id + '/requests/csv/')
           .auth(email, pwd)
           .end(function(err, res) {
-              //console.log("res",  res);
-               console.log("res.text",  res.text);
-              //  console.log("res",  res);              
+              //// console.log("res",  res);
+               // console.log("res.text",  res.text);
+              //  // console.log("res",  res);              
               res.should.have.status(200);
               res.body.should.be.a('object');
              
@@ -735,7 +735,7 @@ it('getallcsv', function (done) {
              done();
           });
           // .catch(function(err) {
-          //     console.log("test reject", err);
+          //     // console.log("test reject", err);
           //     assert.isNotOk(err,'Promise error');
           //     done();
           // });
@@ -762,21 +762,21 @@ it('getallWithLoLead', function (done) {
       var savedProject = savedProjectAndPU.project;
       leadService.createIfNotExists("request_id1-getallWithLoLead", "email@getallWithLoLead.com", savedProject._id).then(function(createdLead) {      
   
-      winston.info("createdLead", createdLead.toObject());
+      // winston.info("createdLead", createdLead.toObject());
         // createWithIdAndRequester(request_id, project_user_id, lead_id, id_project, first_text, departmentid, sourcePage, language, userAgent, status, createdBy, attributes, subject, preflight, channel, location) {
           var now = Date.now();
 
        requestService.createWithIdAndRequester("request_id-getallWithLoLead-"+now, savedProjectAndPU.project_user._id,createdLead._id, savedProject._id, "first_text").then(function(savedRequest) {
 
-        winston.debug("resolve", savedRequest.toObject());
+        // winston.debug("resolve", savedRequest.toObject());
        
 
         chai.request(server)
           .get('/'+ savedProject._id + '/requests/')
           .auth(email, pwd)
           .end(function(err, res) {
-              // console.log("res",  res);
-              // console.log("res.body",  res.body);
+              // // console.log("res",  res);
+              // // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');
               expect(res.body.requests[0].department).to.not.equal(null);
@@ -787,7 +787,7 @@ it('getallWithLoLead', function (done) {
              done();
           });
           // .catch(function(err) {
-          //     console.log("test reject", err);
+          //     // console.log("test reject", err);
           //     assert.isNotOk(err,'Promise error');
           //     done();
           // });
@@ -821,8 +821,8 @@ it('getallWithLoLead', function (done) {
             .set('content-type', 'application/json')
             .send({"first_text":"first_text"})
             .end(function(err, res) {
-                //console.log("res",  res);
-                console.log("res.body",  res.body);
+                //// console.log("res",  res);
+                // console.log("res.body",  res.body);
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 
@@ -848,7 +848,7 @@ it('getallWithLoLead', function (done) {
                 res.body.should.have.property('department').not.eql(null);
                 // res.body.should.have.property('lead').eql(undefined);
                             
-                console.log("res.body.request_id: "+ res.body.request_id);
+                // console.log("res.body.request_id: "+ res.body.request_id);
 
                 chai.request(server)
                 .put('/'+ savedProject._id + '/requests/'+res.body.request_id+"/departments")
@@ -856,8 +856,8 @@ it('getallWithLoLead', function (done) {
                 .set('content-type', 'application/json')
                 .send({})
                 .end(function(err, res2) {
-                    //console.log("res",  res);
-                    console.log("res.body",  res2.body);
+                    //// console.log("res",  res);
+                    // console.log("res.body",  res2.body);
                     res2.should.have.status(200);
                     res2.body.should.be.a('object');
                     expect(res.body.participants.length).to.equal(1);
@@ -900,8 +900,8 @@ it('getallWithLoLead', function (done) {
             .set('content-type', 'application/json')
             .send({"first_text":"first_text"})
             .end(function(err, res) {
-                //console.log("res",  res);
-                console.log("res.body",  res.body);
+                //// console.log("res",  res);
+                // console.log("res.body",  res.body);
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 
@@ -927,7 +927,7 @@ it('getallWithLoLead', function (done) {
                 res.body.should.have.property('department').not.eql(null);
                 // res.body.should.have.property('lead').eql(undefined);
                             
-                console.log("res.body.request_id: "+ res.body.request_id);
+                // console.log("res.body.request_id: "+ res.body.request_id);
 
                 chai.request(server)
                 .put('/'+ savedProject._id + '/requests/'+res.body.request_id+"/departments")
@@ -935,8 +935,8 @@ it('getallWithLoLead', function (done) {
                 .set('content-type', 'application/json')
                 .send({"no_populate":"true"})
                 .end(function(err, res2) {
-                    //console.log("res",  res);
-                    console.log("res.body",  res2.body);
+                    //// console.log("res",  res);
+                    // console.log("res.body",  res2.body);
                     res2.should.have.status(200);
                     res2.body.should.be.a('object');
                     expect(res.body.participants.length).to.equal(1);
@@ -978,8 +978,8 @@ it('createAndAssign2', function (done) {
           .set('content-type', 'application/json')
           .send({"first_text":"first_text"})
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');
               
@@ -1005,7 +1005,7 @@ it('createAndAssign2', function (done) {
               res.body.should.have.property('department').not.eql(null);
               // res.body.should.have.property('lead').eql(undefined);
                           
-              console.log("res.body.request_id: "+ res.body.request_id);
+              // console.log("res.body.request_id: "+ res.body.request_id);
 
               chai.request(server)
               .put('/'+ savedProject._id + '/requests/'+res.body.request_id+"/assign")
@@ -1013,8 +1013,8 @@ it('createAndAssign2', function (done) {
               .set('content-type', 'application/json')
               .send({})
               .end(function(err, res2) {
-                  //console.log("res",  res);
-                  console.log("res.body",  res2.body);
+                  //// console.log("res",  res);
+                  // console.log("res.body",  res2.body);
                   res2.should.have.status(200);
                   res2.body.should.be.a('object');
                   expect(res.body.participants.length).to.equal(1);
@@ -1050,7 +1050,7 @@ it('removeParticipant', function (done) {
       var savedProject = savedProjectAndPU.project;
 
       leadService.createIfNotExists("leadfullname", "email@email.com", savedProject._id).then(function(createdLead) {
-        winston.info("savedProjectAndPU.project_user._id:" +savedProjectAndPU.project_user._id);
+        // winston.info("savedProjectAndPU.project_user._id:" +savedProjectAndPU.project_user._id);
         
         var now = Date.now();
 
@@ -1062,7 +1062,7 @@ it('removeParticipant', function (done) {
         lead:createdLead, requester: savedProjectAndPU.project_user };
 
         requestService.create(request).then(function(savedRequest) {
-        winston.info("savedRequest", savedRequest.toObject());
+        // winston.info("savedRequest", savedRequest.toObject());
         expect(savedRequest.request_id).to.equal("request_id1-removeParticipant-"+now);
 
         chai.request(server)
@@ -1071,8 +1071,8 @@ it('removeParticipant', function (done) {
           .set('content-type', 'application/json')
           .send({"text":"first_text"})
           .end(function(err, res) {
-              //console.log("res",  res);
-              console.log("res.body",  res.body);
+              //// console.log("res",  res);
+              // console.log("res.body",  res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');
               
@@ -1094,7 +1094,7 @@ it('removeParticipant', function (done) {
               expect(res.body.participantsAgents.length).to.equal(0);                
               expect(res.body.participantsBots).to.have.lengthOf(0);
               expect(res.body.hasBot).to.equal(false);          
-              winston.info("res.body.attributes.abandoned_by_project_users", res.body.attributes.abandoned_by_project_users); 
+              // winston.info("res.body.attributes.abandoned_by_project_users", res.body.attributes.abandoned_by_project_users); 
               expect(res.body.attributes.abandoned_by_project_users[savedProjectAndPU.project_user._id]).to.not.equal(undefined);           
               expect(res.body.snapshot.agents).to.equal(undefined);    
 
@@ -1130,8 +1130,8 @@ it('removeParticipant', function (done) {
     //                     .auth(email, pwd)
     //                     .send(webhookContent)
     //                     .end((err, res) => {
-    //                         //console.log("res",  res);
-    //                         console.log("res.body",  res.body);
+    //                         //// console.log("res",  res);
+    //                         // console.log("res.body",  res.body);
     //                         res.should.have.status(200);
     //                         res.body.should.be.a('object');
     //                         // res.body.should.have.property('status').eql(200);

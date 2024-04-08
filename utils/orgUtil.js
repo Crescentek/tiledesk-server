@@ -18,10 +18,10 @@ class OrgUtil {
             this.ORGANIZATION_ENABLED = false;
         }
 
-        winston.info("Organization enabled: "+ this.ORGANIZATION_ENABLED );
+        // winston.info("Organization enabled: "+ this.ORGANIZATION_ENABLED );
 
         this.ORGANIZATION_BASE_URL = process.env.ORGANIZATION_BASE_URL || global.organizationBaseUrl;
-        winston.info("Organization base url: "+ this.ORGANIZATION_BASE_URL );
+        // winston.info("Organization base url: "+ this.ORGANIZATION_BASE_URL );
 
     }
 
@@ -33,27 +33,27 @@ class OrgUtil {
 
 
         // let host = req.get('host');
-        // winston.info("host: "+ host );
+        // // winston.info("host: "+ host );
 
         let origin = req.get('origin');
-        winston.debug("origin: "+ origin );
+        // winston.debug("origin: "+ origin );
 
-        // winston.info("email: " + email.baseUrl);
-        winston.debug("this.ORGANIZATION_BASE_URL: " + this.ORGANIZATION_BASE_URL); 
+        // // winston.info("email: " + email.baseUrl);
+        // winston.debug("this.ORGANIZATION_BASE_URL: " + this.ORGANIZATION_BASE_URL); 
         // global.organizationBaseUrl
         // if (host !=email.baseUrl ) {
         if (origin && origin.indexOf(this.ORGANIZATION_BASE_URL)>-1) {
         // if (origin!=this.ORGANIZATION_BASE_URL) {
-            // winston.info("host found: "+ host );
+            // // winston.info("host found: "+ host );
             // return host;
-            winston.info("origin found: "+ origin );
+            // winston.info("origin found: "+ origin );
             return origin;
         }
-        winston.debug("origin not found: "+ origin );
+        // winston.debug("origin not found: "+ origin );
         
-        // winston.info("host not found: "+ host );
+        // // winston.info("host not found: "+ host );
         // if (host.indexOf("localhost1")>-1) {
-        //     console.log("host found: "+ host );
+        //     // console.log("host found: "+ host );
         //     return "localhost";
         // }
         return undefined;

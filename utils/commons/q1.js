@@ -14,7 +14,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/tiledesk", { "useNewUrlParser": true
 (async () => {
 try {
 var query = {  } ;
-    //console.log("start",new Date())
+    //// console.log("start",new Date())
         var started = new Date();    
 
     
@@ -29,7 +29,7 @@ var requests = await Request
     .limit(1).lean()
    .exec();
    //  .exec( function(err, requests) {
-   //     console.log("requests",requests);
+   //     // console.log("requests",requests);
    //  });   
 
    if (requests && requests.length>0) {
@@ -41,7 +41,7 @@ var requests = await Request
           agentsnew.push({id_user: a.id_user})
         });
 
-        console.log("agentsnew",agentsnew);
+        // console.log("agentsnew",agentsnew);
         request.agents = agentsnew;
 
       }
@@ -50,9 +50,9 @@ var requests = await Request
   }
 
 
-   console.log("end requests", JSON.stringify(requests),requests.length,started, new Date()); 
+   // console.log("end requests", JSON.stringify(requests),requests.length,started, new Date()); 
 } catch (e) {
-console.log(e);
+// console.log(e);
   }
  
 })();

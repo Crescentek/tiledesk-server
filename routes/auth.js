@@ -27,7 +27,7 @@ var UserUtil = require('../utils/userUtil');
 
 let configSecret = process.env.GLOBAL_SECRET || config.secret;
 var pKey = process.env.GLOBAL_SECRET_OR_PRIVATE_KEY;
-// console.log("pKey",pKey);
+// // console.log("pKey",pKey);
 
 if (pKey) {
   configSecret = pKey.replace(/\\n/g, '\n');
@@ -208,7 +208,7 @@ function (req, res) {
           
           authEvent.emit("projectuser.create", savedProject_user);         
 
-          winston.debug('project user created ', savedProject_user.toObject());
+          // winston.debug('project user created ', savedProject_user.toObject());
 
           res.json({ success: true, token: 'JWT ' + token, user: userAnonym });
       });
@@ -220,12 +220,12 @@ function (req, res) {
 
 
 router.post('/signinWithCustomToken', [
-  // function(req,res,next) {req.disablePassportEntityCheck = true;winston.debug("disablePassportEntityCheck=true"); next();},
+  // function(req,res,next) {req.disablePassportEntityCheck = true;// winston.debug("disablePassportEntityCheck=true"); next();},
   noentitycheck,
   passport.authenticate(['jwt'], { session: false }), 
   validtoken], async (req, res) => {
 
-    winston.debug("signinWithCustomToken req: ", req );
+    // winston.debug("signinWithCustomToken req: ", req );
 
     if (!req.user.aud) { //serve??
       winston.warn("SigninWithCustomToken JWT Aud field is required", req.user );
@@ -237,12 +237,12 @@ router.post('/signinWithCustomToken', [
     // }
   
     const audUrl  = new URL(req.user.aud);
-    winston.debug("audUrl: "+ audUrl );
+    // winston.debug("audUrl: "+ audUrl );
     const path = audUrl.pathname;
-    winston.debug("audUrl path: " + path );
+    // winston.debug("audUrl path: " + path );
     
     const AudienceType = path.split("/")[1];
-    winston.debug("audUrl AudienceType: " + AudienceType );
+    // winston.debug("audUrl AudienceType: " + AudienceType );
 
     var id_project;
      
@@ -254,7 +254,7 @@ router.post('/signinWithCustomToken', [
     if (AudienceType === "subscriptions") {
 
       const AudienceId = path.split("/")[2];
-      winston.debug("audUrl AudienceId: " + AudienceId );
+      // winston.debug("audUrl AudienceId: " + AudienceId );
 
       if (!AudienceId) {
         winston.warn("JWT Aud.AudienceId field is required for AudienceType subscriptions", req.user );
@@ -262,15 +262,15 @@ router.post('/signinWithCustomToken', [
       }
 
       var subscription = await Subscription.findById(AudienceId).exec();
-      winston.debug("signinWithCustomToken subscription: ", subscription );
+      // winston.debug("signinWithCustomToken subscription: ", subscription );
       id_project = subscription.id_project;
-      winston.debug("signinWithCustomToken subscription req.user._id: "+ req.user._id );
-      winston.debug("signinWithCustomToken subscription.id_project:"+ id_project );
+      // winston.debug("signinWithCustomToken subscription req.user._id: "+ req.user._id );
+      // winston.debug("signinWithCustomToken subscription.id_project:"+ id_project );
 
     } else if (AudienceType==="projects") {
 
       const AudienceId = path.split("/")[2];
-      winston.debug("audUrl AudienceId: " + AudienceId );
+      // winston.debug("audUrl AudienceId: " + AudienceId );
 
       if (!AudienceId) {
         winston.warn("JWT Aud.AudienceId field is required for AudienceType projects", req.user );
@@ -281,7 +281,7 @@ router.post('/signinWithCustomToken', [
 
 
     } else {
-      winston.debug("audience generic");
+      // winston.debug("audience generic");
       if (req.body.id_project) {
         id_project = req.body.id_project;
         winston.verbose("audience generic. id_project is passed explicitly");
@@ -297,8 +297,8 @@ router.post('/signinWithCustomToken', [
     if (req.user.role) {
       role = req.user.role;
     }
-    winston.debug("role1: " + role );
-    winston.debug("id_project: " + id_project + " uuid_user " + req.user._id + " role " + role);
+    // winston.debug("role1: " + role );
+    // winston.debug("id_project: " + id_project + " uuid_user " + req.user._id + " role " + role);
 
 
       Project_user.findOne({ id_project: id_project, uuid_user: req.user._id}).              
@@ -308,13 +308,13 @@ router.post('/signinWithCustomToken', [
           winston.error(err);
           return res.json({ success: true, token: req.headers["authorization"], user: req.user });
         }
-        winston.debug("project_user: ", project_user );
+        // winston.debug("project_user: ", project_user );
 
 
         if (!project_user) {
 
           let createNewUser = false;
-          winston.debug('role2: '+ role)
+          // winston.debug('role2: '+ role)
 
           
           if (role === RoleConstants.OWNER || role === RoleConstants.ADMIN || role === RoleConstants.AGENT) {            
@@ -326,7 +326,7 @@ router.post('/signinWithCustomToken', [
             // Bug with email in camelcase
             newUser = await userService.signup(req.user.email.toLowerCase(), uuidv4(), req.user.firstname, req.user.lastname, false);
            } catch(e) {
-            winston.debug('error signup already exists??: ')
+            // winston.debug('error signup already exists??: ')
 
             if (e.code = "E11000") {
               newUser = await User.findOne({email: req.user.email.toLowerCase(), status: 100}).exec();
@@ -375,7 +375,7 @@ router.post('/signinWithCustomToken', [
             return res.status(401).send({ success: false, msg: 'User not found.' });
            }
 
-           winston.debug('userToReturn forced to newUser.', newUser)
+           // winston.debug('userToReturn forced to newUser.', newUser)
            userToReturn=newUser;
 
           
@@ -393,13 +393,13 @@ router.post('/signinWithCustomToken', [
               updatedBy: req.user._id
             });
 
-            winston.debug('newProject_user', newProject_user);
+            // winston.debug('newProject_user', newProject_user);
 
             // testtare qiestp cpm dpcker dev partemdp da ui
             if (createNewUser===true) {
               newProject_user.id_user = newUser._id;
               // delete newProject_user.uuid_user;
-              winston.debug('newProject_user.', newProject_user)
+              // winston.debug('newProject_user.', newProject_user)
             }
 
             return newProject_user.save(function (err, savedProject_user) {
@@ -414,7 +414,7 @@ router.post('/signinWithCustomToken', [
 
               authEvent.emit("user.signin", {user:userToReturn, req:req, token: req.headers["authorization"]});      
 
-              winston.debug('project user created ', savedProject_user.toObject());
+              // winston.debug('project user created ', savedProject_user.toObject());
 
 
               let returnToken = req.headers["authorization"];
@@ -442,9 +442,9 @@ router.post('/signinWithCustomToken', [
                 
               }
 
-              winston.debug('returnToken '+returnToken);
+              // winston.debug('returnToken '+returnToken);
 
-              winston.debug('returnToken.indexOf("JWT") '+returnToken.indexOf("JWT"));
+              // winston.debug('returnToken.indexOf("JWT") '+returnToken.indexOf("JWT"));
 
               if (returnToken.indexOf("JWT")<0) {
                 returnToken = "JWT " + returnToken;
@@ -453,7 +453,7 @@ router.post('/signinWithCustomToken', [
               return res.json({ success: true, token: returnToken, user: userToReturn });
           });
         } else {
-          winston.debug('project user already exists ');
+          // winston.debug('project user already exists ');
 
           if (project_user.status==="active") {
 
@@ -497,7 +497,7 @@ router.post('/signinWithCustomToken', [
               
 
             } else {
-              winston.debug('req.headers["authorization"]: '+req.headers["authorization"]);
+              // winston.debug('req.headers["authorization"]: '+req.headers["authorization"]);
               
               return res.json({ success: true, token: req.headers["authorization"], user: userToReturn });
             }
@@ -538,7 +538,7 @@ function (req, res) {
 
   var email = req.body.email.toLowerCase();
   
-  winston.debug("email", email);
+  // winston.debug("email", email);
   User.findOne({
     email: email, status: 100
   }, 'email firstname lastname password emailverified id', function (err, user) {
@@ -670,10 +670,10 @@ function (req, res) {
 // Redirect the user to the Google signin page</em> 
 // router.get("/google", passport.authenticate("google", { scope: ["email", "profile"] }));
 router.get("/google", function(req,res,next){
-  winston.debug("redirect_url: "+ req.query.redirect_url );
+  // winston.debug("redirect_url: "+ req.query.redirect_url );
   req.session.redirect_url = req.query.redirect_url;
 
-  winston.debug("forced_redirect_url: "+ req.query.forced_redirect_url );
+  // winston.debug("forced_redirect_url: "+ req.query.forced_redirect_url );
   req.session.forced_redirect_url = req.query.forced_redirect_url;
 
   // req._toParam = 'Hello';
@@ -685,7 +685,7 @@ router.get("/google", function(req,res,next){
 });
 
 // router.get("/google/callbacks", passport.authenticate("google", { session: false }), (req, res) => {
-//   console.log("callback_signup");
+//   // console.log("callback_signup");
 //   res.redirect("/google/callback");
 // });
 
@@ -694,11 +694,11 @@ router.get("/google/callback", passport.authenticate("google", { session: false 
 // res.redirect("/auth/profile/");
 
   var user = req.user;
-  winston.debug("user", user);
-  // winston.info("req._toParam: "+ req._toParam);
-  // winston.info("req.query.redirect_url: "+ req.query.redirect_url);
-  // winston.info("req.query.state: "+ req.query.state);
-  winston.debug("req.session.redirect_url: "+ req.session.redirect_url);
+  // winston.debug("user", user);
+  // // winston.info("req._toParam: "+ req._toParam);
+  // // winston.info("req.query.redirect_url: "+ req.query.redirect_url);
+  // // winston.info("req.query.state: "+ req.query.state);
+  // winston.debug("req.session.redirect_url: "+ req.session.redirect_url);
   
 
   var userJson = user.toObject();
@@ -727,7 +727,7 @@ router.get("/google/callback", passport.authenticate("google", { session: false 
   // res.json(returnObject);
 
   let dashboard_base_url = process.env.EMAIL_BASEURL || config.baseUrl;
-  winston.debug("Google Redirect dashboard_base_url: ", dashboard_base_url);
+  // winston.debug("Google Redirect dashboard_base_url: ", dashboard_base_url);
 
   let homeurl = "/#/";
 
@@ -741,7 +741,7 @@ router.get("/google/callback", passport.authenticate("google", { session: false 
     url = req.session.forced_redirect_url+"?jwt=JWT "+token;  //attention we use jwt= (ionic) instead token=(dashboard) for ionic 
   }
 
-  winston.debug("Google Redirect: "+ url);
+  // winston.debug("Google Redirect: "+ url);
 
   res.redirect(url);
 
@@ -752,26 +752,26 @@ router.get("/google/callback", passport.authenticate("google", { session: false 
 );
 // profile route after successful sign in</em> 
 // router.get("/profile", (req, res) => {
-//   console.log(req);
+//   // console.log(req);
 // res.send("Welcome");
 // });
 
 // VERIFY EMAIL
 router.put('/verifyemail/:userid', function (req, res) {
 
-  winston.debug('VERIFY EMAIL - REQ BODY ', req.body);
+  // winston.debug('VERIFY EMAIL - REQ BODY ', req.body);
 // controlla
   User.findByIdAndUpdate(req.params.userid, req.body, { new: true, upsert: true }, function (err, findUser) {
     if (err) {
       winston.error(err);
       return res.status(500).send({ success: false, msg: err });
     }
-    winston.debug(findUser);
+    // winston.debug(findUser);
     if (!findUser) {
       winston.warn('User not found for verifyemail' );
       return res.status(404).send({ success: false, msg: 'User not found' });
     }
-    winston.debug('VERIFY EMAIL - RETURNED USER ', findUser);
+    // winston.debug('VERIFY EMAIL - RETURNED USER ', findUser);
 
 
 
@@ -785,7 +785,7 @@ router.put('/verifyemail/:userid', function (req, res) {
  */
 router.get('/pendinginvitationsnoauth/:pendinginvitationid', function (req, res) {
 
-  winston.debug('PENDING INVITATION NO AUTH GET BY ID - BODY ');
+  // winston.debug('PENDING INVITATION NO AUTH GET BY ID - BODY ');
 
   PendingInvitation.findById(req.params.pendinginvitationid, function (err, pendinginvitation) {
     if (err) {
@@ -806,10 +806,10 @@ router.get('/pendinginvitationsnoauth/:pendinginvitationid', function (req, res)
  */
 router.put('/requestresetpsw', function (req, res) {
 
-  winston.debug('REQUEST RESET PSW - EMAIL REQ BODY ', req.body);
+  // winston.debug('REQUEST RESET PSW - EMAIL REQ BODY ', req.body);
 
   var email = req.body.email.toLowerCase();
-  winston.debug("email", email);
+  // winston.debug("email", email);
 
 // auttype
   User.findOne({ email: email, status: 100
@@ -825,11 +825,11 @@ router.put('/requestresetpsw', function (req, res) {
       res.json({ success: false, msg: 'User not found.' });
     } else if (user) {
 
-      winston.debug('REQUEST RESET PSW - USER FOUND ', user);
-      winston.debug('REQUEST RESET PSW - USER FOUND - ID ', user._id);
+      // winston.debug('REQUEST RESET PSW - USER FOUND ', user);
+      // winston.debug('REQUEST RESET PSW - USER FOUND - ID ', user._id);
       var reset_psw_request_id = uniqid()
 
-      winston.debug('REQUEST RESET PSW - UNIC-ID GENERATED ', reset_psw_request_id)
+      // winston.debug('REQUEST RESET PSW - UNIC-ID GENERATED ', reset_psw_request_id)
 
       User.findByIdAndUpdate(user._id, { resetpswrequestid: reset_psw_request_id }, { new: true, upsert: true }).select("+resetpswrequestid").exec(function (err, updatedUser) {
 
@@ -843,7 +843,7 @@ router.put('/requestresetpsw', function (req, res) {
           return res.status(404).send({ success: false, msg: 'User not found' });
         }
 
-        winston.debug('REQUEST RESET PSW - UPDATED USER ', updatedUser);
+        // winston.debug('REQUEST RESET PSW - UPDATED USER ', updatedUser);
 
         if (updatedUser) {
 
@@ -864,7 +864,7 @@ router.put('/requestresetpsw', function (req, res) {
           return res.json({ success: true, user: userWithoutResetPassword });
           // }
           // catch (err) {
-          //   winston.debug('PSW RESET REQUEST - SEND EMAIL ERR ', err)
+          //   // winston.debug('PSW RESET REQUEST - SEND EMAIL ERR ', err)
           // }
 
         }
@@ -879,8 +879,8 @@ router.put('/requestresetpsw', function (req, res) {
  * *** RESET PSW ***
  */
 router.put('/resetpsw/:resetpswrequestid', function (req, res) {
-  winston.debug("--> RESET PSW - REQUEST ID", req.params.resetpswrequestid);
-  winston.debug("--> RESET PSW - NEW PSW ", req.body.password);
+  // winston.debug("--> RESET PSW - REQUEST ID", req.params.resetpswrequestid);
+  // winston.debug("--> RESET PSW - NEW PSW ", req.body.password);
 
   User.findOne({ resetpswrequestid: req.params.resetpswrequestid }, function (err, user) {
 
@@ -895,8 +895,8 @@ router.put('/resetpsw/:resetpswrequestid', function (req, res) {
     }
 
     if (user && req.body.password) {
-      winston.debug('--> RESET PSW - User Found ', user);
-      winston.debug('--> RESET PSW - User ID Found ', user._id);
+      // winston.debug('--> RESET PSW - User Found ', user);
+      // winston.debug('--> RESET PSW - User ID Found ', user._id);
 
       user.password = req.body.password;
       user.resetpswrequestid = '';
@@ -907,7 +907,7 @@ router.put('/resetpsw/:resetpswrequestid', function (req, res) {
           winston.error('--- > USER SAVE -ERROR ', err)
           return res.status(500).send({ success: false, msg: 'Error saving object.' });
         }
-        winston.debug('--- > USER SAVED  ', saveUser)
+        // winston.debug('--- > USER SAVED  ', saveUser)
 
         emailService.sendYourPswHasBeenChangedEmail(saveUser.email, saveUser.firstname, saveUser.lastname);
 
@@ -927,7 +927,7 @@ router.put('/resetpsw/:resetpswrequestid', function (req, res) {
  * if no
  */
 router.get('/checkpswresetkey/:resetpswrequestid', function (req, res) {
-  winston.debug("--> CHECK RESET PSW REQUEST ID", req.params.resetpswrequestid);
+  // winston.debug("--> CHECK RESET PSW REQUEST ID", req.params.resetpswrequestid);
 
   User.findOne({ resetpswrequestid: req.params.resetpswrequestid }, function (err, user) {
 

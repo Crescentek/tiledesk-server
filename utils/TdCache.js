@@ -25,26 +25,26 @@ class TdCache {
                 }
             });
             // this.client.on('connect', function() {
-            //     console.log('Redis Connected!');
+            //     // console.log('Redis Connected!');
             // });
             this.client.on('ready',function() {
                 resolve();
                 if (callback) {
                     callback();
                 }
-                //console.log("Redis is ready.");
+                //// console.log("Redis is ready.");
             });
         });
     }
 
     async set(key, value, options) {
-      //console.log("setting key value", key, value)
+      //// console.log("setting key value", key, value)
       if (!options) {
         options = {EX: 86400}
       }
       return new Promise( async (resolve, reject) => {
         if (options && options.EX) {
-          //console.log("expires:", options.EX)
+          //// console.log("expires:", options.EX)
           try {
             await this.client.set(
               key,
@@ -57,7 +57,7 @@ class TdCache {
         }
         else {
           try {
-            //console.log("setting here...key", key, value)
+            //// console.log("setting here...key", key, value)
             await this.client.set(
               key,
               value);
@@ -70,16 +70,16 @@ class TdCache {
         if (options && options.callback) {
             options.callback();
         }
-        //console.log("resolving...", key);
+        //// console.log("resolving...", key);
         return resolve();
       });
     }
 
     async incr(key) {
-      // console.log("incr key:", key)
+      // // console.log("incr key:", key)
       return new Promise( async (resolve, reject) => {
         try {
-            // console.log("incr here...key", key)
+            // // console.log("incr here...key", key)
             await this.client.incr(key);
           }
           catch(error) {
@@ -118,10 +118,10 @@ class TdCache {
     }
 
     async hset(dict_key, key, value, options) {
-      //console.log("hsetting dict_key key value", dict_key, key, value)
+      //// console.log("hsetting dict_key key value", dict_key, key, value)
       return new Promise( async (resolve, reject) => {
         if (options && options.EX) {
-          //console.log("expires:", options.EX)
+          //// console.log("expires:", options.EX)
           try {
             await this.client.hset(
               dict_key,
@@ -135,7 +135,7 @@ class TdCache {
         }
         else {
           try {
-            //console.log("setting here...key", key, value)
+            //// console.log("setting here...key", key, value)
             await this.client.hset(
               dict_key,
               key,
@@ -154,10 +154,10 @@ class TdCache {
     }
 
     async hdel(dict_key, key, options) {
-      //console.log("hsetting dict_key key value", dict_key, key, value)
+      //// console.log("hsetting dict_key key value", dict_key, key, value)
       return new Promise( async (resolve, reject) => {
         if (options && options.EX) {
-          //console.log("expires:", options.EX)
+          //// console.log("expires:", options.EX)
           try {
             await this.client.hdel(
               dict_key,
@@ -170,7 +170,7 @@ class TdCache {
         }
         else {
           try {
-            //console.log("setting here...key", key, value)
+            //// console.log("setting here...key", key, value)
             await this.client.hdel(
               dict_key,
               key);
@@ -209,7 +209,7 @@ class TdCache {
     }
 
     async hgetall(dict_key, callback) {
-      //console.log("hgetting dics", dict_key);
+      //// console.log("hgetting dics", dict_key);
       return new Promise( async (resolve, reject) => {
         this.client.hgetall(dict_key, (err, value) => {
           if (err) {
@@ -229,7 +229,7 @@ class TdCache {
     }
 
     async hget(dict_key, key, callback) {
-      //console.log("hgetting dics", dict_key);
+      //// console.log("hgetting dics", dict_key);
       return new Promise( async (resolve, reject) => {
         this.client.hget(dict_key, key, (err, value) => {
           if (err) {

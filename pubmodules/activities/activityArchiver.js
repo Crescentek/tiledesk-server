@@ -7,21 +7,21 @@ class ActivityArchiver {
 
     listen() {
 
-        winston.debug('ActivityArchiver listen');   
+        // winston.debug('ActivityArchiver listen');   
 
         var enabled = process.env.ACTIVITY_HISTORY_ENABLED || "false";
-        winston.debug('ActivityArchiver enabled:'+enabled);
+        // winston.debug('ActivityArchiver enabled:'+enabled);
     
         if (enabled==="true") {
-          winston.debug('ActivityArchiver enabled');
+          // winston.debug('ActivityArchiver enabled');
         }else {
-          winston.info('ActivityArchiver disabled');
+          // winston.info('ActivityArchiver disabled');
           return 0;
         }
 
         if (process.env.MONGOOSE_SYNCINDEX) {
           Activity.syncIndexes();
-          winston.info("Activity.syncIndexes called");
+          // winston.info("Activity.syncIndexes called");
         }
         
         var that = this;
@@ -47,7 +47,7 @@ class ActivityArchiver {
       // if (authEvent.queueEnabled) { //queue not supported.
       //   authProjectUserInvitePendingKey = 'project_user.invite.pending.queue';
       // }
-      winston.debug('ActivityArchiver authProjectUserInvitePendingKey: ' + authProjectUserInvitePendingKey);
+      // winston.debug('ActivityArchiver authProjectUserInvitePendingKey: ' + authProjectUserInvitePendingKey);
 
         authEvent.on(authProjectUserInvitePendingKey,  function(event) { 
           setImmediate(() => {
@@ -72,7 +72,7 @@ class ActivityArchiver {
         // if (authEvent.queueEnabled) { //queue not supported
         //   authProjectUserInviteKey = 'project_user.invite.queue';
         // }
-        winston.debug('ActivityArchiver authProjectUserInviteKey: ' + authProjectUserInviteKey);
+        // winston.debug('ActivityArchiver authProjectUserInviteKey: ' + authProjectUserInviteKey);
   
         authEvent.on(authProjectUserInviteKey,  function(event) { 
           setImmediate(() => {
@@ -98,11 +98,11 @@ class ActivityArchiver {
         if (authEvent.queueEnabled) {
           authProjectUserUpdateKey = 'project_user.update.queue';
         }
-        winston.debug('ActivityArchiver authProjectUserUpdateKey: ' + authProjectUserUpdateKey);
+        // winston.debug('ActivityArchiver authProjectUserUpdateKey: ' + authProjectUserUpdateKey);
   
        authEvent.on(authProjectUserUpdateKey,  function(event) { 
         setImmediate(() => {   
-          // winston.info('ActivityArchiver authProjectUserUpdateKey: ', event);
+          // // winston.info('ActivityArchiver authProjectUserUpdateKey: ', event);
       
          /*
          2019-11-20T10:40:52.686991+00:00 app[web.1]: TypeError: Cannot read property '_id' of undefined
@@ -118,10 +118,10 @@ class ActivityArchiver {
             project_user = event.updatedProject_userPopulated;
           }
 
-          winston.debug('ActivityArchiver authProjectUserUpdateKey event: ', event);
+          // winston.debug('ActivityArchiver authProjectUserUpdateKey event: ', event);
 
           if (!event.req.user) {
-            return  winston.debug('ActivityArchiver skipping archive empty user'); //from i think chat21webhook
+            return  // winston.debug('ActivityArchiver skipping archive empty user'); //from i think chat21webhook
           }
           var activity = new Activity({actor: {type:"user", id: event.req.user._id, name: event.req.user.fullName }, 
                 verb: "PROJECT_USER_UPDATE", actionObj: event.req.body, 
@@ -138,7 +138,7 @@ class ActivityArchiver {
       //  if (authEvent.queueEnabled) { //queue not supported
       //   authProjectUserDeleteKey = 'project_user.delete.queue';
       //  }
-       winston.debug('ActivityArchiver authProjectUserDeleteKey: ' + authProjectUserDeleteKey);
+       // winston.debug('ActivityArchiver authProjectUserDeleteKey: ' + authProjectUserDeleteKey);
  
 
       authEvent.on(authProjectUserDeleteKey,  function(event) { 
@@ -163,11 +163,11 @@ class ActivityArchiver {
       // // if (authEvent.queueEnabled) { //queue not supported
       // //   authUserSignineKey = 'user.signin.queue';
       // // }
-      // winston.info('ActivityArchiver authUserSignineKey: ' + authUserSignineKey);
+      // // winston.info('ActivityArchiver authUserSignineKey: ' + authUserSignineKey);
 
 
       //   authEvent.on(authUserSignineKey,  function(event) { 
-      //       winston.info('ActivityArchiver user.login');
+      //       // winston.info('ActivityArchiver user.login');
       //     setImmediate(() => {
            
             
@@ -189,7 +189,7 @@ class ActivityArchiver {
         // // if (authEvent.queueEnabled) {  //queue not supported
         // //   authUserSigninErrorKey = 'user.login.error.queue';
         // // }
-        // winston.info('ActivityArchiver authUserSigninErrorKey: ' + authUserSigninErrorKey);
+        // // winston.info('ActivityArchiver authUserSigninErrorKey: ' + authUserSigninErrorKey);
 
         
         // authEvent.on(authUserSigninErrorKey,  function(event) { 
@@ -213,7 +213,7 @@ class ActivityArchiver {
       //   // if (authEvent.queueEnabled) {  //queue not supported
       //   //   authUserResetPasswordKey = 'user.requestresetpassword.queue';
       //   // }
-      //   winston.info('ActivityArchiver authUserResetPasswordKey: ' + authUserResetPasswordKey);
+      //   // winston.info('ActivityArchiver authUserResetPasswordKey: ' + authUserResetPasswordKey);
 
       //  authEvent.on(authUserResetPasswordKey,  function(event) {   
       //   setImmediate(() => {   
@@ -236,7 +236,7 @@ class ActivityArchiver {
       // //  if (authEvent.queueEnabled) {  //queue not supported
       // //   authUserResetPassword2Key = 'user.resetpassword.queue';
       // //  }
-      //  winston.info('ActivityArchiver authUserResetPassword2Key: ' + authUserResetPassword2Key);
+      //  // winston.info('ActivityArchiver authUserResetPassword2Key: ' + authUserResetPassword2Key);
 
 
       // authEvent.on(authUserResetPassword2Key,  function(event) {     
@@ -260,7 +260,7 @@ class ActivityArchiver {
       // //  if (authEvent.queueEnabled) {  //queue not supported
       // //   authUserSignupKey = 'user.signup.queue';
       // //  }
-      //  winston.info('ActivityArchiver authUserSignupKey: ' + authUserSignupKey);
+      //  // winston.info('ActivityArchiver authUserSignupKey: ' + authUserSignupKey);
 
 
       //  authEvent.on(authUserSignupKey,  function(event) { 
@@ -283,7 +283,7 @@ class ActivityArchiver {
       // //  if (authEvent.queueEnabled) {   //queue not supported
       // //   authUserSignupErrorKey = 'user.signup.error.queue';
       // //  }
-      //  winston.info('ActivityArchiver authUserSignupErrorKey: ' + authUserSignupErrorKey);
+      //  // winston.info('ActivityArchiver authUserSignupErrorKey: ' + authUserSignupErrorKey);
 
 
       // authEvent.on(authUserSignupErrorKey,  function(event) { 
@@ -307,11 +307,11 @@ class ActivityArchiver {
        if (requestEvent.queueEnabled) {
          requestCreateKey = 'request.create.queue';
        }
-       winston.debug('ActivityArchiver requestCreateKey: ' + requestCreateKey);
+       // winston.debug('ActivityArchiver requestCreateKey: ' + requestCreateKey);
 
         requestEvent.on(requestCreateKey,  function(request) {   
           setImmediate(() => {        
-            winston.debug('ActivityArchiver requestCreate triggered');   
+            // winston.debug('ActivityArchiver requestCreate triggered');   
           // problema requester_id
 
           // Error saving activity  {"_id":"5e06189c6e226d358896d733","actor":{"_id":"5e06189c6e226d358896d734","type":"user","id":null},"verb":"REQUEST_CREATE","actionObj":{"status":200,"participants":["5e06189c6e226d358896d728"],"messages_count":0,"tags":[],"_id":"5e06189c6e226d358896d72e","request_id":"request_id-closeRequest","first_text":"first_text","department":{"routing":"assigned","default":true,"status":1,"_id":"5e06189c6e226d358896d72b","name":"Default Department","id_project":"5e06189c6e226d358896d729","createdBy":"5e06189c6e226d358896d728","createdAt":"2019-12-27T14:43:40.327Z","updatedAt":"2019-12-27T14:43:40.327Z","__v":0},"agents":[{"_id":"5e06189c6e226d358896d72a","id_project":"5e06189c6e226d358896d729","id_user":"5e06189c6e226d358896d728","role":"owner","user_available":true,"createdBy":"5e06189c6e226d358896d728","createdAt":"2019-12-27T14:43:40.324Z","updatedAt":"2019-12-27T14:43:40.324Z","__v":0}],"id_project":"5e06189c6e226d358896d729","createdBy":"requester_id1","channel":{"name":"chat21"},"createdAt":"2019-12-27T14:43:40.586Z","updatedAt":"2019-12-27T14:43:40.586Z","__v":0},"target":{"type":"request","id":"5e06189c6e226d358896d72e","object":{"status":200,"participants":["5e06189c6e226d358896d728"],"messages_count":0,"tags":[],"_id":"5e06189c6e226d358896d72e","request_id":"request_id-closeRequest","first_text":"first_text","department":{"routing":"assigned","default":true,"status":1,"_id":"5e06189c6e226d358896d72b","name":"Default Department","id_project":"5e06189c6e226d358896d729","createdBy":"5e06189c6e226d358896d728","createdAt":"2019-12-27T14:43:40.327Z","updatedAt":"2019-12-27T14:43:40.327Z","__v":0},"agents":[{"_id":"5e06189c6e226d358896d72a","id_project":"5e06189c6e226d358896d729","id_user":"5e06189c6e226d358896d728","role":"owner","user_available":true,"createdBy":"5e06189c6e226d358896d728","createdAt":"2019-12-27T14:43:40.324Z","updatedAt":"2019-12-27T14:43:40.324Z","__v":0}],"id_project":"5e06189c6e226d358896d729","createdBy":"requester_id1","channel":{"name":"chat21"},"createdAt":"2019-12-27T14:43:40.586Z","updatedAt":"2019-12-27T14:43:40.586Z","__v":0}},"id_project":"5e06189c6e226d358896d729"}
@@ -329,7 +329,7 @@ class ActivityArchiver {
               try {
 
                 if (request.preflight === true) {
-                  winston.debug("preflight request disable archiver")
+                  // winston.debug("preflight request disable archiver")
                   return 0;
                 }
                 var activity = new Activity({actor: {type:"user", id: request.requester_id}, 
@@ -351,18 +351,18 @@ class ActivityArchiver {
         if (requestEvent.queueEnabled) {
           requestUpdatePreflightKey = 'request.update.preflight.queue';
         }
-        winston.debug('ActivityArchiver requestUpdatePreflightKey: ' + requestUpdatePreflightKey);
+        // winston.debug('ActivityArchiver requestUpdatePreflightKey: ' + requestUpdatePreflightKey);
 
         
         requestEvent.on(requestUpdatePreflightKey,  function(request) {
-          winston.debug('ActivityArchiver request.update.preflight: ');
+          // winston.debug('ActivityArchiver request.update.preflight: ');
    
           setImmediate(() => {           
        
               try {
 
                 if (request.preflight === true) {
-                  winston.debug("preflight request disable archiver")
+                  // winston.debug("preflight request disable archiver")
                   return 0;
                 }
                 var activity = new Activity({actor: {type:"user", id: request.requester_id}, 
@@ -385,15 +385,15 @@ class ActivityArchiver {
         if (requestEvent.queueEnabled) {
           requestCloseKey = 'request.close.queue';
         }
-        winston.debug('ActivityArchiver requestCloseKey: ' + requestCloseKey);
+        // winston.debug('ActivityArchiver requestCloseKey: ' + requestCloseKey);
 
 
         requestEvent.on(requestCloseKey,  function(request) {   
-          winston.debug("request.close event here 7")
+          // winston.debug("request.close event here 7")
           setImmediate(() => {           
        
               try {
-                winston.debug('ActivityArchiver close');
+                // winston.debug('ActivityArchiver close');
                
                 var activity = new Activity({actor: {type:"user", id: request.closed_by}, 
                 verb: "REQUEST_CLOSE", actionObj: request, 
@@ -411,7 +411,7 @@ class ActivityArchiver {
 
         
 
-        winston.info('ActivityArchiver listening');
+        // winston.info('ActivityArchiver listening');
 
     }
 
@@ -420,7 +420,7 @@ class ActivityArchiver {
             if (err) {
                 winston.error('Error saving activity ', {activity: activity.toObject(), err:err});
             }else {
-                winston.debug('Activity saved', savedActivity.toObject());
+                // winston.debug('Activity saved', savedActivity.toObject());
             }
         });
     }

@@ -70,11 +70,11 @@ class EventService {
           if (user) {
             savedEventPopulatedJson.user = user;
           }else {
-            winston.debug("Attention eventService emit user is empty");
+            // winston.debug("Attention eventService emit user is empty");
           }
           
           savedEventPopulatedJson.id = savedEventPopulatedJson._id;
-          winston.debug("savedEventPopulatedJson", savedEventPopulatedJson);
+          // winston.debug("savedEventPopulatedJson", savedEventPopulatedJson);
           eventEvent.emit('event.emit', savedEventPopulatedJson);
           eventEvent.emit('event.emit.'+name, savedEventPopulatedJson);
           

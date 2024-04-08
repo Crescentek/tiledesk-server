@@ -26,11 +26,11 @@ class BotEvent extends EventEmitter {
             messageCreateKey = 'message.create.queue';
         }
 
-        winston.info("Listening " + messageCreateKey + " event for Chatbot messages");
+        // winston.info("Listening " + messageCreateKey + " event for Chatbot messages");
 
         messageEvent.on(messageCreateKey, function(message) {
 
-            winston.debug("message", message);
+            // winston.debug("message", message);
 
             // TODO usa meglio se attributes.reply_always=true
 
@@ -69,7 +69,7 @@ class BotEvent extends EventEmitter {
             
         var botId = getBotId(message);
 
-        winston.debug("botId: " + botId);
+        // winston.debug("botId: " + botId);
 
         if (!botId) {
                 return null;
@@ -77,7 +77,7 @@ class BotEvent extends EventEmitter {
                                                         //loop fix for messages sent from external bot    
                 // botprefix         
                 if (message.sender === 'bot_'+botId || message.sender === botId) {
-                    winston.debug("it s a message sent from bot, exit");
+                    // winston.debug("it s a message sent from bot, exit");
                     return null;        
                 }else {
                     messageEvent.emit('message.received.for.bot', message);  //UNUSED
@@ -91,10 +91,10 @@ class BotEvent extends EventEmitter {
         //TODO unselect secret. secret is unselectable by default in the model
 
                 if (cacheEnabler.faq_kb) {
-                    winston.debug('message.id_project+":faq_kbs:id:"+botId: '+ message.id_project+":faq_kbs:id:"+botId);  
+                    // winston.debug('message.id_project+":faq_kbs:id:"+botId: '+ message.id_project+":faq_kbs:id:"+botId);  
                     // qbot.cache(cacheUtil.defaultTTL, message.id_project+":faq_kbs:id:"+botId)
                     qbot.cache(cacheUtil.defaultTTL, message.id_project+":faq_kbs:id:"+botId+":secret")
-                    winston.debug('faq_kb cache enabled');
+                    // winston.debug('faq_kb cache enabled');
                 }
 
                 qbot.exec(function(err, bot) {
@@ -109,8 +109,8 @@ class BotEvent extends EventEmitter {
                     winston.warn('Bot not found with id '+botId);
                 }
 
-                winston.debug("bot debug", bot);
-                winston.debug('bot debug secret: '+ bot.secret);
+                // winston.debug("bot debug", bot);
+                // winston.debug('bot debug secret: '+ bot.secret);
 
                 if (bot) {
                     if (bot.type==="internal") {
@@ -144,13 +144,13 @@ function getBotFromParticipants(participants) {
   
     if (participants) {
       participants.forEach(function(participant) { 
-        winston.debug("participant", participant);
+        // winston.debug("participant", participant);
         
         // botprefix
         if (participant.indexOf("bot_")> -1) {
             // botprefix
           botIdTmp = participant.replace("bot_","");
-          winston.debug("botIdTmp", botIdTmp);
+          // winston.debug("botIdTmp", botIdTmp);
           //break;        
         }
       });
@@ -164,14 +164,14 @@ function getBotFromParticipants(participants) {
 //TODO use request. getBotId
 function getBotId(message) {
     var sender = message.sender;
-    winston.debug("sender", sender);
+    // winston.debug("sender", sender);
  
     if (sender=="sytem") {
          return null;
     }
  
     var recipient = message.recipient;
-    winston.debug("recipient", recipient);
+    // winston.debug("recipient", recipient);
  
     // botprefix
     if (recipient.startsWith('bot_')) {
@@ -179,17 +179,17 @@ function getBotId(message) {
         return recipient.replace('bot_','');
     }
     // var text = message.text;
-    // winston.debug("text", text);
+    // // winston.debug("text", text);
     
     if ( message.request== null || message.request.participants == null) {
         return null;
     }
 
     var participants = message.request.participants;
-    winston.debug("participants", participants);
+    // winston.debug("participants", participants);
  
     var botId = getBotFromParticipants(participants);
-    winston.debug("botId: " + botId);
+    // winston.debug("botId: " + botId);
  
    if (botId) {
       return botId;

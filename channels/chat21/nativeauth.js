@@ -26,14 +26,14 @@ const jwtSecret = process.env.CHAT21_JWT_SECRET || "tokenKey";
 const masked_jwtSecret = MaskData.maskPhone(jwtSecret, maskPhoneOptions);
 
 
-winston.info("Chat21 Native channel jwtSecret: "+ masked_jwtSecret);
+// winston.info("Chat21 Native channel jwtSecret: "+ masked_jwtSecret);
 
 
 
 router.post('/createCustomToken', function (req, res) {
 
         var userid = req.user.id;
-        winston.debug("userid",userid);
+        // winston.debug("userid",userid);
 
         var user = req.user;
 
@@ -47,7 +47,7 @@ router.post('/createCustomToken', function (req, res) {
         ]
     
         const now = Math.round(new Date().getTime()/1000);
-        // console.log("now: ", now)
+        // // console.log("now: ", now)
         const exp = now + 60 * 60 * 24 * 30;
 
         var payload = {
@@ -77,7 +77,7 @@ router.post('/createCustomToken', function (req, res) {
             "kid": "tiledesk-key", //"legacy-token-key",
             "tiledesk_api_roles": "user"
         }
-        winston.debug("payload:\n", payload)
+        // winston.debug("payload:\n", payload)
         var token = jwt.sign(
             payload,
             jwtSecret,

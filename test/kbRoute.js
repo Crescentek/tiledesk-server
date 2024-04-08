@@ -1,6 +1,6 @@
 //During the test the env variable is set to test
 process.env.NODE_ENV = 'test';
-process.env.GPTKEY = "fakegptkey";
+process.env.GPTKEY = "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";
 
 var userService = require('../services/userService');
 var projectService = require('../services/projectService');

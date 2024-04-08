@@ -159,7 +159,6 @@ class QuoteManager {
         this.project = project;
         let limits = await this.getPlanLimits();
         winston.verbose("limits for current plan: ", limits)
-
         let quote = await this.getCurrentQuote(project, object, type);
         winston.verbose("getCurrentQuote resp: ", quote)
 

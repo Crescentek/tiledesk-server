@@ -19,9 +19,9 @@ router.get('/resendinvite/:pendinginvitationid', function (req, res) {
       return res.status(404).send({ success: false, msg: 'Object not found.' });
     }
     if (pendinginvitation) {
-      winston.debug('RESEND INVITE TO THE PENDING INVITATION: ', pendinginvitation);
-      winston.debug('RESEND INVITE - CURRENT PROJECT: ', req.project);
-      winston.debug('RESEND INVITE - CURRENT USER: ', req.user);
+      // winston.debug('RESEND INVITE TO THE PENDING INVITATION: ', pendinginvitation);
+      // winston.debug('RESEND INVITE - CURRENT PROJECT: ', req.project);
+      // winston.debug('RESEND INVITE - CURRENT USER: ', req.user);
 
       emailService.sendInvitationEmail_UserNotRegistered(pendinginvitation.email, req.user.firstname, req.user.lastname, req.project.name, req.project._id, pendinginvitation.role, pendinginvitation._id)
       //                                                         // invited_user_email, currentUserFirstname, currentUserLastname, project_name, project_id, invited_user_role
@@ -43,7 +43,7 @@ router.get('/resendinvite/:pendinginvitationid', function (req, res) {
 
 router.post('/', function (req, res) {
 
-  winston.debug(req.body);
+  // winston.debug(req.body);
 
   var email = req.body.email;
   if (email) {
@@ -68,7 +68,7 @@ router.post('/', function (req, res) {
 
 router.put('/:pendinginvitationid', function (req, res) {
 
-  winston.debug('PENDING INVITATION UPDATE - BODY ', req.body);
+  // winston.debug('PENDING INVITATION UPDATE - BODY ', req.body);
 
   var update = {};
 
@@ -93,7 +93,7 @@ router.put('/:pendinginvitationid', function (req, res) {
 
 router.delete('/:pendinginvitationid', function (req, res) {
 
-  winston.debug('PENDING INVITATION DELETE - BODY ', req.body);
+  // winston.debug('PENDING INVITATION DELETE - BODY ', req.body);
 
   PendingInvitation.remove({ _id: req.params.pendinginvitationid }, function (err, pendinginvitation) {
     if (err) {
@@ -107,7 +107,7 @@ router.delete('/:pendinginvitationid', function (req, res) {
 
 router.get('/:pendinginvitationid', function (req, res) {
 
-  winston.debug('PENDING INVITATION GET BY ID - BODY ', req.body);
+  // winston.debug('PENDING INVITATION GET BY ID - BODY ', req.body);
 
   PendingInvitation.findById(req.params.pendinginvitationid, function (err, pendinginvitation) {
     if (err) {
@@ -125,7 +125,7 @@ router.get('/:pendinginvitationid', function (req, res) {
 
 router.get('/', function (req, res) {
 
-  winston.debug("GET PENDING INVITATION - req projectid", req.projectid);
+  // winston.debug("GET PENDING INVITATION - req projectid", req.projectid);
 
   PendingInvitation.find({ "id_project": req.projectid }, function (err, pendinginvitation) {
     if (err) {
@@ -135,7 +135,7 @@ router.get('/', function (req, res) {
     if (!pendinginvitation) {
       return res.status(404).send({ success: false, msg: 'Object not found.' });
     }
-    winston.debug('GET PENDING INVITATION ', pendinginvitation);
+    // winston.debug('GET PENDING INVITATION ', pendinginvitation);
 
     res.json(pendinginvitation);
   });

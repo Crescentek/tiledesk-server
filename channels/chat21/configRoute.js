@@ -5,7 +5,7 @@ var router = express.Router();
 
 
 router.get('/', function (req, res) {
-  console.log('Config');
+  // console.log('Config');
   
     var config = {};
 
